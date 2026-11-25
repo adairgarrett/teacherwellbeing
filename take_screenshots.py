@@ -37,6 +37,22 @@ async def run():
         await page.screenshot(path='screenshot_smart_goals.png', full_page=True)
         print("Captured screenshot_smart_goals.png")
 
+        # 4b. Brain Dump Journal View
+        await page.click('#tab-btn-brain-dump')
+        await page.wait_for_timeout(400)
+        await page.screenshot(path='screenshot_brain_dump.png', full_page=True)
+        print("Captured screenshot_brain_dump.png")
+
+        # 4c. Google Docs Modal View
+        await page.click('#tab-btn-smart-builder')
+        await page.wait_for_timeout(300)
+        await page.click("button:has-text('Save to Google Drive')")
+        await page.wait_for_timeout(400)
+        await page.screenshot(path='screenshot_gdocs_modal.png', full_page=False)
+        print("Captured screenshot_gdocs_modal.png")
+        await page.click("button[onclick='closeGoogleDocsExportModal()']")
+        await page.wait_for_timeout(200)
+
         # 5. Navigate to About
         await page.click('#nav-about')
         await page.wait_for_timeout(500)
