@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +12,9 @@
   <!-- Google Fonts: Plus Jakarta Sans & Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <script>
     tailwind.config = {
@@ -61,14 +64,14 @@
       color: #090D16;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
-    
+
     /* Custom subtle glass & borders */
     .glass-card {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       border: 1px solid rgba(226, 232, 240, 0.85);
     }
-    
+
     .soft-blue-gradient {
       background: linear-gradient(135deg, #F0F7FD 0%, #FFFFFF 100%);
     }
@@ -82,13 +85,16 @@
       width: 6px;
       height: 6px;
     }
+
     ::-webkit-scrollbar-track {
       background: #F1F5F9;
     }
+
     ::-webkit-scrollbar-thumb {
       background: #CBD5E1;
       border-radius: 9999px;
     }
+
     ::-webkit-scrollbar-thumb:hover {
       background: #94A3B8;
     }
@@ -98,9 +104,12 @@
       body * {
         visibility: hidden;
       }
-      #smart-goals-print-area, #smart-goals-print-area * {
+
+      #smart-goals-print-area,
+      #smart-goals-print-area * {
         visibility: visible;
       }
+
       #smart-goals-print-area {
         position: absolute;
         left: 0;
@@ -108,58 +117,50 @@
         width: 100%;
         background: white;
       }
+
       .no-print {
         display: none !important;
       }
     }
   </style>
 </head>
+
 <body class="min-h-screen flex flex-col antialiased selection:bg-brand-accent selection:text-white">
 
-  <!-- TOP ANNOUNCEMENT & MULTI-SCHOOL SCALE SELECTOR BAR -->
+  <!-- TOP ANNOUNCEMENT BAR -->
   <header class="bg-brand-ink text-white text-xs border-b border-gray-800 sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
-        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
+        <span
+          class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
           Pilot School Active
         </span>
         <div class="flex items-center space-x-1.5 text-gray-300">
           <i data-lucide="school" class="w-3.5 h-3.5 text-blue-400"></i>
           <span class="font-medium">Current Campus:</span>
-          <!-- School Switcher dropdown -->
+          <!-- Campus Selector dropdown -->
           <div class="relative inline-block text-left">
-            <button id="schoolDropdownBtn" onclick="toggleSchoolMenu()" class="inline-flex items-center font-bold text-white hover:text-blue-200 transition-colors bg-white/10 px-2.5 py-0.5 rounded border border-white/20 text-xs">
-              <span id="currentSchoolName">Lincoln High School</span>
+            <button id="schoolDropdownBtn" onclick="toggleSchoolMenu()"
+              class="inline-flex items-center font-bold text-white hover:text-blue-200 transition-colors bg-white/10 px-2.5 py-0.5 rounded border border-white/20 text-xs">
+              <span id="currentSchoolName">Hillcrest High School</span>
               <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
             </button>
-            <div id="schoolDropdownMenu" class="hidden absolute left-0 mt-1 w-64 rounded-xl shadow-2xl bg-white text-gray-900 border border-gray-200 z-50 overflow-hidden py-1">
+            <div id="schoolDropdownMenu"
+              class="hidden absolute left-0 mt-1 w-64 rounded-xl shadow-2xl bg-white text-gray-900 border border-gray-200 z-50 overflow-hidden py-1">
               <div class="px-3 py-2 border-b border-gray-100 bg-gray-50">
-                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Select Campus (Multi-School Scaling)</p>
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Campus Directory</p>
               </div>
-              <button onclick="switchSchool('Lincoln High School', 'LHS-902')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
+              <div class="w-full text-left px-3 py-2 text-xs flex items-center justify-between bg-blue-50/70 font-semibold text-brand-ink">
                 <span class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-                  Lincoln High School (Active Pilot)
+                  Hillcrest High School (Active)
                 </span>
-                <span class="text-[10px] text-gray-400">42 Staff</span>
-              </button>
-              <button onclick="switchSchool('Oak Ridge Middle School', 'ORMS-401')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
-                <span class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                  Oak Ridge Middle School
-                </span>
-                <span class="text-[10px] text-gray-400">31 Staff</span>
-              </button>
-              <button onclick="switchSchool('Washington Elementary School', 'WES-108')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
-                <span class="flex items-center gap-2">
-                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
-                  Washington Elementary School
-                </span>
-                <span class="text-[10px] text-gray-400">28 Staff</span>
-              </button>
+                <span class="text-[10px] text-brand-accent font-bold">45 Faculty</span>
+              </div>
               <div class="border-t border-gray-100 p-2 bg-gray-50">
-                <button onclick="openNewSchoolModal()" class="w-full text-center py-1 px-2 text-[11px] font-semibold text-brand-accent hover:bg-blue-100/70 rounded-md transition-colors flex items-center justify-center gap-1">
+                <button onclick="openNewSchoolModal()"
+                  class="w-full text-center py-1 px-2 text-[11px] font-semibold text-brand-accent hover:bg-blue-100/70 rounded-md transition-colors flex items-center justify-center gap-1">
                   <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
                   Register Another School / District
                 </button>
@@ -189,42 +190,53 @@
       <div class="flex justify-between h-16 items-center">
         <!-- Logo -->
         <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('request-help')">
-          <div class="w-10 h-10 rounded-xl bg-brand-ink text-white flex items-center justify-center shadow-md shadow-brand-ink/10">
+          <div
+            class="w-10 h-10 rounded-xl bg-brand-ink text-white flex items-center justify-center shadow-md shadow-brand-ink/10">
             <i data-lucide="heart-handshake" class="w-5 h-5 text-blue-400"></i>
           </div>
           <div>
             <div class="flex items-center gap-2">
-              <span class="text-lg font-extrabold tracking-tight text-brand-ink">Faculty<span class="text-brand-accent">Well</span></span>
-              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-soft text-brand-accent rounded-full border border-blue-100">Mutual Aid Hub</span>
+              <span class="text-lg font-extrabold tracking-tight text-brand-ink">Faculty<span
+                  class="text-brand-accent">Well</span></span>
+              <span
+                class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-soft text-brand-accent rounded-full border border-blue-100">Mutual
+                Aid Hub</span>
             </div>
-            <p class="text-[11px] text-brand-muted hidden sm:block">Teacher-to-Teacher Care, Class Coverage & Wellbeing</p>
+            <p class="text-[11px] text-brand-muted hidden sm:block">Teacher-to-Teacher Care, Class Coverage & Wellbeing
+            </p>
           </div>
         </div>
 
         <!-- Desktop Navigation Tabs -->
         <div class="hidden md:flex items-center space-x-1">
-          <button onclick="navigateTo('request-help')" id="nav-request-help" class="nav-link px-3.5 py-2 text-sm font-semibold rounded-lg text-brand-ink bg-brand-soft text-brand-accent transition-all flex items-center gap-1.5 border border-blue-200/50">
+          <button onclick="navigateTo('request-help')" id="nav-request-help"
+            class="nav-link px-3.5 py-2 text-sm font-semibold rounded-lg text-brand-ink bg-brand-soft text-brand-accent transition-all flex items-center gap-1.5 border border-blue-200/50">
             <i data-lucide="help-circle" class="w-4 h-4"></i>
             <span>Request Help</span>
           </button>
-          
-          <button onclick="navigateTo('offer-help')" id="nav-offer-help" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+
+          <button onclick="navigateTo('offer-help')" id="nav-offer-help"
+            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
             <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
             <span>I Can Help</span>
-            <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold" id="helperBadgeCount">4</span>
+            <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold"
+              id="helperBadgeCount">4</span>
           </button>
 
-          <button onclick="navigateTo('wellbeing')" id="nav-wellbeing" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+          <button onclick="navigateTo('wellbeing')" id="nav-wellbeing"
+            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
             <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i>
             <span>Wellbeing & Activities</span>
           </button>
 
-          <button onclick="navigateTo('smart-goals')" id="nav-smart-goals" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+          <button onclick="navigateTo('smart-goals')" id="nav-smart-goals"
+            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
             <i data-lucide="target" class="w-4 h-4 text-indigo-500"></i>
             <span>SMART Goals</span>
           </button>
 
-          <button onclick="navigateTo('about')" id="nav-about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+          <button onclick="navigateTo('about')" id="nav-about"
+            class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
             <i data-lucide="user" class="w-4 h-4 text-slate-500"></i>
             <span>About Dr. Adair</span>
           </button>
@@ -232,14 +244,16 @@
 
         <!-- Quick Urgent Action Button -->
         <div class="flex items-center space-x-2">
-          <button onclick="triggerQuickEmergencyModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
+          <button onclick="triggerQuickEmergencyModal()"
+            class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
             <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span>
             <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-600"></i>
             <span>Immediate Emergency</span>
           </button>
-          
+
           <!-- Mobile Menu Toggle Button -->
-          <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+          <button onclick="toggleMobileMenu()"
+            class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
             <i data-lucide="menu" id="mobileMenuIcon" class="w-6 h-6"></i>
           </button>
         </div>
@@ -248,19 +262,24 @@
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
-      <button onclick="navigateTo('request-help'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-accent bg-brand-soft flex items-center gap-2">
+      <button onclick="navigateTo('request-help'); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-accent bg-brand-soft flex items-center gap-2">
         <i data-lucide="help-circle" class="w-4 h-4"></i> Request Help
       </button>
-      <button onclick="navigateTo('offer-help'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+      <button onclick="navigateTo('offer-help'); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
         <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i> I Can Help / My Availability
       </button>
-      <button onclick="navigateTo('wellbeing'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+      <button onclick="navigateTo('wellbeing'); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
         <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i> Wellbeing Resources & Meditation
       </button>
-      <button onclick="navigateTo('smart-goals'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+      <button onclick="navigateTo('smart-goals'); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
         <i data-lucide="target" class="w-4 h-4 text-indigo-500"></i> Interactive SMART Goals
       </button>
-      <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+      <button onclick="navigateTo('about'); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
         <i data-lucide="user" class="w-4 h-4 text-slate-500"></i> About Dr. Angela Adair
       </button>
     </div>
@@ -281,76 +300,100 @@
 
         <!-- HERO HEADER -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-soft text-brand-accent border border-blue-200/80">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-soft text-brand-accent border border-blue-200/80">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
             <span>Confidential, Safe & Collegial Peer Support</span>
           </div>
-          
+
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight">
             What do you need <span class="text-brand-accent">today?</span>
           </h1>
-          
+
           <p class="text-base sm:text-lg text-brand-muted leading-relaxed font-normal">
-            No teacher should feel stranded in their classroom. Select what you need right now—from a 5-minute restroom break to an urgent nurse escort—and colleagues on free periods will step in.
+            No teacher should feel stranded in their classroom. Select what you need right now—from a 5-minute restroom
+            break to an urgent nurse escort—and colleagues on free periods will step in.
           </p>
         </div>
 
         <!-- TWO-COLUMN WORKFLOW: REQUEST BUILDER (LEFT) & REAL-TIME BOARD (RIGHT) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           <!-- LEFT COLUMN: REQUEST COMPOSER (lg:col-span-7) -->
-          <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-xl shadow-blue-900/5 border border-slate-200">
+          <div
+            class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-xl shadow-blue-900/5 border border-slate-200">
             <div class="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
               <div>
                 <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
                   <i data-lucide="layers" class="w-5 h-5 text-brand-accent"></i>
                   Select What You Need
                 </h2>
-                <p class="text-xs text-brand-muted mt-0.5">You can select multiple options below to build your request.</p>
+                <p class="text-xs text-brand-muted mt-0.5">You can select multiple options below to build your request.
+                </p>
               </div>
-              <span class="text-xs font-semibold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full" id="selectedOptionsCounter">1 selected</span>
+              <span class="text-xs font-semibold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full"
+                id="selectedOptionsCounter">1 selected</span>
             </div>
 
             <!-- MULTI-SELECT CATEGORY PILLS / CARDS -->
             <div class="space-y-4">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Categories of Assistance (Multi-Select)</label>
-              
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Categories of Assistance
+                (Multi-Select)</label>
+
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="optionsGrid">
-                
-                <!-- Option 1: Watch Class (with duration selector) -->
-                <div onclick="toggleRequestOption('watch-class')" id="opt-watch-class" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-brand-accent bg-blue-50/40 hover:border-blue-500 transition-all select-none">
+
+                <!-- Option 1: Watch Class (with duration selector including Full Period) -->
+                <div onclick="toggleRequestOption('watch-class')" id="opt-watch-class"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-brand-accent bg-blue-50/40 hover:border-blue-500 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center font-bold">
                         <i data-lucide="clock" class="w-4 h-4"></i>
                       </div>
                       <div>
                         <h3 class="text-sm font-bold text-brand-ink">Watch My Class</h3>
-                        <p class="text-xs text-brand-muted">Restroom, phone call, stepping out</p>
+                        <p class="text-xs text-brand-muted">Restroom, phone call, stepping out, full period</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-brand-accent bg-brand-accent flex items-center justify-center text-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-brand-accent bg-brand-accent flex items-center justify-center text-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 check-icon"></i>
                     </div>
                   </div>
 
-                  <!-- Sub-selector for Minutes (visible when checked) -->
-                  <div id="sub-duration-box" class="mt-3 pt-3 border-t border-blue-200/80 flex items-center justify-between gap-2" onclick="event.stopPropagation()">
+                  <!-- Sub-selector for Minutes / Full Period -->
+                  <div id="sub-duration-box"
+                    class="mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap items-center justify-between gap-2"
+                    onclick="event.stopPropagation()">
                     <span class="text-xs font-semibold text-slate-600">Duration:</span>
-                    <div class="flex items-center gap-1.5">
-                      <button type="button" onclick="setWatchMinutes(5)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-blue-300 bg-blue-600 text-white" data-min="5">5 min</button>
-                      <button type="button" onclick="setWatchMinutes(10)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="10">10 min</button>
-                      <button type="button" onclick="setWatchMinutes(15)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="15">15 min</button>
-                      <button type="button" onclick="setWatchMinutes(30)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="30">Half Period</button>
+                    <div class="flex flex-wrap items-center gap-1.5">
+                      <button type="button" onclick="setWatchMinutes(5)"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-blue-300 bg-blue-600 text-white"
+                        data-min="5">5 min</button>
+                      <button type="button" onclick="setWatchMinutes(10)"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        data-min="10">10 min</button>
+                      <button type="button" onclick="setWatchMinutes(15)"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        data-min="15">15 min</button>
+                      <button type="button" onclick="setWatchMinutes(30)"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        data-min="30">Half Period</button>
+                      <button type="button" onclick="setWatchMinutes('Full Period')"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        data-min="Full Period">Full Period (45-60m)</button>
                     </div>
                   </div>
                 </div>
 
                 <!-- Option 2: Urgent / Emergency (Fight, de-escalation) -->
-                <div onclick="toggleRequestOption('urgent-emergency')" id="opt-urgent-emergency" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-rose-400 hover:bg-rose-50/30 transition-all select-none">
+                <div onclick="toggleRequestOption('urgent-emergency')" id="opt-urgent-emergency"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-rose-400 hover:bg-rose-50/30 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
                         <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -358,17 +401,27 @@
                         <p class="text-xs text-rose-600 font-medium">Fight, crisis, admin backup</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
                     </div>
+                  </div>
+
+                  <!-- Sub-options for Urgent -->
+                  <div id="sub-urgent-box" class="hidden mt-3 pt-3 border-t border-rose-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Student Conflict / Fight', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Student Fight</button>
+                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Classroom De-escalation', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">De-escalation</button>
+                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Administrator Needed', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Admin Backup</button>
                   </div>
                 </div>
 
                 <!-- Option 3: Medical Emergency -->
-                <div onclick="toggleRequestOption('medical-emergency')" id="opt-medical-emergency" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-red-400 hover:bg-red-50/30 transition-all select-none">
+                <div onclick="toggleRequestOption('medical-emergency')" id="opt-medical-emergency"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-red-400 hover:bg-red-50/30 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold">
                         <i data-lucide="cross" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -376,17 +429,27 @@
                         <p class="text-xs text-red-600 font-medium">Injury, seizure, allergic reaction</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
                     </div>
+                  </div>
+
+                  <!-- Sub-options for Medical Emergency -->
+                  <div id="sub-medical-box" class="hidden mt-3 pt-3 border-t border-red-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('medical-emergency', 'Injury / Bleeding', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Injury / Bleeding</button>
+                    <button type="button" onclick="selectSubOption('medical-emergency', 'Severe Allergy / EpiPen', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Allergy / EpiPen</button>
+                    <button type="button" onclick="selectSubOption('medical-emergency', 'Seizure / Fainting / 911', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Seizure / 911</button>
                   </div>
                 </div>
 
                 <!-- Option 4: I Need a Nurse -->
-                <div onclick="toggleRequestOption('need-nurse')" id="opt-need-nurse" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/30 transition-all select-none">
+                <div onclick="toggleRequestOption('need-nurse')" id="opt-need-nurse"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/30 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
                         <i data-lucide="stethoscope" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -394,17 +457,27 @@
                         <p class="text-xs text-brand-muted">Clinic visit, student sick, medication</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
                     </div>
+                  </div>
+
+                  <!-- Sub-options for Nurse -->
+                  <div id="sub-nurse-box" class="hidden mt-3 pt-3 border-t border-amber-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Send Nurse to My Classroom', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Send Nurse to Room</button>
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Escort Student to Clinic', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Escort to Clinic</button>
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Medication / Diabetic Care', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Medication Check</button>
                   </div>
                 </div>
 
                 <!-- Option 5: Supplies / Copies / Tech Run -->
-                <div onclick="toggleRequestOption('supplies-copies')" id="opt-supplies-copies" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/30 transition-all select-none">
+                <div onclick="toggleRequestOption('supplies-copies')" id="opt-supplies-copies"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/30 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
                         <i data-lucide="printer" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -412,17 +485,27 @@
                         <p class="text-xs text-brand-muted">Urgent copies, markers, lab gear</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
                     </div>
+                  </div>
+
+                  <!-- Sub-options for Supplies -->
+                  <div id="sub-supplies-box" class="hidden mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('supplies-copies', 'Urgent Print Copies Run', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Urgent Print Copies</button>
+                    <button type="button" onclick="selectSubOption('supplies-copies', 'Whiteboard Markers / Erasers', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Whiteboard Markers</button>
+                    <button type="button" onclick="selectSubOption('supplies-copies', 'Paper / Pencils / Supplies', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Paper / Pencils</button>
                   </div>
                 </div>
 
                 <!-- Option 6: 3-Min Mindful Reset / Emotional Debrief -->
-                <div onclick="toggleRequestOption('mindful-reset')" id="opt-mindful-reset" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-teal-400 hover:bg-teal-50/30 transition-all select-none">
+                <div onclick="toggleRequestOption('mindful-reset')" id="opt-mindful-reset"
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-teal-400 hover:bg-teal-50/30 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
-                      <div class="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                      <div
+                        class="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
                         <i data-lucide="wind" class="w-4 h-4"></i>
                       </div>
                       <div>
@@ -430,9 +513,17 @@
                         <p class="text-xs text-brand-muted">Need 3 min breathing space / peer ear</p>
                       </div>
                     </div>
-                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                    <div
+                      class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
                     </div>
+                  </div>
+
+                  <!-- Sub-options for Mindful Reset -->
+                  <div id="sub-mindful-box" class="hidden mt-3 pt-3 border-t border-teal-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('mindful-reset', '5-Minute Quiet Step-Out', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">5-Min Step-Out</button>
+                    <button type="button" onclick="selectSubOption('mindful-reset', 'Peer Listening Ear / Debrief', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Peer Listening Ear</button>
+                    <button type="button" onclick="selectSubOption('mindful-reset', 'Quiet Hallway Reset', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Quiet Reset</button>
                   </div>
                 </div>
 
@@ -442,38 +533,51 @@
             <!-- LOCATION & TEACHER INFO -->
             <div class="mt-6 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label for="reqTeacherName" class="block text-xs font-bold text-slate-700 mb-1">Your Name / Subject</label>
+                <label for="reqTeacherName" class="block text-xs font-bold text-slate-700 mb-1">Your Name /
+                  Subject</label>
                 <div class="relative">
                   <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
-                  <input type="text" id="reqTeacherName" value="Ms. Jessica Taylor (10th Eng)" class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g. Mr. Ramirez (Math)">
+                  <input type="text" id="reqTeacherName" value="Ms. Jessica Taylor (10th Eng)"
+                    class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white"
+                    placeholder="e.g. Mr. Ramirez (Math)">
                 </div>
               </div>
 
               <div>
-                <label for="reqRoomNumber" class="block text-xs font-bold text-slate-700 mb-1">Room # or Campus Location <span class="text-rose-500">*</span></label>
+                <label for="reqRoomNumber" class="block text-xs font-bold text-slate-700 mb-1">Room # or Campus Location
+                  <span class="text-rose-500">*</span></label>
                 <div class="relative">
                   <i data-lucide="map-pin" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
-                  <input type="text" id="reqRoomNumber" value="Room 214 (Building B, 2nd Fl)" class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g. Room 304, Media Center, Gym">
+                  <input type="text" id="reqRoomNumber" value="Room 214 (Building B, 2nd Fl)"
+                    class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white"
+                    placeholder="e.g. Room 304, Media Center, Gym">
                 </div>
               </div>
             </div>
 
             <!-- OPTIONAL NOTE -->
             <div class="mt-4">
-              <label for="reqNotes" class="block text-xs font-bold text-slate-700 mb-1">Brief Note / Instructions (Optional)</label>
-              <textarea id="reqNotes" rows="2" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g., Students are doing quiet independent reading, just need someone to stand near the doorway for 5 min while I take medication."></textarea>
+              <label for="reqNotes" class="block text-xs font-bold text-slate-700 mb-1">Brief Note / Instructions
+                (Optional)</label>
+              <textarea id="reqNotes" rows="2"
+                class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white"
+                placeholder="e.g., Students are doing quiet independent reading, just need someone to stand near the doorway for 5 min while I take medication."></textarea>
             </div>
 
             <!-- URGENCY & SUBMIT -->
-            <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div
+              class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div class="flex items-center space-x-2">
-                <input type="checkbox" id="urgentPriorityToggle" class="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-slate-300">
-                <label for="urgentPriorityToggle" class="text-xs font-bold text-slate-700 cursor-pointer flex items-center gap-1">
+                <input type="checkbox" id="urgentPriorityToggle"
+                  class="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-slate-300">
+                <label for="urgentPriorityToggle"
+                  class="text-xs font-bold text-slate-700 cursor-pointer flex items-center gap-1">
                   <span class="w-2 h-2 rounded-full bg-rose-500"></span> Mark as Urgent Priority (Sound School Alert)
                 </label>
               </div>
 
-              <button type="button" onclick="submitHelpRequest()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-sm shadow-lg shadow-black/10 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
+              <button type="button" onclick="submitHelpRequest()"
+                class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-sm shadow-lg shadow-black/10 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
                 <i data-lucide="send" class="w-4 h-4 text-blue-400"></i>
                 <span>Broadcast Request to Staff</span>
               </button>
@@ -483,26 +587,34 @@
 
           <!-- RIGHT COLUMN: REAL-TIME CAMPUS REQUEST BOARD (lg:col-span-5) -->
           <div class="lg:col-span-5 space-y-4">
-            
+
             <div class="flex items-center justify-between">
               <div>
                 <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
                   <i data-lucide="radio" class="w-5 h-5 text-rose-500 animate-pulse"></i>
                   Live Campus Board
                 </h2>
-                <p class="text-xs text-brand-muted">Active peer requests at <span class="font-semibold text-brand-slate" id="boardSchoolBadge">Lincoln High</span></p>
+                <p class="text-xs text-brand-muted">Active peer requests at <span class="font-semibold text-brand-slate"
+                    id="boardSchoolBadge">Hillcrest High School</span></p>
               </div>
-              <button onclick="renderRequestsFeed()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Refresh Feed">
+              <button onclick="renderRequestsFeed()"
+                class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+                title="Refresh Feed">
                 <i data-lucide="refresh-cw" class="w-4 h-4"></i>
               </button>
             </div>
 
             <!-- FILTER TABS -->
             <div class="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl text-xs font-semibold">
-              <button onclick="setBoardFilter('all')" id="filter-all" class="flex-1 py-1.5 rounded-lg bg-white text-brand-ink shadow-sm text-center">All Active (<span id="count-all">2</span>)</button>
-              <button onclick="setBoardFilter('coverage')" id="filter-coverage" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Coverage</button>
-              <button onclick="setBoardFilter('urgent')" id="filter-urgent" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Urgent / Nurse</button>
-              <button onclick="setBoardFilter('resolved')" id="filter-resolved" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Resolved</button>
+              <button onclick="setBoardFilter('all')" id="filter-all"
+                class="flex-1 py-1.5 rounded-lg bg-white text-brand-ink shadow-sm text-center">All Active (<span
+                  id="count-all">2</span>)</button>
+              <button onclick="setBoardFilter('coverage')" id="filter-coverage"
+                class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Coverage</button>
+              <button onclick="setBoardFilter('urgent')" id="filter-urgent"
+                class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Urgent / Nurse</button>
+              <button onclick="setBoardFilter('resolved')" id="filter-resolved"
+                class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Resolved</button>
             </div>
 
             <!-- REQUESTS FEED CARDS CONTAINER -->
@@ -511,13 +623,15 @@
             </div>
 
             <!-- QUICK TIP BANNER -->
-            <div class="p-4 rounded-2xl bg-brand-soft border border-blue-200/60 text-xs text-brand-slate flex items-start gap-3">
+            <div
+              class="p-4 rounded-2xl bg-brand-soft border border-blue-200/60 text-xs text-brand-slate flex items-start gap-3">
               <div class="p-1.5 bg-blue-100 rounded-lg text-brand-accent mt-0.5">
                 <i data-lucide="info" class="w-4 h-4"></i>
               </div>
               <div>
                 <p class="font-bold text-brand-ink">Colleague Etiquette Promise</p>
-                <p class="text-brand-muted mt-0.5">When you step in to cover a 5-minute break, no questions are asked. Mutual trust and rapid mutual aid reduce chronic teacher burnout.</p>
+                <p class="text-brand-muted mt-0.5">When you step in to cover a 5-minute break, no questions are asked.
+                  Mutual trust and rapid mutual aid reduce chronic teacher burnout.</p>
               </div>
             </div>
 
@@ -534,80 +648,100 @@
     <!-- ========================================================================= -->
     <section id="view-offer-help" class="view-section hidden py-8 sm:py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        
+
         <!-- Header -->
         <div class="max-w-3xl mx-auto text-center space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
             <i data-lucide="hand-heart" class="w-3.5 h-3.5"></i>
             <span>The Giver's Circle: School Mutual Aid</span>
           </div>
           <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">I'm Available to Help</h1>
           <p class="text-base text-brand-muted">
-            Have a prep block, duty-free period, or quiet co-taught classroom? Let colleagues know when you can step in to hold the door, walk a student, or watch a class for 5 minutes.
+            Have a prep block, duty-free period, or quiet co-taught classroom? Let colleagues know when you can step in
+            to hold the door, walk a student, or watch a class for 5 minutes.
           </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           <!-- LEFT: AVAILABILITY SETTER FORM (lg:col-span-7) -->
           <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
             <h2 class="text-xl font-bold text-brand-ink mb-1 flex items-center gap-2">
               <i data-lucide="calendar-clock" class="w-5 h-5 text-emerald-600"></i>
               Set Your Availability for Today
             </h2>
-            <p class="text-xs text-brand-muted mb-6">Select when you can step in and the types of assistance you're comfortable providing.</p>
+            <p class="text-xs text-brand-muted mb-6">Select when you can step in and the types of assistance you're
+              comfortable providing.</p>
 
             <!-- Teacher Profile -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Your Name</label>
-                <input type="text" id="helperNameInput" value="Mr. Marcus Bell (History)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
+                <input type="text" id="helperNameInput" value="Mr. Marcus Bell (History)"
+                  class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
               </div>
               <div>
                 <label class="block text-xs font-bold text-slate-700 mb-1">Your Base Location / Room</label>
-                <input type="text" id="helperLocationInput" value="Room 210 (Building B, 2nd Floor)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
+                <input type="text" id="helperLocationInput" value="Room 210 (Building B, 2nd Floor)"
+                  class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
               </div>
             </div>
 
             <!-- TIME AVAILABILITY OPTIONS (MULTI-SELECT) -->
             <div class="mb-6">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">When Are You Available Today? (Select Multiple)</label>
-              
-              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="availTimeSlots">
-                <button type="button" onclick="toggleAvailSlot(this, 'Right Now (Next 20m)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">When Are You Available
+                Today? (Select Multiple)</label>
+
+              <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="availTimeSlots">
+                <button type="button" onclick="toggleAvailSlot(this, 'Right Now')"
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
                   <span>Right Now</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Period 1 (8:15 - 9:05)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 1')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
                   <span>Period 1</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Period 2 (9:10 - 10:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 2')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
                   <span>Period 2</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Period 3 / Prep (10:05 - 10:55)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
-                  <span>Period 3 (Prep)</span>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 3')"
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  <span>Period 3</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Lunch Block (11:30 - 12:15)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
-                  <span>Lunch Block</span>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 4')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Period 4</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Period 5 / Planning (1:15 - 2:05)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
-                  <span>Period 5 (Planning)</span>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 5')"
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  <span>Period 5</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'Period 6 (2:10 - 3:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 6')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
                   <span>Period 6</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'After School (3:15 - 4:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
-                  <span>After School</span>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 7')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Period 7</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
-                <button type="button" onclick="toggleAvailSlot(this, 'On-Call via Intercom')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
-                  <span>On-Call / Co-Taught</span>
+                <button type="button" onclick="toggleAvailSlot(this, 'Lunch Block')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Lunch Block</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'After School')"
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>After School</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
               </div>
@@ -615,35 +749,54 @@
 
             <!-- WHAT CAN YOU HELP WITH (MULTI-SELECT) -->
             <div class="mb-6">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Ways You're Happy to Help (Select Multiple)</label>
-              
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Ways You're Happy to
+                Help (Select Multiple)</label>
+
               <div class="space-y-2" id="availCapabilities">
-                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
-                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="5-Min Quick Class Watch (Bathroom / Break)">
+                <label
+                  class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
+                    value="5-Min Quick Class Watch (Bathroom / Break)">
                   <span class="font-bold text-slate-800">5-Min Quick Class Watch</span>
-                  <span class="text-slate-500 text-[11px]">— Stand in doorway while colleague takes restroom/water break</span>
+                  <span class="text-slate-500 text-[11px]">— Stand in doorway while colleague takes restroom/water
+                    break</span>
                 </label>
 
-                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
-                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Walk Student to Nurse / Counseling">
+                <label
+                  class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
+                    value="Walk Student to Nurse / Counseling">
                   <span class="font-bold text-slate-800">Escort to Nurse / Front Office</span>
-                  <span class="text-slate-500 text-[11px]">— Walk a sick or emotionally distressed student to clinic</span>
+                  <span class="text-slate-500 text-[11px]">— Walk a sick or emotionally distressed student to
+                    clinic</span>
                 </label>
 
-                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
-                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Emergency Copy / Supply Run">
+                <label
+                  class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
+                    value="Emergency Copy / Supply Run">
                   <span class="font-bold text-slate-800">Supply or Print Run</span>
                   <span class="text-slate-500 text-[11px]">— Grab emergency copies or markers from workroom</span>
                 </label>
 
-                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
-                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Student De-escalation & Quiet Co-presence">
+                <label
+                  class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked
+                    class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
+                    value="Student De-escalation & Quiet Co-presence">
                   <span class="font-bold text-slate-800">Quiet Co-Presence / De-escalation</span>
-                  <span class="text-slate-500 text-[11px]">— Calm presence in room to help reset disruptive behavior</span>
+                  <span class="text-slate-500 text-[11px]">— Calm presence in room to help reset disruptive
+                    behavior</span>
                 </label>
 
-                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
-                  <input type="checkbox" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Peer Listening & Mentoring Debrief">
+                <label
+                  class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox"
+                    class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
+                    value="Peer Listening & Mentoring Debrief">
                   <span class="font-bold text-slate-800">Peer Mentoring & Listening Ear</span>
                   <span class="text-slate-500 text-[11px]">— 5-min calm reflection during planning period</span>
                 </label>
@@ -651,7 +804,8 @@
             </div>
 
             <!-- Submit Availability -->
-            <button onclick="saveHelperAvailability()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+            <button onclick="saveHelperAvailability()"
+              class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
               <i data-lucide="check-circle-2" class="w-4 h-4"></i>
               <span>Publish My Availability Status</span>
             </button>
@@ -667,7 +821,8 @@
                 </h2>
                 <p class="text-xs text-brand-muted">Staff ready to help right now or during planning blocks</p>
               </div>
-              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800" id="standbyCountBadge">4 Available</span>
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"
+                id="standbyCountBadge">4 Available</span>
             </div>
 
             <!-- Standby Helpers List -->
@@ -690,25 +845,30 @@
 
         <!-- Header -->
         <div class="max-w-3xl mx-auto text-center space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
             <i data-lucide="feather" class="w-3.5 h-3.5"></i>
             <span>Classroom Mindfulness & Nervous System Resilience</span>
           </div>
           <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">Educator Wellbeing & Interactive Practices</h1>
           <p class="text-base text-brand-muted">
-            Ground yourself between class periods. Built-in interactive soundscapes, animated box breathing, and micro-somatic resets grounded in Dr. Angela Adair's educational resilience research.
+            Ground yourself between class periods. Built-in interactive soundscapes, animated box breathing, and
+            micro-somatic resets grounded in Dr. Angela Adair's educational resilience research.
           </p>
         </div>
 
         <!-- INTERACTIVE ACTIVITY 1: GUIDED BREATHING PACER -->
         <div class="glass-card rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-md">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             <!-- Breath Visualizer Circle -->
-            <div class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-brand-soft rounded-2xl border border-blue-100 min-h-[340px] relative overflow-hidden">
+            <div
+              class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-brand-soft rounded-2xl border border-blue-100 min-h-[340px] relative overflow-hidden">
               <!-- Animated Ring -->
-              <div id="breathingCircle" class="w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[4000ms] ease-in-out shadow-2xl shadow-blue-300/40">
-                <div class="w-36 h-36 rounded-full bg-white/20 backdrop-blur-sm flex flex-col items-center justify-center">
+              <div id="breathingCircle"
+                class="w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[4000ms] ease-in-out shadow-2xl shadow-blue-300/40">
+                <div
+                  class="w-36 h-36 rounded-full bg-white/20 backdrop-blur-sm flex flex-col items-center justify-center">
                   <span id="breathPhaseText" class="text-lg uppercase tracking-wider font-extrabold">Inhale</span>
                   <span id="breathTimerDisplay" class="text-3xl font-black mt-1">4</span>
                 </div>
@@ -716,50 +876,60 @@
 
               <!-- Pacing Mode Badges -->
               <div class="mt-6 flex items-center gap-2">
-                <button onclick="setBreathingTechnique('box')" id="breath-box-btn" class="px-3 py-1 rounded-full text-xs font-bold bg-brand-ink text-white shadow-sm">Box 4-4-4-4</button>
-                <button onclick="setBreathingTechnique('calm')" id="breath-calm-btn" class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Calm 4-7-8</button>
-                <button onclick="setBreathingTechnique('transition')" id="breath-trans-btn" class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Bell Reset 3-3</button>
+                <button onclick="setBreathingTechnique('box')" id="breath-box-btn"
+                  class="px-3 py-1 rounded-full text-xs font-bold bg-brand-ink text-white shadow-sm">Box
+                  4-4-4-4</button>
+                <button onclick="setBreathingTechnique('calm')" id="breath-calm-btn"
+                  class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Calm
+                  4-7-8</button>
+                <button onclick="setBreathingTechnique('transition')" id="breath-trans-btn"
+                  class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Bell
+                  Reset 3-3</button>
               </div>
             </div>
 
             <!-- Breath Controls & Explanation -->
             <div class="lg:col-span-7 space-y-5">
               <div>
-                <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Interactive Nervous System Reset</span>
-                <h3 class="text-2xl font-bold text-brand-ink mt-1" id="breathTitle">Guided Box Breathing (Samavritti)</h3>
+                <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Interactive Nervous System
+                  Reset</span>
+                <h3 class="text-2xl font-bold text-brand-ink mt-1" id="breathTitle">Guided Box Breathing (Samavritti)
+                </h3>
                 <p class="text-sm text-brand-muted mt-2 leading-relaxed" id="breathDescription">
-                  Used by educators and emergency responders to immediately halt sympathetic "fight-or-flight" overdrive after student conflicts or intense class periods. Four seconds inhale, four seconds hold, four seconds exhale, four seconds hold.
+                  Used by educators and emergency responders to immediately halt sympathetic "fight-or-flight" overdrive
+                  after student conflicts or intense class periods. Four seconds inhale, four seconds hold, four seconds
+                  exhale, four seconds hold.
                 </p>
               </div>
 
               <!-- Interactive Controls -->
               <div class="flex items-center gap-3 pt-2">
-                <button id="toggleBreathBtn" onclick="toggleBreathingGuide()" class="px-6 py-3 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
+                <button id="toggleBreathBtn" onclick="toggleBreathingGuide()"
+                  class="px-6 py-3 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
                   <i data-lucide="play" id="breathPlayIcon" class="w-4 h-4"></i>
                   <span id="breathPlayLabel">Start Breathing Guide</span>
                 </button>
 
-                <button onclick="resetBreathingGuide()" class="px-4 py-3 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition-colors flex items-center gap-1.5">
+                <button onclick="resetBreathingGuide()"
+                  class="px-4 py-3 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition-colors flex items-center gap-1.5">
                   <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
                   <span>Reset</span>
                 </button>
 
                 <div class="ml-auto flex items-center space-x-2 text-xs font-bold text-slate-600">
                   <span>Cycle:</span>
-                  <span id="cycleCounterBadge" class="px-2.5 py-1 bg-slate-100 rounded-md font-mono text-brand-accent text-sm">0 / 4</span>
+                  <span id="cycleCounterBadge"
+                    class="px-2.5 py-1 bg-slate-100 rounded-md font-mono text-brand-accent text-sm">0 / 4</span>
                 </div>
               </div>
 
-              <!-- Quick Audio Chime Option -->
-              <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <!-- Silent Visual Pacing Indicator -->
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
                 <span class="flex items-center gap-1.5">
-                  <i data-lucide="volume-2" class="w-4 h-4 text-blue-500"></i>
-                  Gentle synthesized chime on cycle change
+                  <i data-lucide="eye" class="w-4 h-4 text-brand-accent"></i>
+                  Visual tranquil pacing pacer (completely silent)
                 </span>
-                <label class="inline-flex items-center cursor-pointer">
-                  <input type="checkbox" id="chimeToggle" checked class="sr-only peer">
-                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
-                </label>
+                <span class="text-[11px] font-semibold text-slate-400 font-mono">Silent Guide</span>
               </div>
             </div>
 
@@ -768,7 +938,7 @@
 
         <!-- INTERACTIVE ACTIVITY 2: AMBIENT SOUNDSCAPE & BELL-TO-BELL AUDIO PLAYER -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           <!-- SOUNDSCAPE STATION (lg:col-span-6) -->
           <div class="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
             <div class="flex items-center justify-between">
@@ -782,13 +952,14 @@
             </div>
 
             <p class="text-xs text-brand-muted">
-              Built with real-time browser audio synthesis (no external audio files needed). Use your earbuds during planning periods to create a quiet mental sanctuary right at your desk.
+              Built with real-time browser audio synthesis (no external audio files needed). Put on headphones or earbuds during planning periods for deep cognitive focus and stress reduction.
             </p>
 
-            <!-- Soundscape Options -->
-            <div class="grid grid-cols-2 gap-3">
-              <button onclick="toggleAudioSound('rain')" id="audio-btn-rain" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+            <!-- Soundscape Options (Rain, Ocean, EMDR Bilateral) -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <button onclick="toggleAudioSound('rain')" id="audio-btn-rain"
+                class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="cloud-rain" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -797,8 +968,9 @@
                 </div>
               </button>
 
-              <button onclick="toggleAudioSound('ocean')" id="audio-btn-ocean" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center">
+              <button onclick="toggleAudioSound('ocean')" id="audio-btn-ocean"
+                class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center flex-shrink-0">
                   <i data-lucide="waves" class="w-4 h-4"></i>
                 </div>
                 <div>
@@ -807,23 +979,14 @@
                 </div>
               </button>
 
-              <button onclick="toggleAudioSound('singing-bowl')" id="audio-btn-singing-bowl" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
-                  <i data-lucide="bell" class="w-4 h-4"></i>
+              <button onclick="toggleAudioSound('emdr')" id="audio-btn-emdr"
+                class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-indigo-400 text-left transition-all flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center flex-shrink-0">
+                  <i data-lucide="headphones" class="w-4 h-4"></i>
                 </div>
                 <div>
-                  <h4 class="text-xs font-bold text-brand-ink">Singing Bowl</h4>
-                  <p class="text-[10px] text-slate-400">432Hz harmonic</p>
-                </div>
-              </button>
-
-              <button onclick="toggleAudioSound('alpha-drone')" id="audio-btn-alpha-drone" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
-                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
-                  <i data-lucide="activity" class="w-4 h-4"></i>
-                </div>
-                <div>
-                  <h4 class="text-xs font-bold text-brand-ink">Alpha Waves</h4>
-                  <p class="text-[10px] text-slate-400">Binaural calm</p>
+                  <h4 class="text-xs font-bold text-brand-ink">EMDR Bilateral</h4>
+                  <p class="text-[10px] text-indigo-600 font-semibold">Left/right focus pulse</p>
                 </div>
               </button>
             </div>
@@ -832,10 +995,12 @@
             <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
               <div class="flex items-center gap-2 flex-grow">
                 <i data-lucide="volume-1" class="w-4 h-4 text-slate-400"></i>
-                <input type="range" id="soundVolume" min="0" max="100" value="40" oninput="setAudioVolume(this.value)" class="w-full accent-blue-600 cursor-pointer">
+                <input type="range" id="soundVolume" min="0" max="100" value="40" oninput="setAudioVolume(this.value)"
+                  class="w-full accent-blue-600 cursor-pointer">
                 <i data-lucide="volume-2" class="w-4 h-4 text-slate-400"></i>
               </div>
-              <button onclick="stopAllAudio()" class="px-3 py-1.5 rounded-lg text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors">
+              <button onclick="stopAllAudio()"
+                class="px-3 py-1.5 rounded-lg text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors">
                 Stop Audio
               </button>
             </div>
@@ -848,7 +1013,8 @@
                 <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Desk Somatics</span>
                 <h3 class="text-xl font-bold text-brand-ink mt-0.5">60-Second Classroom Tension Release</h3>
               </div>
-              <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full" id="somaticStepBadge">Step 1 of 4</span>
+              <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full"
+                id="somaticStepBadge">Step 1 of 4</span>
             </div>
 
             <div class="p-5 rounded-2xl bg-brand-soft border border-blue-100 space-y-3 min-h-[160px]">
@@ -857,15 +1023,19 @@
                   <i data-lucide="move" class="w-4 h-4 text-brand-accent"></i>
                   1. Neck & Upper Trapezius Drop
                 </h4>
-                <span class="text-xs font-mono font-bold text-brand-accent px-2 py-0.5 bg-white rounded-md border border-blue-200">15s</span>
+                <span
+                  class="text-xs font-mono font-bold text-brand-accent px-2 py-0.5 bg-white rounded-md border border-blue-200">15s</span>
               </div>
               <p class="text-xs text-brand-slate leading-relaxed" id="somaticStepDesc">
-                Lower your right ear toward your right shoulder without lifting the shoulder. Gently place your right hand on your head (no pulling, just dead weight). Take two deep diaphragmatic breaths, noticing the release along the left neck tendon.
+                Lower your right ear toward your right shoulder without lifting the shoulder. Gently place your right
+                hand on your head (no pulling, just dead weight). Take two deep diaphragmatic breaths, noticing the
+                release along the left neck tendon.
               </p>
             </div>
 
             <div class="flex items-center justify-between pt-2">
-              <button onclick="prevSomaticStep()" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+              <button onclick="prevSomaticStep()"
+                class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
                 <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
                 Previous
               </button>
@@ -877,7 +1047,8 @@
                 <span class="w-2.5 h-2.5 rounded-full bg-slate-200 somatic-dot" id="dot-3"></span>
               </div>
 
-              <button onclick="nextSomaticStep()" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-ink hover:bg-slate-800 text-white transition-colors flex items-center gap-1.5">
+              <button onclick="nextSomaticStep()"
+                class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-ink hover:bg-slate-800 text-white transition-colors flex items-center gap-1.5">
                 Next Stretch
                 <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
               </button>
@@ -890,11 +1061,14 @@
         <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
-              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Mentoring & Resilience Culture</span>
+              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Mentoring & Resilience
+                Culture</span>
               <h3 class="text-2xl font-bold text-brand-ink mt-0.5">Staff Gratitude & Kudos Wall</h3>
-              <p class="text-xs text-brand-muted mt-1">Research shows peer gratitude is one of the highest predictors of faculty retention and psychological safety.</p>
+              <p class="text-xs text-brand-muted mt-1">Research shows peer gratitude is one of the highest predictors of
+                faculty retention and psychological safety.</p>
             </div>
-            <button onclick="openGratitudeModal()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 self-start sm:self-auto">
+            <button onclick="openGratitudeModal()"
+              class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 self-start sm:self-auto">
               <i data-lucide="heart" class="w-4 h-4 fill-white"></i>
               <span>Post a Colleague Shout-Out</span>
             </button>
@@ -917,48 +1091,57 @@
 
         <!-- Header -->
         <div class="max-w-3xl mx-auto text-center space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+          <div
+            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
             <i data-lucide="compass" class="w-3.5 h-3.5"></i>
             <span>Intentional Professional & Personal Boundaries</span>
           </div>
           <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">Interactive Educator SMART Goals</h1>
           <p class="text-base text-brand-muted">
-            Move from overwhelming to-do lists to sustainable habits. Formulate, track, and print goals that protect your instructional energy and wellbeing.
+            Move from overwhelming to-do lists to sustainable habits. Formulate, track, and print goals that protect
+            your instructional energy and wellbeing.
           </p>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-          
+
           <!-- LEFT: SMART GOAL INTERACTIVE WIZARD (lg:col-span-7) -->
           <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
-            
+
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
               <div>
                 <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
                   <i data-lucide="edit-3" class="w-5 h-5 text-indigo-600"></i>
                   SMART Goal Framework
                 </h3>
-                <p class="text-xs text-brand-muted">Fill out each dimension or load an educator-tested template below.</p>
+                <p class="text-xs text-brand-muted">Fill out each dimension or load an educator-tested template below.
+                </p>
               </div>
 
               <!-- Template Loader Dropdown -->
               <div class="relative">
-                <button onclick="toggleTemplateDropdown()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 flex items-center gap-1.5">
+                <button onclick="toggleTemplateDropdown()"
+                  class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 flex items-center gap-1.5">
                   <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
                   <span>Load Preset Template</span>
                   <i data-lucide="chevron-down" class="w-3 h-3"></i>
                 </button>
-                <div id="goalTemplatesMenu" class="hidden absolute right-0 mt-1 w-72 rounded-xl shadow-xl bg-white border border-gray-200 z-30 py-1 text-xs">
-                  <button onclick="loadGoalTemplate('departure')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                <div id="goalTemplatesMenu"
+                  class="hidden absolute right-0 mt-1 w-72 rounded-xl shadow-xl bg-white border border-gray-200 z-30 py-1 text-xs">
+                  <button onclick="loadGoalTemplate('departure')"
+                    class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
                     🚪 Departure Boundary: Leave by 4:00 PM 3x/week
                   </button>
-                  <button onclick="loadGoalTemplate('batch-grading')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                  <button onclick="loadGoalTemplate('batch-grading')"
+                    class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
                     📝 Batch Grading: Zero grading on weekends
                   </button>
-                  <button onclick="loadGoalTemplate('mindful-transition')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                  <button onclick="loadGoalTemplate('mindful-transition')"
+                    class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
                     🧘 Mindful Morning: 5-min prep quiet reset
                   </button>
-                  <button onclick="loadGoalTemplate('mentoring')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                  <button onclick="loadGoalTemplate('mentoring')"
+                    class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
                     🤝 Peer Support: Bi-weekly mutual mentoring check-in
                   </button>
                 </div>
@@ -969,56 +1152,83 @@
             <div class="space-y-4">
               <!-- S: Specific -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
-                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
-                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">S</span>
+                <label
+                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span
+                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">S</span>
                   Specific — What exactly will you achieve?
                 </label>
-                <input type="text" id="smartSpecific" value="Leave the school building by 4:15 PM every Tuesday and Thursday" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Leave school campus by 4:00 PM twice a week without taking grading home">
+                <input type="text" id="smartSpecific"
+                  value="Leave the school building by 4:15 PM every Tuesday and Thursday"
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400"
+                  placeholder="e.g. Leave school campus by 4:00 PM twice a week without taking grading home">
               </div>
 
               <!-- M: Measurable -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
-                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
-                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">M</span>
+                <label
+                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span
+                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">M</span>
                   Measurable — How will you track progress?
                 </label>
-                <input type="text" id="smartMeasurable" value="Log departure times in my phone calendar, targeting 8 successful days per month" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Track on calendar: 8 out of 8 target days achieved">
+                <input type="text" id="smartMeasurable"
+                  value="Log departure times in my phone calendar, targeting 8 successful days per month"
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400"
+                  placeholder="e.g. Track on calendar: 8 out of 8 target days achieved">
               </div>
 
               <!-- A: Achievable -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
-                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
-                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">A</span>
+                <label
+                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span
+                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">A</span>
                   Achievable — What system or support makes this realistic?
                 </label>
-                <input type="text" id="smartAchievable" value="Pack teaching bag during 5th period prep and arrange carpool walkout with Ms. Chen" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Close classroom door at 3:45 PM; pair up with an accountability buddy">
+                <input type="text" id="smartAchievable"
+                  value="Pack teaching bag during 5th period prep and arrange carpool walkout with Ms. Chen"
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400"
+                  placeholder="e.g. Close classroom door at 3:45 PM; pair up with an accountability buddy">
               </div>
 
               <!-- R: Relevant -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
-                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
-                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">R</span>
+                <label
+                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span
+                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">R</span>
                   Relevant — Why does this matter for your longevity & wellbeing?
                 </label>
-                <input type="text" id="smartRelevant" value="Preventing chronic evening fatigue allows me to stay patient and energetic with students" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Restores energy for my family and reduces Sunday evening anxiety">
+                <input type="text" id="smartRelevant"
+                  value="Preventing chronic evening fatigue allows me to stay patient and energetic with students"
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400"
+                  placeholder="e.g. Restores energy for my family and reduces Sunday evening anxiety">
               </div>
 
               <!-- T: Time-bound -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
-                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
-                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">T</span>
+                <label
+                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span
+                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">T</span>
                   Time-bound — Target review date or milestone period
                 </label>
-                <input type="text" id="smartTimeBound" value="Review at 4 weeks (End of Month 1) during team collaboration block" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. 4-week pilot, evaluation on October 30th">
+                <input type="text" id="smartTimeBound"
+                  value="Review at 4 weeks (End of Month 1) during team collaboration block"
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400"
+                  placeholder="e.g. 4-week pilot, evaluation on October 30th">
               </div>
             </div>
 
             <!-- Action buttons -->
             <div class="flex items-center justify-between gap-3 pt-2">
-              <button onclick="clearGoalForm()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-bold transition-colors">
+              <button onclick="clearGoalForm()"
+                class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-bold transition-colors">
                 Reset Form
               </button>
-              <button onclick="saveSmartGoal()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
+              <button onclick="saveSmartGoal()"
+                class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
                 <span>Save to My Wellbeing Plan</span>
               </button>
@@ -1028,20 +1238,37 @@
 
           <!-- RIGHT: MY ACTIVE GOALS DASHBOARD & PRINT EXPORT (lg:col-span-5) -->
           <div class="lg:col-span-5 space-y-4" id="smart-goals-print-area">
-            
-            <div class="flex items-center justify-between">
+
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
               <div>
                 <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
                   <i data-lucide="award" class="w-5 h-5 text-indigo-600"></i>
                   My Active Goals
                 </h3>
-                <p class="text-xs text-brand-muted">Check off milestones as you build consistent resilience.</p>
+                <p class="text-xs text-brand-muted">Auto-saved to your browser storage & downloadable.</p>
               </div>
 
-              <button onclick="window.print()" class="no-print px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors">
-                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
-                <span>Print / PDF</span>
-              </button>
+              <div class="no-print flex items-center gap-1.5">
+                <button onclick="downloadSmartGoalsTxt()"
+                  class="px-2.5 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Download text file">
+                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                  <span>Download .txt</span>
+                </button>
+                <button onclick="window.print()"
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Print or save as PDF">
+                  <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                  <span>Print</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Auto-save notification banner -->
+            <div class="no-print p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
+              <span class="flex items-center gap-1.5 font-medium">
+                <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
+                <span>Goals automatically saved in this browser.</span>
+              </span>
+              <button onclick="copySmartGoalsToClipboard()" class="font-bold underline hover:text-emerald-950">Copy All</button>
             </div>
 
             <!-- Goal Cards Container -->
@@ -1068,54 +1295,73 @@
           <div class="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-blue-100/50 -z-10 blur-2xl"></div>
 
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             <!-- Avatar / Badge Graphic -->
             <div class="lg:col-span-4 flex flex-col items-center text-center">
               <div class="relative">
-                <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-tr from-brand-accent to-sky-400 p-1.5 shadow-xl shadow-blue-500/20">
-                  <div class="w-full h-full rounded-full bg-brand-ink text-white flex flex-col items-center justify-center p-4">
+                <div
+                  class="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-tr from-brand-accent to-sky-400 p-1.5 shadow-xl shadow-blue-500/20">
+                  <div
+                    class="w-full h-full rounded-full bg-brand-ink text-white flex flex-col items-center justify-center p-4">
                     <span class="text-4xl sm:text-5xl font-black tracking-tight text-blue-200">AA</span>
                     <span class="text-[11px] font-bold tracking-widest uppercase text-blue-400 mt-1">Auburn Univ.</span>
                   </div>
                 </div>
-                <div class="absolute bottom-2 right-2 p-2 rounded-full bg-emerald-500 text-white shadow-lg border-2 border-white" title="Verified Educational Leadership Expert">
+                <div
+                  class="absolute bottom-2 right-2 p-2 rounded-full bg-emerald-500 text-white shadow-lg border-2 border-white"
+                  title="Verified Educational Leadership Expert">
                   <i data-lucide="check-check" class="w-4 h-4"></i>
                 </div>
               </div>
 
               <h2 class="text-2xl font-extrabold text-brand-ink mt-4">Angela Adair, Ed.D.</h2>
-              <p class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Educational Leadership & Evaluation</p>
-              
+              <p class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Educational Leadership &
+                Evaluation</p>
+
               <div class="mt-4 flex flex-wrap justify-center gap-2">
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-brand-accent border border-blue-200">Doctorate in Ed. Leadership</span>
-                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Program Evaluation Certified</span>
+                <span
+                  class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-brand-accent border border-blue-200">Doctorate
+                  in Ed. Leadership</span>
+                <span
+                  class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Program
+                  Evaluation Certified</span>
               </div>
             </div>
 
             <!-- Bio Narrative -->
             <div class="lg:col-span-8 space-y-5">
               <div>
-                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Leadership Profile & Vision</span>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Leadership Profile &
+                  Vision</span>
                 <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink tracking-tight mt-1">
                   Empowering Educators Through Systemic Care & Resilient Leadership
                 </h1>
               </div>
 
               <p class="text-base text-slate-700 leading-relaxed">
-                I have my <strong>doctorate in Educational Leadership from Auburn University</strong> as well as <strong>program evaluation certification</strong>. I am currently focusing my research on <strong>mentoring, mindfulness/well-being, and resilience</strong>. I am an expert in educational leadership or principal preparation.
+                I have my <strong>doctorate in Educational Leadership from Auburn University</strong> as well as
+                <strong>program evaluation certification</strong>. I am currently focusing my research on
+                <strong>mentoring, mindfulness/well-being, and resilience</strong>. I am an expert in educational
+                leadership and principal preparation.
               </p>
 
               <p class="text-sm text-brand-muted leading-relaxed">
-                Schools thrive when teachers never have to suffer in silence or sacrifice their basic physical and emotional needs while managing classrooms. By bridging rigorous administrative research with compassionate grassroots systems, this platform demonstrates how one campus—and soon entire districts—can implement sustainable mutual aid.
+                Schools thrive when teachers never have to suffer in silence or sacrifice their basic physical and
+                emotional needs while managing classrooms. By bridging rigorous administrative research with
+                compassionate grassroots systems, this platform demonstrates how one campus—and soon entire
+                districts—can implement sustainable mutual aid.
               </p>
 
               <!-- DIRECT CONTACT CALLOUT -->
-              <div class="p-5 rounded-2xl bg-brand-soft border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div
+                class="p-5 rounded-2xl bg-brand-soft border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div>
                   <h4 class="text-sm font-bold text-brand-ink">Let's Connect & Collaborate</h4>
-                  <p class="text-xs text-brand-muted mt-0.5">Keynotes, principal mentorship consulting, program evaluations, or district pilots.</p>
+                  <p class="text-xs text-brand-muted mt-0.5">Keynotes, principal mentorship consulting, program
+                    evaluations, or district pilots.</p>
                 </div>
-                <a href="mailto:angelacadair@gmail.com?subject=Educational%20Leadership%20Inquiry%20from%20FacultyWell" class="px-5 py-2.5 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 whitespace-nowrap">
+                <a href="mailto:angelacadair@gmail.com?subject=Educational%20Leadership%20Inquiry%20from%20FacultyWell"
+                  class="px-5 py-2.5 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 whitespace-nowrap">
                   <i data-lucide="mail" class="w-4 h-4 text-blue-400"></i>
                   <span>angelacadair@gmail.com</span>
                 </a>
@@ -1129,85 +1375,96 @@
         <div class="space-y-6">
           <div class="text-center max-w-2xl mx-auto">
             <h3 class="text-2xl font-bold text-brand-ink">Core Research & Expertise Pillars</h3>
-            <p class="text-xs text-brand-muted mt-1">Grounding school culture in evidence-based systems that protect teachers and elevate student learning.</p>
+            <p class="text-xs text-brand-muted mt-1">Grounding school culture in evidence-based systems that protect
+              teachers and elevate student learning.</p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-            
+
             <!-- Pillar 1: Mentoring -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+            <div
+              class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
               <div class="w-10 h-10 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center">
                 <i data-lucide="users" class="w-5 h-5"></i>
               </div>
               <h4 class="text-base font-bold text-brand-ink">1. Mentoring in Education</h4>
               <p class="text-xs text-brand-muted leading-relaxed">
-                Structured peer mentorship architectures that bridge veteran wisdom with early-career vitality, eliminating novice isolation and boosting multi-year retention.
+                Structured peer mentorship architectures that bridge veteran wisdom with early-career vitality,
+                eliminating novice isolation and boosting multi-year retention.
               </p>
             </div>
 
             <!-- Pillar 2: Mindfulness & Wellbeing -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+            <div
+              class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
               <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center">
                 <i data-lucide="sparkles" class="w-5 h-5"></i>
               </div>
               <h4 class="text-base font-bold text-brand-ink">2. Mindfulness & Well-Being</h4>
               <p class="text-xs text-brand-muted leading-relaxed">
-                Classroom-feasible, somatic nervous-system regulation techniques designed for busy bell schedules—preventing burnout before it takes root.
+                Classroom-feasible, somatic nervous-system regulation techniques designed for busy bell
+                schedules—preventing burnout before it takes root.
               </p>
             </div>
 
             <!-- Pillar 3: Resilience -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+            <div
+              class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
               <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
                 <i data-lucide="shield" class="w-5 h-5"></i>
               </div>
               <h4 class="text-base font-bold text-brand-ink">3. Educator Resilience</h4>
               <p class="text-xs text-brand-muted leading-relaxed">
-                Systemic and psychological resilience frameworks that build organizational agility, allowing school communities to thrive through institutional change.
+                Systemic and psychological resilience frameworks that build organizational agility, allowing school
+                communities to thrive through institutional change.
               </p>
             </div>
 
             <!-- Pillar 4: Educational Leadership -->
-            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+            <div
+              class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
               <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
                 <i data-lucide="award" class="w-5 h-5"></i>
               </div>
               <h4 class="text-base font-bold text-brand-ink">4. Principal Preparation</h4>
               <p class="text-xs text-brand-muted leading-relaxed">
-                Preparing future school executives to move beyond administrative checklists toward high-empathy leadership, culture cultivation, and program evaluation.
+                Preparing future school executives to move beyond administrative checklists toward high-empathy
+                leadership, culture cultivation, and program evaluation.
               </p>
             </div>
 
           </div>
         </div>
 
-        <!-- MULTI-SCHOOL SCALING ROADMAP -->
+        <!-- CAMPUS PILOT & DISTRICT ROADMAP -->
         <div class="p-8 rounded-3xl bg-brand-ink text-white space-y-6">
           <div class="max-w-2xl">
-            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Institutional Scaling Roadmap</span>
-            <h3 class="text-2xl font-bold tracking-tight mt-1">From a Single Campus Pilot to Multi-District Scaling</h3>
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Campus Pilot & District Roadmap</span>
+            <h3 class="text-2xl font-bold tracking-tight mt-1">From Hillcrest High School to District-Wide Support</h3>
             <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-              Designed from day one with multi-tenant architecture so schools across a district can implement seamless mutual aid and cross-building substitute support.
+              Designed with a modular architecture so Hillcrest High can demonstrate peer mutual aid, with the capacity to coordinate with neighboring schools in the future.
             </p>
           </div>
 
           <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-800">
             <div class="space-y-2">
-              <span class="text-xs font-bold text-emerald-400 font-mono">PHASE 1 (CURRENT)</span>
-              <h4 class="text-sm font-bold text-white">Single School Pilot</h4>
-              <p class="text-xs text-gray-400">Lincoln High School testbed. Validating 5-minute coverage speed, intercom notifications, and staff adoption.</p>
+              <span class="text-xs font-bold text-emerald-400 font-mono">PHASE 1 (ACTIVE)</span>
+              <h4 class="text-sm font-bold text-white">Hillcrest High School Pilot</h4>
+              <p class="text-xs text-gray-400">Hillcrest High faculty testbed. Validating quick class coverage speed, peer de-escalation, and daily teacher wellbeing practices.</p>
             </div>
 
             <div class="space-y-2">
-              <span class="text-xs font-bold text-blue-400 font-mono">PHASE 2 (NEXT)</span>
+              <span class="text-xs font-bold text-blue-400 font-mono">PHASE 2</span>
               <h4 class="text-sm font-bold text-white">District Cluster Network</h4>
-              <p class="text-xs text-gray-400">Inter-school support sharing: elementary, middle, and high schools coordinate prep-block coverage and resource banks.</p>
+              <p class="text-xs text-gray-400">Inter-school support sharing: feeder middle and high schools
+                coordinate prep-block coverage and resource banks.</p>
             </div>
 
             <div class="space-y-2">
               <span class="text-xs font-bold text-indigo-400 font-mono">PHASE 3</span>
-              <h4 class="text-sm font-bold text-white">Statewide Faculty Retention Analytics</h4>
-              <p class="text-xs text-gray-400">Anonymized program evaluation metrics providing superintendents with predictive burnout data and intervention efficacy.</p>
+              <h4 class="text-sm font-bold text-white">Faculty Retention & Evaluation</h4>
+              <p class="text-xs text-gray-400">Anonymized program evaluation metrics providing superintendents with
+                predictive burnout data and intervention efficacy.</p>
             </div>
           </div>
         </div>
@@ -1230,15 +1487,21 @@
       </div>
 
       <div class="flex items-center space-x-6">
-        <a href="javascript:void(0)" onclick="navigateTo('request-help')" class="hover:text-brand-accent transition-colors">Request Help</a>
-        <a href="javascript:void(0)" onclick="navigateTo('offer-help')" class="hover:text-brand-accent transition-colors">I Can Help</a>
-        <a href="javascript:void(0)" onclick="navigateTo('wellbeing')" class="hover:text-brand-accent transition-colors">Mindfulness</a>
-        <a href="javascript:void(0)" onclick="navigateTo('smart-goals')" class="hover:text-brand-accent transition-colors">SMART Goals</a>
-        <a href="javascript:void(0)" onclick="navigateTo('about')" class="hover:text-brand-accent transition-colors">Dr. Angela Adair</a>
+        <a href="javascript:void(0)" onclick="navigateTo('request-help')"
+          class="hover:text-brand-accent transition-colors">Request Help</a>
+        <a href="javascript:void(0)" onclick="navigateTo('offer-help')"
+          class="hover:text-brand-accent transition-colors">I Can Help</a>
+        <a href="javascript:void(0)" onclick="navigateTo('wellbeing')"
+          class="hover:text-brand-accent transition-colors">Mindfulness</a>
+        <a href="javascript:void(0)" onclick="navigateTo('smart-goals')"
+          class="hover:text-brand-accent transition-colors">SMART Goals</a>
+        <a href="javascript:void(0)" onclick="navigateTo('about')" class="hover:text-brand-accent transition-colors">Dr.
+          Angela Adair</a>
       </div>
 
       <div>
-        <span>Inquiries: <a href="mailto:angelacadair@gmail.com" class="font-semibold text-brand-ink hover:underline">angelacadair@gmail.com</a></span>
+        <span>Inquiries: <a href="mailto:angelacadair@gmail.com"
+            class="font-semibold text-brand-ink hover:underline">angelacadair@gmail.com</a></span>
       </div>
     </div>
   </footer>
@@ -1248,8 +1511,10 @@
   <!-- ========================================================================= -->
 
   <!-- QUICK EMERGENCY MODAL -->
-  <div id="quickEmergencyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-rose-400 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+  <div id="quickEmergencyModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div
+      class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-rose-400 space-y-4 animate-in fade-in zoom-in-95 duration-150">
       <div class="flex items-start justify-between">
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
@@ -1268,7 +1533,8 @@
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Emergency Type</label>
-          <select id="emTypeSelect" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 font-semibold text-rose-900 bg-rose-50/50">
+          <select id="emTypeSelect"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 font-semibold text-rose-900 bg-rose-50/50">
             <option value="Fight / De-escalation Needed">Student Fight / Physical De-escalation</option>
             <option value="Medical Emergency (Nurse / 911)">Medical Emergency (Seizure / Injury / 911)</option>
             <option value="Nurse Needed to Room Urgently">Nurse Needed to Room Urgently</option>
@@ -1277,19 +1543,24 @@
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-700 mb-1">Your Room # / Location <span class="text-rose-600">*</span></label>
-          <input type="text" id="emLocationInput" value="Room 214" class="w-full px-3 py-2 text-sm rounded-xl border border-rose-300 bg-white font-bold text-slate-900">
+          <label class="block text-xs font-bold text-slate-700 mb-1">Your Room # / Location <span
+              class="text-rose-600">*</span></label>
+          <input type="text" id="emLocationInput" value="Room 214"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-rose-300 bg-white font-bold text-slate-900">
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Critical Detail</label>
-          <input type="text" id="emDetailInput" placeholder="e.g. Two 10th graders fighting near back exit" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="text" id="emDetailInput" placeholder="e.g. Two 10th graders fighting near back exit"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
       </div>
 
       <div class="pt-2 flex items-center justify-end gap-3">
-        <button onclick="closeQuickEmergencyModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
-        <button onclick="sendImmediateEmergency()" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 flex items-center gap-1.5">
+        <button onclick="closeQuickEmergencyModal()"
+          class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="sendImmediateEmergency()"
+          class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 flex items-center gap-1.5">
           <i data-lucide="bell-ring" class="w-4 h-4"></i>
           <span>BROADCAST NOW</span>
         </button>
@@ -1298,7 +1569,8 @@
   </div>
 
   <!-- GRATITUDE SHOUTOUT MODAL -->
-  <div id="gratitudeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+  <div id="gratitudeModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-bold text-brand-ink flex items-center gap-2">
@@ -1313,27 +1585,35 @@
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">To (Teacher Name & Dept)</label>
-          <input type="text" id="kudosTo" placeholder="e.g. Ms. Chen (Science)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="text" id="kudosTo" placeholder="e.g. Ms. Chen (Science)"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">From Your Name</label>
-          <input type="text" id="kudosFrom" value="Ms. Jessica Taylor" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="text" id="kudosFrom" value="Ms. Jessica Taylor"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Your Appreciation Note</label>
-          <textarea id="kudosMessage" rows="3" placeholder="Thank you for stepping into my room for 5 minutes during 3rd period..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300"></textarea>
+          <textarea id="kudosMessage" rows="3"
+            placeholder="Thank you for stepping into my room for 5 minutes during 3rd period..."
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300"></textarea>
         </div>
       </div>
 
       <div class="flex items-center justify-end gap-3 pt-2">
-        <button onclick="closeGratitudeModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
-        <button onclick="submitGratitudeNote()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md">Post to Kudos Wall</button>
+        <button onclick="closeGratitudeModal()"
+          class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="submitGratitudeNote()"
+          class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md">Post to
+          Kudos Wall</button>
       </div>
     </div>
   </div>
 
   <!-- REGISTER NEW SCHOOL MODAL (SCALING DEMO) -->
-  <div id="newSchoolModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+  <div id="newSchoolModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
     <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
       <div class="flex items-center justify-between">
         <h3 class="text-lg font-bold text-brand-ink flex items-center gap-2">
@@ -1346,27 +1626,34 @@
       </div>
 
       <p class="text-xs text-brand-muted">
-        FacultyWell is scaling nationwide to empower school districts. Register your campus to create an isolated mutual aid network for your staff.
+        FacultyWell is scaling nationwide to empower school districts. Register your campus to create an isolated mutual
+        aid network for your staff.
       </p>
 
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">School Name</label>
-          <input type="text" id="newSchoolNameInput" placeholder="e.g. Martin Luther King Jr. High School" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="text" id="newSchoolNameInput" placeholder="e.g. Martin Luther King Jr. High School"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">School District</label>
-          <input type="text" id="newSchoolDistrictInput" placeholder="e.g. Fulton County Schools" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="text" id="newSchoolDistrictInput" placeholder="e.g. Fulton County Schools"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">Lead Administrator or Contact Email</label>
-          <input type="email" id="newSchoolEmailInput" placeholder="principal@district.k12.org" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+          <input type="email" id="newSchoolEmailInput" placeholder="principal@district.k12.org"
+            class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
       </div>
 
       <div class="flex items-center justify-end gap-3 pt-2">
-        <button onclick="closeNewSchoolModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
-        <button onclick="registerNewSchoolSubmit()" class="px-5 py-2.5 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-xs shadow-md">Create School Network</button>
+        <button onclick="closeNewSchoolModal()"
+          class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="registerNewSchoolSubmit()"
+          class="px-5 py-2.5 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-xs shadow-md">Create
+          School Network</button>
       </div>
     </div>
   </div>
@@ -1377,12 +1664,13 @@
   <script>
     // INITIAL STATE & LOCALSTORAGE PERSISTENCE
     const state = {
-      currentSchool: 'Lincoln High School',
-      currentSchoolCode: 'LHS-902',
+      currentSchool: 'Hillcrest High School',
+      currentSchoolCode: 'HHS-101',
       selectedRequestOptions: new Set(['watch-class']), // Default selected
+      selectedSubOptions: {}, // Maps categoryId to specific sub-option text
       watchMinutes: 5,
       boardFilter: 'all',
-      
+
       // Sample Requests Feed
       requests: [
         {
@@ -1400,7 +1688,7 @@
           id: 'req-2',
           teacher: 'Mr. David Harris (Biology)',
           room: 'Lab 302',
-          options: ['I Need a Nurse'],
+          options: ['Nurse: Escort Student to Clinic'],
           note: 'Student has nosebleed that won\'t stop, needs clinic escort.',
           timestamp: '11 mins ago',
           urgent: false,
@@ -1426,29 +1714,29 @@
           id: 'h-1',
           name: 'Mr. Marcus Bell (History)',
           room: 'Room 210 (Building B)',
-          slots: ['Right Now (Next 20m)', 'Period 3 / Prep (10:05 - 10:55)', 'Period 5 / Planning (1:15 - 2:05)'],
-          capabilities: ['5-Min Quick Class Watch', 'Walk Student to Nurse', 'Supply / Print Run']
+          slots: ['Right Now (Next 20m)', 'Period 3 (10:05 - 10:55)', 'Period 5 (1:15 - 2:05)'],
+          capabilities: ['5-Min Quick Class Watch', 'Full Period Watch (Emergency)', 'Walk Student to Nurse', 'Supply / Print Run']
         },
         {
           id: 'h-2',
           name: 'Ms. Chen (Science)',
           room: 'Room 216 (Building B)',
-          slots: ['Right Now (Next 20m)', 'Lunch Block (11:30 - 12:15)'],
-          capabilities: ['5-Min Quick Class Watch', 'Student De-escalation']
+          slots: ['Right Now (Next 20m)', 'Period 4 (11:00 - 11:50)', 'Lunch Block (11:55 - 12:40)'],
+          capabilities: ['5-Min Quick Class Watch', 'Student De-escalation', 'Somatic Reset']
         },
         {
           id: 'h-3',
           name: 'Coach Davis (PE / Health)',
           room: 'Gym Office',
-          slots: ['Period 2 (9:10 - 10:00)', 'Period 5 / Planning (1:15 - 2:05)'],
-          capabilities: ['Walk Student to Nurse', 'Emergency De-escalation']
+          slots: ['Period 2 (9:10 - 10:00)', 'Period 6 (2:10 - 3:00)'],
+          capabilities: ['Full Period Watch (Emergency)', 'Walk Student to Nurse', 'Emergency De-escalation']
         },
         {
           id: 'h-4',
           name: 'Mrs. Alvarez (Spanish)',
           room: 'Room 114 (1st Floor)',
-          slots: ['Right Now (Next 20m)', 'After School (3:15 - 4:00)'],
-          capabilities: ['5-Min Quick Class Watch', 'Peer Mentoring Debrief']
+          slots: ['Period 1 (8:15 - 9:05)', 'Period 7 (3:05 - 3:50)', 'After School (3:50 - 4:30)'],
+          capabilities: ['5-Min Quick Class Watch', 'Peer Mentoring Debrief', 'Supply / Print Run']
         }
       ],
 
@@ -1589,47 +1877,110 @@
     }
 
     // REQUEST HELP BUILDER
+    const subBoxMap = {
+      'watch-class': 'sub-duration-box',
+      'urgent-emergency': 'sub-urgent-box',
+      'medical-emergency': 'sub-medical-box',
+      'need-nurse': 'sub-nurse-box',
+      'supplies-copies': 'sub-supplies-box',
+      'mindful-reset': 'sub-mindful-box'
+    };
+
     function toggleRequestOption(optionId) {
       const card = document.getElementById('opt-' + optionId);
+      if (!card) return;
       const checkIcon = card.querySelector('.check-icon');
       const checkboxBox = card.querySelector('.opt-checkbox');
+      const subBoxId = subBoxMap[optionId];
+      const subBoxEl = subBoxId ? document.getElementById(subBoxId) : null;
 
       if (state.selectedRequestOptions.has(optionId)) {
         state.selectedRequestOptions.delete(optionId);
+        delete state.selectedSubOptions[optionId];
+
         card.classList.remove('border-brand-accent', 'bg-blue-50/40', 'border-rose-500', 'bg-rose-50/40', 'border-red-500', 'border-amber-500');
         card.classList.add('border-slate-200', 'bg-white');
-        checkIcon.classList.add('hidden');
-        checkboxBox.classList.remove('bg-brand-accent', 'border-brand-accent', 'bg-rose-600', 'border-rose-600');
-        checkboxBox.classList.add('border-slate-300', 'bg-white');
+        if (checkIcon) checkIcon.classList.add('hidden');
+        if (checkboxBox) {
+          checkboxBox.classList.remove('bg-brand-accent', 'border-brand-accent', 'bg-rose-600', 'border-rose-600');
+          checkboxBox.classList.add('border-slate-300', 'bg-white');
+        }
 
-        if (optionId === 'watch-class') {
-          document.getElementById('sub-duration-box').classList.add('hidden');
+        if (subBoxEl) {
+          subBoxEl.classList.add('hidden');
+          // Reset sub-chip styling
+          subBoxEl.querySelectorAll('.sub-chip-btn, .sub-chip').forEach(btn => {
+            btn.classList.remove('bg-brand-accent', 'text-white', 'border-brand-accent', 'bg-rose-600', 'border-rose-600', 'bg-amber-600', 'border-amber-600', 'bg-teal-600', 'border-teal-600');
+            btn.classList.add('bg-white');
+          });
         }
       } else {
         state.selectedRequestOptions.add(optionId);
-        checkIcon.classList.remove('hidden');
+        if (checkIcon) checkIcon.classList.remove('hidden');
 
         if (optionId === 'urgent-emergency' || optionId === 'medical-emergency') {
           card.classList.add('border-rose-500', 'bg-rose-50/40');
-          checkboxBox.classList.add('bg-rose-600', 'border-rose-600');
+          if (checkboxBox) {
+            checkboxBox.classList.add('bg-rose-600', 'border-rose-600');
+            checkboxBox.classList.remove('border-slate-300', 'bg-white');
+          }
         } else {
           card.classList.add('border-brand-accent', 'bg-blue-50/40');
-          checkboxBox.classList.add('bg-brand-accent', 'border-brand-accent');
+          if (checkboxBox) {
+            checkboxBox.classList.add('bg-brand-accent', 'border-brand-accent');
+            checkboxBox.classList.remove('border-slate-300', 'bg-white');
+          }
         }
         card.classList.remove('border-slate-200');
 
-        if (optionId === 'watch-class') {
-          document.getElementById('sub-duration-box').classList.remove('hidden');
+        if (subBoxEl) {
+          subBoxEl.classList.remove('hidden');
         }
       }
 
       updateSelectedCountBadge();
     }
 
+    function selectSubOption(categoryId, subText, btnEl) {
+      state.selectedSubOptions[categoryId] = subText;
+
+      // Highlight active button within container
+      const container = btnEl.closest('.sub-option-container') || btnEl.parentElement;
+      if (container) {
+        container.querySelectorAll('.sub-chip-btn, .sub-chip').forEach(btn => {
+          btn.classList.remove('bg-brand-accent', 'text-white', 'border-brand-accent', 'bg-rose-600', 'border-rose-600', 'bg-amber-600', 'border-amber-600', 'bg-teal-600', 'border-teal-600');
+          btn.classList.add('bg-white');
+        });
+      }
+
+      if (categoryId === 'urgent-emergency' || categoryId === 'medical-emergency') {
+        btnEl.classList.remove('bg-white');
+        btnEl.classList.add('bg-rose-600', 'text-white', 'border-rose-600');
+      } else if (categoryId === 'need-nurse') {
+        btnEl.classList.remove('bg-white');
+        btnEl.classList.add('bg-amber-600', 'text-white', 'border-amber-600');
+      } else if (categoryId === 'mindful-reset') {
+        btnEl.classList.remove('bg-white');
+        btnEl.classList.add('bg-teal-600', 'text-white', 'border-teal-600');
+      } else {
+        btnEl.classList.remove('bg-white');
+        btnEl.classList.add('bg-brand-accent', 'text-white', 'border-brand-accent');
+      }
+
+      // Automatically append or set in notes if note is empty
+      const notesInput = document.getElementById('reqNotes');
+      if (notesInput && !notesInput.value.trim()) {
+        notesInput.value = subText;
+      }
+
+      showToast(`Selected: ${subText}`, 'info');
+    }
+
     function setWatchMinutes(mins) {
       state.watchMinutes = mins;
       document.querySelectorAll('.min-btn').forEach(btn => {
-        if (parseInt(btn.getAttribute('data-min')) === mins) {
+        const btnVal = btn.getAttribute('data-min');
+        if (btnVal === String(mins)) {
           btn.classList.add('bg-blue-600', 'text-white', 'border-blue-300');
           btn.classList.remove('bg-white', 'text-slate-700');
         } else {
@@ -1660,15 +2011,24 @@
       const notes = document.getElementById('reqNotes').value.trim();
       const isUrgent = document.getElementById('urgentPriorityToggle').checked || state.selectedRequestOptions.has('urgent-emergency') || state.selectedRequestOptions.has('medical-emergency');
 
-      // Convert selected options to readable strings
+      // Convert selected options and sub-options to clear readable tags
       const optLabels = [];
       state.selectedRequestOptions.forEach(opt => {
-        if (opt === 'watch-class') optLabels.push(`Classroom Watch (${state.watchMinutes} min)`);
-        else if (opt === 'urgent-emergency') optLabels.push('Urgent / De-escalation');
-        else if (opt === 'medical-emergency') optLabels.push('Medical Emergency');
-        else if (opt === 'need-nurse') optLabels.push('I Need a Nurse');
-        else if (opt === 'supplies-copies') optLabels.push('Supplies / Print Job');
-        else if (opt === 'mindful-reset') optLabels.push('3-Min Mindful Reset');
+        const sub = state.selectedSubOptions[opt];
+        if (opt === 'watch-class') {
+          const durationLabel = state.watchMinutes === 'Full Period' ? 'Full Period (45-60m)' : `${state.watchMinutes} min`;
+          optLabels.push(`Classroom Watch (${durationLabel})`);
+        } else if (opt === 'urgent-emergency') {
+          optLabels.push(sub ? `Urgent: ${sub}` : 'Urgent / De-escalation');
+        } else if (opt === 'medical-emergency') {
+          optLabels.push(sub ? `Medical: ${sub}` : 'Medical Emergency');
+        } else if (opt === 'need-nurse') {
+          optLabels.push(sub ? `Nurse: ${sub}` : 'I Need a Nurse');
+        } else if (opt === 'supplies-copies') {
+          optLabels.push(sub ? `Supplies: ${sub}` : 'Supplies / Print Job');
+        } else if (opt === 'mindful-reset') {
+          optLabels.push(sub ? `Mindful Reset: ${sub}` : '3-Min Mindful Reset');
+        }
       });
 
       const newReq = {
@@ -1676,7 +2036,7 @@
         teacher: teacher,
         room: room,
         options: optLabels,
-        note: notes || 'Assistance requested by colleague.',
+        note: notes || (optLabels.length > 0 ? optLabels.join(' • ') : 'Assistance requested by colleague.'),
         timestamp: 'Just now',
         urgent: isUrgent,
         status: 'Open',
@@ -1687,7 +2047,7 @@
       persistState();
       renderRequestsFeed();
 
-      // Play soft notification sound or alert
+      // Play soft notification chime
       playChimeSound(660);
       showToast(`Help request broadcasted to all ${state.currentSchool} staff!`, 'success');
 
@@ -1730,7 +2090,7 @@
       filtered.forEach(req => {
         const isUrgent = req.urgent;
         const cardBorder = isUrgent ? 'border-rose-300 bg-rose-50/20' : (req.status === 'Resolved' ? 'border-slate-200 bg-slate-50/60 opacity-75' : 'border-slate-200 bg-white');
-        
+
         let statusBadge = '';
         if (req.status === 'Open') {
           statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span> Open</span>`;
@@ -1790,7 +2150,7 @@
           </p>
 
           <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
-            <span class="text-[11px] text-slate-400">Lincoln High Mutual Aid</span>
+            <span class="text-[11px] text-slate-400">${state.currentSchool} Mutual Aid</span>
             <div class="flex items-center gap-2">
               ${actionsHtml}
             </div>
@@ -2044,25 +2404,52 @@
           whiteNoise.start();
           currentNoiseNode = whiteNoise;
 
-        } else if (type === 'singing-bowl' || type === 'alpha-drone') {
-          // Harmonic warm drone
+        } else if (type === 'emdr') {
+          // EMDR Bilateral Auditory Stimulation
+          // Alternates gentle harmonic focus tones smoothly between left and right channels
           const osc1 = ctx.createOscillator();
-          const osc2 = ctx.createOscillator();
+          const oscWarmth = ctx.createOscillator();
+          const toneGain = ctx.createGain();
+
           osc1.type = 'sine';
-          osc2.type = 'triangle';
+          osc1.frequency.setValueAtTime(432, ctx.currentTime);
+          oscWarmth.type = 'triangle';
+          oscWarmth.frequency.setValueAtTime(216, ctx.currentTime);
 
-          const baseFreq = type === 'singing-bowl' ? 432 : 136.1; // 432Hz or Om drone
-          osc1.frequency.setValueAtTime(baseFreq, ctx.currentTime);
-          osc2.frequency.setValueAtTime(baseFreq * 1.5, ctx.currentTime);
+          toneGain.gain.setValueAtTime(0.35, ctx.currentTime);
 
-          osc1.connect(masterGain);
-          osc2.connect(masterGain);
+          let pannerLfo = null;
+          if (ctx.createStereoPanner) {
+            const panner = ctx.createStereoPanner();
+            pannerLfo = ctx.createOscillator();
+            pannerLfo.frequency.setValueAtTime(0.5, ctx.currentTime); // 0.5 Hz bilateral cycle
+            const pannerLfoGain = ctx.createGain();
+            pannerLfoGain.gain.setValueAtTime(0.85, ctx.currentTime);
+
+            pannerLfo.connect(pannerLfoGain);
+            pannerLfoGain.connect(panner.pan);
+            pannerLfo.start();
+
+            osc1.connect(toneGain);
+            oscWarmth.connect(toneGain);
+            toneGain.connect(panner);
+            panner.connect(masterGain);
+          } else {
+            osc1.connect(toneGain);
+            oscWarmth.connect(toneGain);
+            toneGain.connect(masterGain);
+          }
+
           osc1.start();
-          osc2.start();
+          oscWarmth.start();
+
           currentNoiseNode = {
             stop: () => {
-              osc1.stop();
-              osc2.stop();
+              try {
+                osc1.stop();
+                oscWarmth.stop();
+                if (pannerLfo) pannerLfo.stop();
+              } catch (e) { }
             }
           };
 
@@ -2113,7 +2500,7 @@
 
     function stopAllAudio() {
       if (currentNoiseNode) {
-        try { currentNoiseNode.stop(); } catch (e) {}
+        try { currentNoiseNode.stop(); } catch (e) { }
         currentNoiseNode = null;
       }
       activeSoundName = null;
@@ -2211,8 +2598,6 @@
       const circle = document.getElementById('breathingCircle');
       circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${breathConfig.phases[breathCurrentPhaseIndex].scale}`;
 
-      playChimeSound(breathConfig.phases[breathCurrentPhaseIndex].freq);
-
       breathInterval = setInterval(() => {
         breathTimeRemainingInPhase--;
         if (breathTimeRemainingInPhase <= 0) {
@@ -2225,7 +2610,6 @@
           breathTimeRemainingInPhase = nextPhase.duration;
           document.getElementById('breathPhaseText').textContent = nextPhase.label;
           circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${nextPhase.scale}`;
-          playChimeSound(nextPhase.freq);
         }
         document.getElementById('breathTimerDisplay').textContent = breathTimeRemainingInPhase;
       }, 1000);
@@ -2437,20 +2821,87 @@
         return;
       }
 
-      state.goals.unshift({
+      const newGoal = {
         id: 'goal-' + Date.now(),
         specific: s,
-        measurable: m,
-        achievable: a,
-        relevant: r,
-        timeBound: t,
+        measurable: m || 'Track weekly in educator planner',
+        achievable: a || 'Coordinated during planning blocks',
+        relevant: r || 'Supports teacher well-being and prevents fatigue',
+        timeBound: t || 'Review in 4 weeks',
         progress: 10,
         completed: false
-      });
+      };
 
+      state.goals.unshift(newGoal);
       persistState();
       renderSavedGoals();
-      showToast('SMART Goal added to your personal wellbeing plan!', 'success');
+      showToast('SMART Goal saved! Stored in browser & ready for export.', 'success');
+      clearGoalForm();
+    }
+
+    function downloadSmartGoalsTxt() {
+      if (state.goals.length === 0) {
+        showToast('No saved goals to download yet. Create one first!', 'error');
+        return;
+      }
+
+      let content = `=======================================================\n`;
+      content += `FACULTYWELL - EDUCATOR WELLBEING & SMART GOALS PLAN\n`;
+      content += `Campus: ${state.currentSchool}\n`;
+      content += `Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}\n`;
+      content += `Framework: Dr. Angela Adair (Educational Leadership, Resilience & Mentoring)\n`;
+      content += `=======================================================\n\n`;
+
+      state.goals.forEach((g, idx) => {
+        content += `GOAL #${idx + 1}: ${g.specific}\n`;
+        content += `-------------------------------------------------------\n`;
+        content += `• Measurable (Track):  ${g.measurable}\n`;
+        content += `• Achievable (System): ${g.achievable}\n`;
+        content += `• Relevant (Why):      ${g.relevant}\n`;
+        content += `• Time-Bound (Target): ${g.timeBound}\n`;
+        content += `• Milestone Progress:  ${g.progress}%\n`;
+        content += `• Status:              ${g.progress === 100 ? 'Achieved' : 'Active / In Progress'}\n\n`;
+      });
+
+      content += `=======================================================\n`;
+      content += `Notes for Administrator / Mentor Collaboration:\n`;
+      content += `Regular debriefs during planning periods support sustained educator resilience.\n`;
+
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${state.currentSchool.replace(/\s+/g, '_')}_SMART_Goals.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      showToast('Downloaded SMART Goals wellbeing plan (.txt)!', 'success');
+    }
+
+    function copySmartGoalsToClipboard() {
+      if (state.goals.length === 0) {
+        showToast('No saved goals to copy yet.', 'error');
+        return;
+      }
+
+      let text = `FACULTYWELL SMART GOALS PLAN (${state.currentSchool})\n`;
+      text += `Educator Resilience & Well-being Framework\n\n`;
+
+      state.goals.forEach((g, idx) => {
+        text += `Goal #${idx + 1}: ${g.specific}\n`;
+        text += `  • Track: ${g.measurable}\n`;
+        text += `  • System: ${g.achievable}\n`;
+        text += `  • Why: ${g.relevant}\n`;
+        text += `  • Target: ${g.timeBound} (Progress: ${g.progress}%)\n\n`;
+      });
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied SMART goals plan to clipboard!', 'success');
+      }).catch(() => {
+        showToast('Copied text plan prepared (check downloaded file).', 'info');
+      });
     }
 
     function renderSavedGoals() {
@@ -2572,7 +3023,7 @@
     function showToast(message, type = 'info') {
       const container = document.getElementById('toastContainer');
       const toast = document.createElement('div');
-      
+
       let bgStyle = 'bg-slate-900 text-white border-slate-800';
       let icon = 'info';
       if (type === 'success') {
@@ -2630,4 +3081,5 @@
     });
   </script>
 </body>
+
 </html>
