@@ -7,7 +7,7 @@
 ## 🌐 Live Online Website
 
 Once GitHub Pages is activated on this repository, the site is live at:
-### 👉 **[https://adairgarrett.github.io/teacher.wellbeing/](https://adairgarrett.github.io/teacher.wellbeing/)**
+### 👉 **[https://adairgarrett.github.io/teacherwellbeing/](https://adairgarrett.github.io/teacherwellbeing/)**
 
 ---
 
@@ -15,13 +15,11 @@ Once GitHub Pages is activated on this repository, the site is live at:
 
 If the site isn't live yet at the URL above, enable GitHub Pages in your repository settings:
 
-1. Go to your repository settings: **[Repository Settings > Pages](https://github.com/adairgarrett/teacher.wellbeing/settings/pages)**
-2. Under **Build and deployment > Source**, choose either:
-   - **GitHub Actions** (recommended — the included `.github/workflows/deploy.yml` workflow will automatically deploy on every push)
-   *OR*
+1. Go to your repository settings: **[Repository Settings > Pages](https://github.com/adairgarrett/teacherwellbeing/settings/pages)**
+2. Under **Build and deployment > Source**, choose:
    - **Deploy from a branch**: Select `main` branch and `/ (root)` folder, then click **Save**.
 3. Within 1–2 minutes, your website will be live at:
-   `https://adairgarrett.github.io/teacher.wellbeing/`
+   `https://adairgarrett.github.io/teacherwellbeing/`
 
 ---
 
