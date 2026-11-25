@@ -1,0 +1,2633 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FacultyWell | Teacher Mutual Aid & Wellbeing Network</title>
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              soft: '#F0F7FD',       // Calming soft ice-blue background
+              softHover: '#E1EFFF',  // Hover soft blue
+              light: '#DBEAFE',      // Light border blue
+              accent: '#2563EB',     // Sleek vivid blue
+              accentDark: '#1D4ED8', // Darker vivid blue
+              sky: '#0EA5E9',        // Sky blue for mindful accents
+              ink: '#090D16',        // Deep modern sleek black
+              slate: '#1E293B',      // Secondary dark text
+              muted: '#64748B',      // Muted slate
+              border: '#E2E8F0',     // Subtle border
+            }
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+            body: ['Inter', 'sans-serif'],
+          },
+          keyframes: {
+            pulseGlow: {
+              '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+              '50%': { transform: 'scale(1.03)', opacity: '0.85' },
+            },
+            breatheCircle: {
+              '0%, 100%': { transform: 'scale(0.85)' },
+              '50%': { transform: 'scale(1.25)' },
+            }
+          },
+          animation: {
+            'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
+            'breathe': 'breatheCircle 8s ease-in-out infinite',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F8FAFC;
+      color: #090D16;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    /* Custom subtle glass & borders */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.85);
+    }
+    
+    .soft-blue-gradient {
+      background: linear-gradient(135deg, #F0F7FD 0%, #FFFFFF 100%);
+    }
+
+    .hero-glow {
+      background: radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.08) 0%, rgba(240, 247, 253, 0) 70%);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F1F5F9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94A3B8;
+    }
+
+    /* Print styles for SMART goals */
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #smart-goals-print-area, #smart-goals-print-area * {
+        visibility: visible;
+      }
+      #smart-goals-print-area {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        background: white;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased selection:bg-brand-accent selection:text-white">
+
+  <!-- TOP ANNOUNCEMENT & MULTI-SCHOOL SCALE SELECTOR BAR -->
+  <header class="bg-brand-ink text-white text-xs border-b border-gray-800 sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-500/20 text-blue-300 border border-blue-400/30">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5 animate-pulse"></span>
+          Pilot School Active
+        </span>
+        <div class="flex items-center space-x-1.5 text-gray-300">
+          <i data-lucide="school" class="w-3.5 h-3.5 text-blue-400"></i>
+          <span class="font-medium">Current Campus:</span>
+          <!-- School Switcher dropdown -->
+          <div class="relative inline-block text-left">
+            <button id="schoolDropdownBtn" onclick="toggleSchoolMenu()" class="inline-flex items-center font-bold text-white hover:text-blue-200 transition-colors bg-white/10 px-2.5 py-0.5 rounded border border-white/20 text-xs">
+              <span id="currentSchoolName">Lincoln High School</span>
+              <i data-lucide="chevron-down" class="w-3 h-3 ml-1"></i>
+            </button>
+            <div id="schoolDropdownMenu" class="hidden absolute left-0 mt-1 w-64 rounded-xl shadow-2xl bg-white text-gray-900 border border-gray-200 z-50 overflow-hidden py-1">
+              <div class="px-3 py-2 border-b border-gray-100 bg-gray-50">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Select Campus (Multi-School Scaling)</p>
+              </div>
+              <button onclick="switchSchool('Lincoln High School', 'LHS-902')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  Lincoln High School (Active Pilot)
+                </span>
+                <span class="text-[10px] text-gray-400">42 Staff</span>
+              </button>
+              <button onclick="switchSchool('Oak Ridge Middle School', 'ORMS-401')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                  Oak Ridge Middle School
+                </span>
+                <span class="text-[10px] text-gray-400">31 Staff</span>
+              </button>
+              <button onclick="switchSchool('Washington Elementary School', 'WES-108')" class="w-full text-left px-3 py-2 text-xs flex items-center justify-between hover:bg-blue-50 transition-colors font-medium">
+                <span class="flex items-center gap-2">
+                  <span class="w-2 h-2 rounded-full bg-blue-400"></span>
+                  Washington Elementary School
+                </span>
+                <span class="text-[10px] text-gray-400">28 Staff</span>
+              </button>
+              <div class="border-t border-gray-100 p-2 bg-gray-50">
+                <button onclick="openNewSchoolModal()" class="w-full text-center py-1 px-2 text-[11px] font-semibold text-brand-accent hover:bg-blue-100/70 rounded-md transition-colors flex items-center justify-center gap-1">
+                  <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                  Register Another School / District
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4 text-gray-300">
+        <div class="hidden sm:flex items-center space-x-2">
+          <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-gray-300" id="liveHelpersStat"><strong>4 Teachers</strong> available for quick cover now</span>
+        </div>
+        <span class="text-gray-600">|</span>
+        <div class="flex items-center space-x-1.5">
+          <i data-lucide="bell" class="w-3.5 h-3.5 text-blue-400"></i>
+          <span class="text-white font-medium" id="liveActiveRequestsStat">1 active request</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN NAVIGATION BAR -->
+  <nav class="bg-white border-b border-slate-200 sticky top-9 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between h-16 items-center">
+        <!-- Logo -->
+        <div class="flex items-center space-x-3 cursor-pointer" onclick="navigateTo('request-help')">
+          <div class="w-10 h-10 rounded-xl bg-brand-ink text-white flex items-center justify-center shadow-md shadow-brand-ink/10">
+            <i data-lucide="heart-handshake" class="w-5 h-5 text-blue-400"></i>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="text-lg font-extrabold tracking-tight text-brand-ink">Faculty<span class="text-brand-accent">Well</span></span>
+              <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-brand-soft text-brand-accent rounded-full border border-blue-100">Mutual Aid Hub</span>
+            </div>
+            <p class="text-[11px] text-brand-muted hidden sm:block">Teacher-to-Teacher Care, Class Coverage & Wellbeing</p>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation Tabs -->
+        <div class="hidden md:flex items-center space-x-1">
+          <button onclick="navigateTo('request-help')" id="nav-request-help" class="nav-link px-3.5 py-2 text-sm font-semibold rounded-lg text-brand-ink bg-brand-soft text-brand-accent transition-all flex items-center gap-1.5 border border-blue-200/50">
+            <i data-lucide="help-circle" class="w-4 h-4"></i>
+            <span>Request Help</span>
+          </button>
+          
+          <button onclick="navigateTo('offer-help')" id="nav-offer-help" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+            <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i>
+            <span>I Can Help</span>
+            <span class="ml-1 px-1.5 py-0.2 rounded-full text-[10px] bg-emerald-100 text-emerald-800 font-bold" id="helperBadgeCount">4</span>
+          </button>
+
+          <button onclick="navigateTo('wellbeing')" id="nav-wellbeing" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i>
+            <span>Wellbeing & Activities</span>
+          </button>
+
+          <button onclick="navigateTo('smart-goals')" id="nav-smart-goals" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+            <i data-lucide="target" class="w-4 h-4 text-indigo-500"></i>
+            <span>SMART Goals</span>
+          </button>
+
+          <button onclick="navigateTo('about')" id="nav-about" class="nav-link px-3.5 py-2 text-sm font-medium rounded-lg text-brand-slate hover:text-brand-ink hover:bg-slate-50 transition-all flex items-center gap-1.5">
+            <i data-lucide="user" class="w-4 h-4 text-slate-500"></i>
+            <span>About Dr. Adair</span>
+          </button>
+        </div>
+
+        <!-- Quick Urgent Action Button -->
+        <div class="flex items-center space-x-2">
+          <button onclick="triggerQuickEmergencyModal()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping"></span>
+            <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-600"></i>
+            <span>Immediate Emergency</span>
+          </button>
+          
+          <!-- Mobile Menu Toggle Button -->
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100">
+            <i data-lucide="menu" id="mobileMenuIcon" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
+      <button onclick="navigateTo('request-help'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-accent bg-brand-soft flex items-center gap-2">
+        <i data-lucide="help-circle" class="w-4 h-4"></i> Request Help
+      </button>
+      <button onclick="navigateTo('offer-help'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+        <i data-lucide="user-check" class="w-4 h-4 text-emerald-600"></i> I Can Help / My Availability
+      </button>
+      <button onclick="navigateTo('wellbeing'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+        <i data-lucide="sparkles" class="w-4 h-4 text-blue-500"></i> Wellbeing Resources & Meditation
+      </button>
+      <button onclick="navigateTo('smart-goals'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+        <i data-lucide="target" class="w-4 h-4 text-indigo-500"></i> Interactive SMART Goals
+      </button>
+      <button onclick="navigateTo('about'); toggleMobileMenu()" class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center gap-2">
+        <i data-lucide="user" class="w-4 h-4 text-slate-500"></i> About Dr. Angela Adair
+      </button>
+    </div>
+  </nav>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+  <!-- MAIN VIEWPORT CONTAINER -->
+  <main class="flex-grow">
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: REQUEST HELP (HOME OPENING PAGE)                                 -->
+    <!-- "What do you need today?" with Multi-Select Options & Live Board          -->
+    <!-- ========================================================================= -->
+    <section id="view-request-help" class="view-section hero-glow py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+        <!-- HERO HEADER -->
+        <div class="text-center max-w-3xl mx-auto space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-soft text-brand-accent border border-blue-200/80">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+            <span>Confidential, Safe & Collegial Peer Support</span>
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight">
+            What do you need <span class="text-brand-accent">today?</span>
+          </h1>
+          
+          <p class="text-base sm:text-lg text-brand-muted leading-relaxed font-normal">
+            No teacher should feel stranded in their classroom. Select what you need right now—from a 5-minute restroom break to an urgent nurse escort—and colleagues on free periods will step in.
+          </p>
+        </div>
+
+        <!-- TWO-COLUMN WORKFLOW: REQUEST BUILDER (LEFT) & REAL-TIME BOARD (RIGHT) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT COLUMN: REQUEST COMPOSER (lg:col-span-7) -->
+          <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-xl shadow-blue-900/5 border border-slate-200">
+            <div class="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
+              <div>
+                <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
+                  <i data-lucide="layers" class="w-5 h-5 text-brand-accent"></i>
+                  Select What You Need
+                </h2>
+                <p class="text-xs text-brand-muted mt-0.5">You can select multiple options below to build your request.</p>
+              </div>
+              <span class="text-xs font-semibold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full" id="selectedOptionsCounter">1 selected</span>
+            </div>
+
+            <!-- MULTI-SELECT CATEGORY PILLS / CARDS -->
+            <div class="space-y-4">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Categories of Assistance (Multi-Select)</label>
+              
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="optionsGrid">
+                
+                <!-- Option 1: Watch Class (with duration selector) -->
+                <div onclick="toggleRequestOption('watch-class')" id="opt-watch-class" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-brand-accent bg-blue-50/40 hover:border-blue-500 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center font-bold">
+                        <i data-lucide="clock" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-brand-ink">Watch My Class</h3>
+                        <p class="text-xs text-brand-muted">Restroom, phone call, stepping out</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-brand-accent bg-brand-accent flex items-center justify-center text-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 check-icon"></i>
+                    </div>
+                  </div>
+
+                  <!-- Sub-selector for Minutes (visible when checked) -->
+                  <div id="sub-duration-box" class="mt-3 pt-3 border-t border-blue-200/80 flex items-center justify-between gap-2" onclick="event.stopPropagation()">
+                    <span class="text-xs font-semibold text-slate-600">Duration:</span>
+                    <div class="flex items-center gap-1.5">
+                      <button type="button" onclick="setWatchMinutes(5)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-blue-300 bg-blue-600 text-white" data-min="5">5 min</button>
+                      <button type="button" onclick="setWatchMinutes(10)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="10">10 min</button>
+                      <button type="button" onclick="setWatchMinutes(15)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="15">15 min</button>
+                      <button type="button" onclick="setWatchMinutes(30)" class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100" data-min="30">Half Period</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 2: Urgent / Emergency (Fight, de-escalation) -->
+                <div onclick="toggleRequestOption('urgent-emergency')" id="opt-urgent-emergency" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-rose-400 hover:bg-rose-50/30 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
+                        <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-rose-900">Urgent / De-escalation</h3>
+                        <p class="text-xs text-rose-600 font-medium">Fight, crisis, admin backup</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 3: Medical Emergency -->
+                <div onclick="toggleRequestOption('medical-emergency')" id="opt-medical-emergency" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-red-400 hover:bg-red-50/30 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold">
+                        <i data-lucide="cross" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-red-900">Medical Emergency</h3>
+                        <p class="text-xs text-red-600 font-medium">Injury, seizure, allergic reaction</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 4: I Need a Nurse -->
+                <div onclick="toggleRequestOption('need-nurse')" id="opt-need-nurse" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/30 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                        <i data-lucide="stethoscope" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-brand-ink">I Need a Nurse</h3>
+                        <p class="text-xs text-brand-muted">Clinic visit, student sick, medication</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 5: Supplies / Copies / Tech Run -->
+                <div onclick="toggleRequestOption('supplies-copies')" id="opt-supplies-copies" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/30 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
+                        <i data-lucide="printer" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-brand-ink">Supplies / Print Job</h3>
+                        <p class="text-xs text-brand-muted">Urgent copies, markers, lab gear</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Option 6: 3-Min Mindful Reset / Emotional Debrief -->
+                <div onclick="toggleRequestOption('mindful-reset')" id="opt-mindful-reset" class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-teal-400 hover:bg-teal-50/30 transition-all select-none">
+                  <div class="flex items-start justify-between">
+                    <div class="flex items-center gap-3">
+                      <div class="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                        <i data-lucide="wind" class="w-4 h-4"></i>
+                      </div>
+                      <div>
+                        <h3 class="text-sm font-bold text-brand-ink">Mindful Reset / Debrief</h3>
+                        <p class="text-xs text-brand-muted">Need 3 min breathing space / peer ear</p>
+                      </div>
+                    </div>
+                    <div class="opt-checkbox w-5 h-5 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white">
+                      <i data-lucide="check" class="w-3.5 h-3.5 hidden check-icon"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- LOCATION & TEACHER INFO -->
+            <div class="mt-6 pt-5 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label for="reqTeacherName" class="block text-xs font-bold text-slate-700 mb-1">Your Name / Subject</label>
+                <div class="relative">
+                  <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+                  <input type="text" id="reqTeacherName" value="Ms. Jessica Taylor (10th Eng)" class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g. Mr. Ramirez (Math)">
+                </div>
+              </div>
+
+              <div>
+                <label for="reqRoomNumber" class="block text-xs font-bold text-slate-700 mb-1">Room # or Campus Location <span class="text-rose-500">*</span></label>
+                <div class="relative">
+                  <i data-lucide="map-pin" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+                  <input type="text" id="reqRoomNumber" value="Room 214 (Building B, 2nd Fl)" class="w-full pl-9 pr-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g. Room 304, Media Center, Gym">
+                </div>
+              </div>
+            </div>
+
+            <!-- OPTIONAL NOTE -->
+            <div class="mt-4">
+              <label for="reqNotes" class="block text-xs font-bold text-slate-700 mb-1">Brief Note / Instructions (Optional)</label>
+              <textarea id="reqNotes" rows="2" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-accent bg-white" placeholder="e.g., Students are doing quiet independent reading, just need someone to stand near the doorway for 5 min while I take medication."></textarea>
+            </div>
+
+            <!-- URGENCY & SUBMIT -->
+            <div class="mt-6 pt-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div class="flex items-center space-x-2">
+                <input type="checkbox" id="urgentPriorityToggle" class="w-4 h-4 rounded text-rose-600 focus:ring-rose-500 border-slate-300">
+                <label for="urgentPriorityToggle" class="text-xs font-bold text-slate-700 cursor-pointer flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span> Mark as Urgent Priority (Sound School Alert)
+                </label>
+              </div>
+
+              <button type="button" onclick="submitHelpRequest()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-sm shadow-lg shadow-black/10 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                <i data-lucide="send" class="w-4 h-4 text-blue-400"></i>
+                <span>Broadcast Request to Staff</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- RIGHT COLUMN: REAL-TIME CAMPUS REQUEST BOARD (lg:col-span-5) -->
+          <div class="lg:col-span-5 space-y-4">
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
+                  <i data-lucide="radio" class="w-5 h-5 text-rose-500 animate-pulse"></i>
+                  Live Campus Board
+                </h2>
+                <p class="text-xs text-brand-muted">Active peer requests at <span class="font-semibold text-brand-slate" id="boardSchoolBadge">Lincoln High</span></p>
+              </div>
+              <button onclick="renderRequestsFeed()" class="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" title="Refresh Feed">
+                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <!-- FILTER TABS -->
+            <div class="flex items-center gap-1 bg-slate-200/60 p-1 rounded-xl text-xs font-semibold">
+              <button onclick="setBoardFilter('all')" id="filter-all" class="flex-1 py-1.5 rounded-lg bg-white text-brand-ink shadow-sm text-center">All Active (<span id="count-all">2</span>)</button>
+              <button onclick="setBoardFilter('coverage')" id="filter-coverage" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Coverage</button>
+              <button onclick="setBoardFilter('urgent')" id="filter-urgent" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Urgent / Nurse</button>
+              <button onclick="setBoardFilter('resolved')" id="filter-resolved" class="flex-1 py-1.5 rounded-lg text-slate-600 hover:text-brand-ink text-center">Resolved</button>
+            </div>
+
+            <!-- REQUESTS FEED CARDS CONTAINER -->
+            <div id="requestsFeedList" class="space-y-3 max-h-[640px] overflow-y-auto pr-1">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+            <!-- QUICK TIP BANNER -->
+            <div class="p-4 rounded-2xl bg-brand-soft border border-blue-200/60 text-xs text-brand-slate flex items-start gap-3">
+              <div class="p-1.5 bg-blue-100 rounded-lg text-brand-accent mt-0.5">
+                <i data-lucide="info" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <p class="font-bold text-brand-ink">Colleague Etiquette Promise</p>
+                <p class="text-brand-muted mt-0.5">When you step in to cover a 5-minute break, no questions are asked. Mutual trust and rapid mutual aid reduce chronic teacher burnout.</p>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 2: OFFER HELP & AVAILABILITY                                        -->
+    <!-- Teachers specify when they're available and how they can help             -->
+    <!-- ========================================================================= -->
+    <section id="view-offer-help" class="view-section hidden py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+        
+        <!-- Header -->
+        <div class="max-w-3xl mx-auto text-center space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+            <i data-lucide="hand-heart" class="w-3.5 h-3.5"></i>
+            <span>The Giver's Circle: School Mutual Aid</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">I'm Available to Help</h1>
+          <p class="text-base text-brand-muted">
+            Have a prep block, duty-free period, or quiet co-taught classroom? Let colleagues know when you can step in to hold the door, walk a student, or watch a class for 5 minutes.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT: AVAILABILITY SETTER FORM (lg:col-span-7) -->
+          <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-sm border border-slate-200">
+            <h2 class="text-xl font-bold text-brand-ink mb-1 flex items-center gap-2">
+              <i data-lucide="calendar-clock" class="w-5 h-5 text-emerald-600"></i>
+              Set Your Availability for Today
+            </h2>
+            <p class="text-xs text-brand-muted mb-6">Select when you can step in and the types of assistance you're comfortable providing.</p>
+
+            <!-- Teacher Profile -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Your Name</label>
+                <input type="text" id="helperNameInput" value="Mr. Marcus Bell (History)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-700 mb-1">Your Base Location / Room</label>
+                <input type="text" id="helperLocationInput" value="Room 210 (Building B, 2nd Floor)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 focus:ring-2 focus:ring-emerald-500 bg-white">
+              </div>
+            </div>
+
+            <!-- TIME AVAILABILITY OPTIONS (MULTI-SELECT) -->
+            <div class="mb-6">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">When Are You Available Today? (Select Multiple)</label>
+              
+              <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5" id="availTimeSlots">
+                <button type="button" onclick="toggleAvailSlot(this, 'Right Now (Next 20m)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  <span>Right Now</span>
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 1 (8:15 - 9:05)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Period 1</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 2 (9:10 - 10:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Period 2</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 3 / Prep (10:05 - 10:55)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  <span>Period 3 (Prep)</span>
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Lunch Block (11:30 - 12:15)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Lunch Block</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 5 / Planning (1:15 - 2:05)')" class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  <span>Period 5 (Planning)</span>
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'Period 6 (2:10 - 3:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>Period 6</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'After School (3:15 - 4:00)')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>After School</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+                <button type="button" onclick="toggleAvailSlot(this, 'On-Call via Intercom')" class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  <span>On-Call / Co-Taught</span>
+                  <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- WHAT CAN YOU HELP WITH (MULTI-SELECT) -->
+            <div class="mb-6">
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-3">Ways You're Happy to Help (Select Multiple)</label>
+              
+              <div class="space-y-2" id="availCapabilities">
+                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="5-Min Quick Class Watch (Bathroom / Break)">
+                  <span class="font-bold text-slate-800">5-Min Quick Class Watch</span>
+                  <span class="text-slate-500 text-[11px]">— Stand in doorway while colleague takes restroom/water break</span>
+                </label>
+
+                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Walk Student to Nurse / Counseling">
+                  <span class="font-bold text-slate-800">Escort to Nurse / Front Office</span>
+                  <span class="text-slate-500 text-[11px]">— Walk a sick or emotionally distressed student to clinic</span>
+                </label>
+
+                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Emergency Copy / Supply Run">
+                  <span class="font-bold text-slate-800">Supply or Print Run</span>
+                  <span class="text-slate-500 text-[11px]">— Grab emergency copies or markers from workroom</span>
+                </label>
+
+                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" checked class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Student De-escalation & Quiet Co-presence">
+                  <span class="font-bold text-slate-800">Quiet Co-Presence / De-escalation</span>
+                  <span class="text-slate-500 text-[11px]">— Calm presence in room to help reset disruptive behavior</span>
+                </label>
+
+                <label class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
+                  <input type="checkbox" class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check" value="Peer Listening & Mentoring Debrief">
+                  <span class="font-bold text-slate-800">Peer Mentoring & Listening Ear</span>
+                  <span class="text-slate-500 text-[11px]">— 5-min calm reflection during planning period</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Submit Availability -->
+            <button onclick="saveHelperAvailability()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>Publish My Availability Status</span>
+            </button>
+          </div>
+
+          <!-- RIGHT: LIVE DIRECTORY OF HELPERS (lg:col-span-5) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="flex items-center justify-between">
+              <div>
+                <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
+                  <i data-lucide="users" class="w-5 h-5 text-emerald-600"></i>
+                  Colleagues On Standby
+                </h2>
+                <p class="text-xs text-brand-muted">Staff ready to help right now or during planning blocks</p>
+              </div>
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800" id="standbyCountBadge">4 Available</span>
+            </div>
+
+            <!-- Standby Helpers List -->
+            <div id="standbyHelpersList" class="space-y-3">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 3: WELLBEING RESOURCES & INTERACTIVE ACTIVITIES                      -->
+    <!-- Guided Meditation, Ambient Soundscape, Somatic Stretches, Gratitude Wall -->
+    <!-- ========================================================================= -->
+    <section id="view-wellbeing" class="view-section hidden py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+        <!-- Header -->
+        <div class="max-w-3xl mx-auto text-center space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-200">
+            <i data-lucide="feather" class="w-3.5 h-3.5"></i>
+            <span>Classroom Mindfulness & Nervous System Resilience</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">Educator Wellbeing & Interactive Practices</h1>
+          <p class="text-base text-brand-muted">
+            Ground yourself between class periods. Built-in interactive soundscapes, animated box breathing, and micro-somatic resets grounded in Dr. Angela Adair's educational resilience research.
+          </p>
+        </div>
+
+        <!-- INTERACTIVE ACTIVITY 1: GUIDED BREATHING PACER -->
+        <div class="glass-card rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-md">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Breath Visualizer Circle -->
+            <div class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-brand-soft rounded-2xl border border-blue-100 min-h-[340px] relative overflow-hidden">
+              <!-- Animated Ring -->
+              <div id="breathingCircle" class="w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[4000ms] ease-in-out shadow-2xl shadow-blue-300/40">
+                <div class="w-36 h-36 rounded-full bg-white/20 backdrop-blur-sm flex flex-col items-center justify-center">
+                  <span id="breathPhaseText" class="text-lg uppercase tracking-wider font-extrabold">Inhale</span>
+                  <span id="breathTimerDisplay" class="text-3xl font-black mt-1">4</span>
+                </div>
+              </div>
+
+              <!-- Pacing Mode Badges -->
+              <div class="mt-6 flex items-center gap-2">
+                <button onclick="setBreathingTechnique('box')" id="breath-box-btn" class="px-3 py-1 rounded-full text-xs font-bold bg-brand-ink text-white shadow-sm">Box 4-4-4-4</button>
+                <button onclick="setBreathingTechnique('calm')" id="breath-calm-btn" class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Calm 4-7-8</button>
+                <button onclick="setBreathingTechnique('transition')" id="breath-trans-btn" class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Bell Reset 3-3</button>
+              </div>
+            </div>
+
+            <!-- Breath Controls & Explanation -->
+            <div class="lg:col-span-7 space-y-5">
+              <div>
+                <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Interactive Nervous System Reset</span>
+                <h3 class="text-2xl font-bold text-brand-ink mt-1" id="breathTitle">Guided Box Breathing (Samavritti)</h3>
+                <p class="text-sm text-brand-muted mt-2 leading-relaxed" id="breathDescription">
+                  Used by educators and emergency responders to immediately halt sympathetic "fight-or-flight" overdrive after student conflicts or intense class periods. Four seconds inhale, four seconds hold, four seconds exhale, four seconds hold.
+                </p>
+              </div>
+
+              <!-- Interactive Controls -->
+              <div class="flex items-center gap-3 pt-2">
+                <button id="toggleBreathBtn" onclick="toggleBreathingGuide()" class="px-6 py-3 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
+                  <i data-lucide="play" id="breathPlayIcon" class="w-4 h-4"></i>
+                  <span id="breathPlayLabel">Start Breathing Guide</span>
+                </button>
+
+                <button onclick="resetBreathingGuide()" class="px-4 py-3 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-100 font-semibold text-sm transition-colors flex items-center gap-1.5">
+                  <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+                  <span>Reset</span>
+                </button>
+
+                <div class="ml-auto flex items-center space-x-2 text-xs font-bold text-slate-600">
+                  <span>Cycle:</span>
+                  <span id="cycleCounterBadge" class="px-2.5 py-1 bg-slate-100 rounded-md font-mono text-brand-accent text-sm">0 / 4</span>
+                </div>
+              </div>
+
+              <!-- Quick Audio Chime Option -->
+              <div class="pt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+                <span class="flex items-center gap-1.5">
+                  <i data-lucide="volume-2" class="w-4 h-4 text-blue-500"></i>
+                  Gentle synthesized chime on cycle change
+                </span>
+                <label class="inline-flex items-center cursor-pointer">
+                  <input type="checkbox" id="chimeToggle" checked class="sr-only peer">
+                  <div class="w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                </label>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- INTERACTIVE ACTIVITY 2: AMBIENT SOUNDSCAPE & BELL-TO-BELL AUDIO PLAYER -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- SOUNDSCAPE STATION (lg:col-span-6) -->
+          <div class="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-sky-600 uppercase tracking-wider">Audio De-Stress Station</span>
+                <h3 class="text-xl font-bold text-brand-ink mt-0.5">Focus & Calming Soundscapes</h3>
+              </div>
+              <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-700 flex items-center justify-center">
+                <i data-lucide="headphones" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <p class="text-xs text-brand-muted">
+              Built with real-time browser audio synthesis (no external audio files needed). Use your earbuds during planning periods to create a quiet mental sanctuary right at your desk.
+            </p>
+
+            <!-- Soundscape Options -->
+            <div class="grid grid-cols-2 gap-3">
+              <button onclick="toggleAudioSound('rain')" id="audio-btn-rain" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center">
+                  <i data-lucide="cloud-rain" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-ink">Soft Rain</h4>
+                  <p class="text-[10px] text-slate-400">Pink noise filter</p>
+                </div>
+              </button>
+
+              <button onclick="toggleAudioSound('ocean')" id="audio-btn-ocean" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-teal-50 text-teal-600 flex items-center justify-center">
+                  <i data-lucide="waves" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-ink">Ocean Tide</h4>
+                  <p class="text-[10px] text-slate-400">Rhythmic swell</p>
+                </div>
+              </button>
+
+              <button onclick="toggleAudioSound('singing-bowl')" id="audio-btn-singing-bowl" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center">
+                  <i data-lucide="bell" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-ink">Singing Bowl</h4>
+                  <p class="text-[10px] text-slate-400">432Hz harmonic</p>
+                </div>
+              </button>
+
+              <button onclick="toggleAudioSound('alpha-drone')" id="audio-btn-alpha-drone" class="sound-card p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 text-left transition-all flex items-center gap-3">
+                <div class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                  <i data-lucide="activity" class="w-4 h-4"></i>
+                </div>
+                <div>
+                  <h4 class="text-xs font-bold text-brand-ink">Alpha Waves</h4>
+                  <p class="text-[10px] text-slate-400">Binaural calm</p>
+                </div>
+              </button>
+            </div>
+
+            <!-- Volume Slider & Stop Button -->
+            <div class="pt-3 border-t border-slate-100 flex items-center justify-between gap-4">
+              <div class="flex items-center gap-2 flex-grow">
+                <i data-lucide="volume-1" class="w-4 h-4 text-slate-400"></i>
+                <input type="range" id="soundVolume" min="0" max="100" value="40" oninput="setAudioVolume(this.value)" class="w-full accent-blue-600 cursor-pointer">
+                <i data-lucide="volume-2" class="w-4 h-4 text-slate-400"></i>
+              </div>
+              <button onclick="stopAllAudio()" class="px-3 py-1.5 rounded-lg text-xs font-bold text-rose-700 bg-rose-50 hover:bg-rose-100 transition-colors">
+                Stop Audio
+              </button>
+            </div>
+          </div>
+
+          <!-- SOMATIC MICRO-BREAK GUIDE (lg:col-span-6) -->
+          <div class="lg:col-span-6 glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-5">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Desk Somatics</span>
+                <h3 class="text-xl font-bold text-brand-ink mt-0.5">60-Second Classroom Tension Release</h3>
+              </div>
+              <span class="text-xs font-bold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full" id="somaticStepBadge">Step 1 of 4</span>
+            </div>
+
+            <div class="p-5 rounded-2xl bg-brand-soft border border-blue-100 space-y-3 min-h-[160px]">
+              <div class="flex items-center justify-between">
+                <h4 class="text-base font-bold text-brand-ink flex items-center gap-2" id="somaticStepTitle">
+                  <i data-lucide="move" class="w-4 h-4 text-brand-accent"></i>
+                  1. Neck & Upper Trapezius Drop
+                </h4>
+                <span class="text-xs font-mono font-bold text-brand-accent px-2 py-0.5 bg-white rounded-md border border-blue-200">15s</span>
+              </div>
+              <p class="text-xs text-brand-slate leading-relaxed" id="somaticStepDesc">
+                Lower your right ear toward your right shoulder without lifting the shoulder. Gently place your right hand on your head (no pulling, just dead weight). Take two deep diaphragmatic breaths, noticing the release along the left neck tendon.
+              </p>
+            </div>
+
+            <div class="flex items-center justify-between pt-2">
+              <button onclick="prevSomaticStep()" class="px-4 py-2 rounded-xl text-xs font-bold border border-slate-200 hover:bg-slate-100 transition-colors flex items-center gap-1.5">
+                <i data-lucide="chevron-left" class="w-3.5 h-3.5"></i>
+                Previous
+              </button>
+
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-brand-accent somatic-dot" id="dot-0"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 somatic-dot" id="dot-1"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 somatic-dot" id="dot-2"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-slate-200 somatic-dot" id="dot-3"></span>
+              </div>
+
+              <button onclick="nextSomaticStep()" class="px-4 py-2 rounded-xl text-xs font-bold bg-brand-ink hover:bg-slate-800 text-white transition-colors flex items-center gap-1.5">
+                Next Stretch
+                <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- INTERACTIVE ACTIVITY 3: STAFF GRATITUDE & MENTORING SHOUTOUT WALL -->
+        <div class="glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Mentoring & Resilience Culture</span>
+              <h3 class="text-2xl font-bold text-brand-ink mt-0.5">Staff Gratitude & Kudos Wall</h3>
+              <p class="text-xs text-brand-muted mt-1">Research shows peer gratitude is one of the highest predictors of faculty retention and psychological safety.</p>
+            </div>
+            <button onclick="openGratitudeModal()" class="px-4 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 self-start sm:self-auto">
+              <i data-lucide="heart" class="w-4 h-4 fill-white"></i>
+              <span>Post a Colleague Shout-Out</span>
+            </button>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="gratitudeNotesList">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 4: INTERACTIVE SMART GOALS BUILDER & TRACKER                         -->
+    <!-- Tailored for Educator Work-Life Boundaries, Planning & Mindful Habits     -->
+    <!-- ========================================================================= -->
+    <section id="view-smart-goals" class="view-section hidden py-8 sm:py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+
+        <!-- Header -->
+        <div class="max-w-3xl mx-auto text-center space-y-3">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 text-indigo-700 border border-indigo-200">
+            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
+            <span>Intentional Professional & Personal Boundaries</span>
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink">Interactive Educator SMART Goals</h1>
+          <p class="text-base text-brand-muted">
+            Move from overwhelming to-do lists to sustainable habits. Formulate, track, and print goals that protect your instructional energy and wellbeing.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          <!-- LEFT: SMART GOAL INTERACTIVE WIZARD (lg:col-span-7) -->
+          <div class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
+            
+            <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+              <div>
+                <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
+                  <i data-lucide="edit-3" class="w-5 h-5 text-indigo-600"></i>
+                  SMART Goal Framework
+                </h3>
+                <p class="text-xs text-brand-muted">Fill out each dimension or load an educator-tested template below.</p>
+              </div>
+
+              <!-- Template Loader Dropdown -->
+              <div class="relative">
+                <button onclick="toggleTemplateDropdown()" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 flex items-center gap-1.5">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <span>Load Preset Template</span>
+                  <i data-lucide="chevron-down" class="w-3 h-3"></i>
+                </button>
+                <div id="goalTemplatesMenu" class="hidden absolute right-0 mt-1 w-72 rounded-xl shadow-xl bg-white border border-gray-200 z-30 py-1 text-xs">
+                  <button onclick="loadGoalTemplate('departure')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                    🚪 Departure Boundary: Leave by 4:00 PM 3x/week
+                  </button>
+                  <button onclick="loadGoalTemplate('batch-grading')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                    📝 Batch Grading: Zero grading on weekends
+                  </button>
+                  <button onclick="loadGoalTemplate('mindful-transition')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                    🧘 Mindful Morning: 5-min prep quiet reset
+                  </button>
+                  <button onclick="loadGoalTemplate('mentoring')" class="w-full text-left px-3 py-2 hover:bg-indigo-50 text-slate-800 font-medium">
+                    🤝 Peer Support: Bi-weekly mutual mentoring check-in
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- SMART FORM INPUTS -->
+            <div class="space-y-4">
+              <!-- S: Specific -->
+              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">S</span>
+                  Specific — What exactly will you achieve?
+                </label>
+                <input type="text" id="smartSpecific" value="Leave the school building by 4:15 PM every Tuesday and Thursday" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Leave school campus by 4:00 PM twice a week without taking grading home">
+              </div>
+
+              <!-- M: Measurable -->
+              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">M</span>
+                  Measurable — How will you track progress?
+                </label>
+                <input type="text" id="smartMeasurable" value="Log departure times in my phone calendar, targeting 8 successful days per month" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Track on calendar: 8 out of 8 target days achieved">
+              </div>
+
+              <!-- A: Achievable -->
+              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">A</span>
+                  Achievable — What system or support makes this realistic?
+                </label>
+                <input type="text" id="smartAchievable" value="Pack teaching bag during 5th period prep and arrange carpool walkout with Ms. Chen" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Close classroom door at 3:45 PM; pair up with an accountability buddy">
+              </div>
+
+              <!-- R: Relevant -->
+              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">R</span>
+                  Relevant — Why does this matter for your longevity & wellbeing?
+                </label>
+                <input type="text" id="smartRelevant" value="Preventing chronic evening fatigue allows me to stay patient and energetic with students" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. Restores energy for my family and reduces Sunday evening anxiety">
+              </div>
+
+              <!-- T: Time-bound -->
+              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+                <label class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  <span class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">T</span>
+                  Time-bound — Target review date or milestone period
+                </label>
+                <input type="text" id="smartTimeBound" value="Review at 4 weeks (End of Month 1) during team collaboration block" class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400" placeholder="e.g. 4-week pilot, evaluation on October 30th">
+              </div>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex items-center justify-between gap-3 pt-2">
+              <button onclick="clearGoalForm()" class="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 text-xs font-bold transition-colors">
+                Reset Form
+              </button>
+              <button onclick="saveSmartGoal()" class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
+                <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                <span>Save to My Wellbeing Plan</span>
+              </button>
+            </div>
+
+          </div>
+
+          <!-- RIGHT: MY ACTIVE GOALS DASHBOARD & PRINT EXPORT (lg:col-span-5) -->
+          <div class="lg:col-span-5 space-y-4" id="smart-goals-print-area">
+            
+            <div class="flex items-center justify-between">
+              <div>
+                <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
+                  <i data-lucide="award" class="w-5 h-5 text-indigo-600"></i>
+                  My Active Goals
+                </h3>
+                <p class="text-xs text-brand-muted">Check off milestones as you build consistent resilience.</p>
+              </div>
+
+              <button onclick="window.print()" class="no-print px-3 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors">
+                <i data-lucide="printer" class="w-3.5 h-3.5"></i>
+                <span>Print / PDF</span>
+              </button>
+            </div>
+
+            <!-- Goal Cards Container -->
+            <div id="savedGoalsList" class="space-y-3">
+              <!-- Dynamically populated via JS -->
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 5: ABOUT DR. ANGELA ADAIR & INSTITUTIONAL SCALING                     -->
+    <!-- Full Bio, Auburn Ed.D., Mentoring, Mindfulness, Resilience & Contact      -->
+    <!-- ========================================================================= -->
+    <section id="view-about" class="view-section hidden py-8 sm:py-16">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+
+        <!-- PROFILE HERO CARD -->
+        <div class="glass-card rounded-3xl p-8 sm:p-12 border border-slate-200 shadow-xl relative overflow-hidden">
+          <div class="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-blue-100/50 -z-10 blur-2xl"></div>
+
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+            
+            <!-- Avatar / Badge Graphic -->
+            <div class="lg:col-span-4 flex flex-col items-center text-center">
+              <div class="relative">
+                <div class="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-tr from-brand-accent to-sky-400 p-1.5 shadow-xl shadow-blue-500/20">
+                  <div class="w-full h-full rounded-full bg-brand-ink text-white flex flex-col items-center justify-center p-4">
+                    <span class="text-4xl sm:text-5xl font-black tracking-tight text-blue-200">AA</span>
+                    <span class="text-[11px] font-bold tracking-widest uppercase text-blue-400 mt-1">Auburn Univ.</span>
+                  </div>
+                </div>
+                <div class="absolute bottom-2 right-2 p-2 rounded-full bg-emerald-500 text-white shadow-lg border-2 border-white" title="Verified Educational Leadership Expert">
+                  <i data-lucide="check-check" class="w-4 h-4"></i>
+                </div>
+              </div>
+
+              <h2 class="text-2xl font-extrabold text-brand-ink mt-4">Angela Adair, Ed.D.</h2>
+              <p class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Educational Leadership & Evaluation</p>
+              
+              <div class="mt-4 flex flex-wrap justify-center gap-2">
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-brand-accent border border-blue-200">Doctorate in Ed. Leadership</span>
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Program Evaluation Certified</span>
+              </div>
+            </div>
+
+            <!-- Bio Narrative -->
+            <div class="lg:col-span-8 space-y-5">
+              <div>
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Leadership Profile & Vision</span>
+                <h1 class="text-3xl sm:text-4xl font-extrabold text-brand-ink tracking-tight mt-1">
+                  Empowering Educators Through Systemic Care & Resilient Leadership
+                </h1>
+              </div>
+
+              <p class="text-base text-slate-700 leading-relaxed">
+                I have my <strong>doctorate in Educational Leadership from Auburn University</strong> as well as <strong>program evaluation certification</strong>. I am currently focusing my research on <strong>mentoring, mindfulness/well-being, and resilience</strong>. I am an expert in educational leadership or principal preparation.
+              </p>
+
+              <p class="text-sm text-brand-muted leading-relaxed">
+                Schools thrive when teachers never have to suffer in silence or sacrifice their basic physical and emotional needs while managing classrooms. By bridging rigorous administrative research with compassionate grassroots systems, this platform demonstrates how one campus—and soon entire districts—can implement sustainable mutual aid.
+              </p>
+
+              <!-- DIRECT CONTACT CALLOUT -->
+              <div class="p-5 rounded-2xl bg-brand-soft border border-blue-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div>
+                  <h4 class="text-sm font-bold text-brand-ink">Let's Connect & Collaborate</h4>
+                  <p class="text-xs text-brand-muted mt-0.5">Keynotes, principal mentorship consulting, program evaluations, or district pilots.</p>
+                </div>
+                <a href="mailto:angelacadair@gmail.com?subject=Educational%20Leadership%20Inquiry%20from%20FacultyWell" class="px-5 py-2.5 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-xs shadow-md transition-all flex items-center gap-2 whitespace-nowrap">
+                  <i data-lucide="mail" class="w-4 h-4 text-blue-400"></i>
+                  <span>angelacadair@gmail.com</span>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- FOUR RESEARCH PILLARS -->
+        <div class="space-y-6">
+          <div class="text-center max-w-2xl mx-auto">
+            <h3 class="text-2xl font-bold text-brand-ink">Core Research & Expertise Pillars</h3>
+            <p class="text-xs text-brand-muted mt-1">Grounding school culture in evidence-based systems that protect teachers and elevate student learning.</p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+            
+            <!-- Pillar 1: Mentoring -->
+            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center">
+                <i data-lucide="users" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-brand-ink">1. Mentoring in Education</h4>
+              <p class="text-xs text-brand-muted leading-relaxed">
+                Structured peer mentorship architectures that bridge veteran wisdom with early-career vitality, eliminating novice isolation and boosting multi-year retention.
+              </p>
+            </div>
+
+            <!-- Pillar 2: Mindfulness & Wellbeing -->
+            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-sky-100 text-sky-600 flex items-center justify-center">
+                <i data-lucide="sparkles" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-brand-ink">2. Mindfulness & Well-Being</h4>
+              <p class="text-xs text-brand-muted leading-relaxed">
+                Classroom-feasible, somatic nervous-system regulation techniques designed for busy bell schedules—preventing burnout before it takes root.
+              </p>
+            </div>
+
+            <!-- Pillar 3: Resilience -->
+            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                <i data-lucide="shield" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-brand-ink">3. Educator Resilience</h4>
+              <p class="text-xs text-brand-muted leading-relaxed">
+                Systemic and psychological resilience frameworks that build organizational agility, allowing school communities to thrive through institutional change.
+              </p>
+            </div>
+
+            <!-- Pillar 4: Educational Leadership -->
+            <div class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
+              <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </div>
+              <h4 class="text-base font-bold text-brand-ink">4. Principal Preparation</h4>
+              <p class="text-xs text-brand-muted leading-relaxed">
+                Preparing future school executives to move beyond administrative checklists toward high-empathy leadership, culture cultivation, and program evaluation.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- MULTI-SCHOOL SCALING ROADMAP -->
+        <div class="p-8 rounded-3xl bg-brand-ink text-white space-y-6">
+          <div class="max-w-2xl">
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Institutional Scaling Roadmap</span>
+            <h3 class="text-2xl font-bold tracking-tight mt-1">From a Single Campus Pilot to Multi-District Scaling</h3>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">
+              Designed from day one with multi-tenant architecture so schools across a district can implement seamless mutual aid and cross-building substitute support.
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-gray-800">
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-emerald-400 font-mono">PHASE 1 (CURRENT)</span>
+              <h4 class="text-sm font-bold text-white">Single School Pilot</h4>
+              <p class="text-xs text-gray-400">Lincoln High School testbed. Validating 5-minute coverage speed, intercom notifications, and staff adoption.</p>
+            </div>
+
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-blue-400 font-mono">PHASE 2 (NEXT)</span>
+              <h4 class="text-sm font-bold text-white">District Cluster Network</h4>
+              <p class="text-xs text-gray-400">Inter-school support sharing: elementary, middle, and high schools coordinate prep-block coverage and resource banks.</p>
+            </div>
+
+            <div class="space-y-2">
+              <span class="text-xs font-bold text-indigo-400 font-mono">PHASE 3</span>
+              <h4 class="text-sm font-bold text-white">Statewide Faculty Retention Analytics</h4>
+              <p class="text-xs text-gray-400">Anonymized program evaluation metrics providing superintendents with predictive burnout data and intervention efficacy.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-t border-slate-200 mt-16 py-10 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-2">
+        <div class="w-6 h-6 rounded-lg bg-brand-ink text-white flex items-center justify-center">
+          <i data-lucide="heart-handshake" class="w-3.5 h-3.5 text-blue-400"></i>
+        </div>
+        <span class="font-extrabold text-brand-ink">FacultyWell</span>
+        <span>•</span>
+        <span>Empowering Educator Mutual Aid & Wellbeing</span>
+      </div>
+
+      <div class="flex items-center space-x-6">
+        <a href="javascript:void(0)" onclick="navigateTo('request-help')" class="hover:text-brand-accent transition-colors">Request Help</a>
+        <a href="javascript:void(0)" onclick="navigateTo('offer-help')" class="hover:text-brand-accent transition-colors">I Can Help</a>
+        <a href="javascript:void(0)" onclick="navigateTo('wellbeing')" class="hover:text-brand-accent transition-colors">Mindfulness</a>
+        <a href="javascript:void(0)" onclick="navigateTo('smart-goals')" class="hover:text-brand-accent transition-colors">SMART Goals</a>
+        <a href="javascript:void(0)" onclick="navigateTo('about')" class="hover:text-brand-accent transition-colors">Dr. Angela Adair</a>
+      </div>
+
+      <div>
+        <span>Inquiries: <a href="mailto:angelacadair@gmail.com" class="font-semibold text-brand-ink hover:underline">angelacadair@gmail.com</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========================================================================= -->
+  <!-- MODALS & DIALOGS                                                          -->
+  <!-- ========================================================================= -->
+
+  <!-- QUICK EMERGENCY MODAL -->
+  <div id="quickEmergencyModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-2 border-rose-400 space-y-4 animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center">
+            <i data-lucide="alert-octagon" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-rose-900">Immediate Emergency Broadcast</h3>
+            <p class="text-xs text-rose-600">Broadcasts instant audible alert to all nearby staff & admin</p>
+          </div>
+        </div>
+        <button onclick="closeQuickEmergencyModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Emergency Type</label>
+          <select id="emTypeSelect" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300 font-semibold text-rose-900 bg-rose-50/50">
+            <option value="Fight / De-escalation Needed">Student Fight / Physical De-escalation</option>
+            <option value="Medical Emergency (Nurse / 911)">Medical Emergency (Seizure / Injury / 911)</option>
+            <option value="Nurse Needed to Room Urgently">Nurse Needed to Room Urgently</option>
+            <option value="Intruder / Security Alert">Security / Administrator Needed Immediately</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Your Room # / Location <span class="text-rose-600">*</span></label>
+          <input type="text" id="emLocationInput" value="Room 214" class="w-full px-3 py-2 text-sm rounded-xl border border-rose-300 bg-white font-bold text-slate-900">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Critical Detail</label>
+          <input type="text" id="emDetailInput" placeholder="e.g. Two 10th graders fighting near back exit" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+      </div>
+
+      <div class="pt-2 flex items-center justify-end gap-3">
+        <button onclick="closeQuickEmergencyModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="sendImmediateEmergency()" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 flex items-center gap-1.5">
+          <i data-lucide="bell-ring" class="w-4 h-4"></i>
+          <span>BROADCAST NOW</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GRATITUDE SHOUTOUT MODAL -->
+  <div id="gratitudeModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold text-brand-ink flex items-center gap-2">
+          <i data-lucide="heart" class="w-5 h-5 text-amber-500 fill-amber-500"></i>
+          Send Colleague Kudos
+        </h3>
+        <button onclick="closeGratitudeModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">To (Teacher Name & Dept)</label>
+          <input type="text" id="kudosTo" placeholder="e.g. Ms. Chen (Science)" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">From Your Name</label>
+          <input type="text" id="kudosFrom" value="Ms. Jessica Taylor" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Your Appreciation Note</label>
+          <textarea id="kudosMessage" rows="3" placeholder="Thank you for stepping into my room for 5 minutes during 3rd period..." class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300"></textarea>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closeGratitudeModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="submitGratitudeNote()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-bold text-xs shadow-md">Post to Kudos Wall</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REGISTER NEW SCHOOL MODAL (SCALING DEMO) -->
+  <div id="newSchoolModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border border-slate-200 space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="text-lg font-bold text-brand-ink flex items-center gap-2">
+          <i data-lucide="building-2" class="w-5 h-5 text-brand-accent"></i>
+          Onboard a New School
+        </h3>
+        <button onclick="closeNewSchoolModal()" class="text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-brand-muted">
+        FacultyWell is scaling nationwide to empower school districts. Register your campus to create an isolated mutual aid network for your staff.
+      </p>
+
+      <div class="space-y-3">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">School Name</label>
+          <input type="text" id="newSchoolNameInput" placeholder="e.g. Martin Luther King Jr. High School" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">School District</label>
+          <input type="text" id="newSchoolDistrictInput" placeholder="e.g. Fulton County Schools" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-700 mb-1">Lead Administrator or Contact Email</label>
+          <input type="email" id="newSchoolEmailInput" placeholder="principal@district.k12.org" class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closeNewSchoolModal()" class="px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-100 rounded-xl">Cancel</button>
+        <button onclick="registerNewSchoolSubmit()" class="px-5 py-2.5 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-xs shadow-md">Create School Network</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- JAVASCRIPT APPLICATION LOGIC & STATE MANAGEMENT                          -->
+  <!-- ========================================================================= -->
+  <script>
+    // INITIAL STATE & LOCALSTORAGE PERSISTENCE
+    const state = {
+      currentSchool: 'Lincoln High School',
+      currentSchoolCode: 'LHS-902',
+      selectedRequestOptions: new Set(['watch-class']), // Default selected
+      watchMinutes: 5,
+      boardFilter: 'all',
+      
+      // Sample Requests Feed
+      requests: [
+        {
+          id: 'req-1',
+          teacher: 'Ms. Jessica Taylor (10th Eng)',
+          room: 'Room 214 (Building B, 2nd Fl)',
+          options: ['Classroom Watch (5 min)'],
+          note: 'Bathroom break urgently needed, students doing silent reading.',
+          timestamp: '3 mins ago',
+          urgent: false,
+          status: 'Open', // 'Open', 'Claimed', 'Resolved'
+          claimedBy: null
+        },
+        {
+          id: 'req-2',
+          teacher: 'Mr. David Harris (Biology)',
+          room: 'Lab 302',
+          options: ['I Need a Nurse'],
+          note: 'Student has nosebleed that won\'t stop, needs clinic escort.',
+          timestamp: '11 mins ago',
+          urgent: false,
+          status: 'Claimed',
+          claimedBy: 'Nurse Clara (ETA 2m)'
+        },
+        {
+          id: 'req-3',
+          teacher: 'Ms. Keisha Washington (Math)',
+          room: 'Room 108',
+          options: ['Classroom Watch (10 min)'],
+          note: 'Parent emergency call in front office.',
+          timestamp: '25 mins ago',
+          urgent: false,
+          status: 'Resolved',
+          claimedBy: 'Mr. Marcus Bell'
+        }
+      ],
+
+      // Standby Helpers
+      helpers: [
+        {
+          id: 'h-1',
+          name: 'Mr. Marcus Bell (History)',
+          room: 'Room 210 (Building B)',
+          slots: ['Right Now (Next 20m)', 'Period 3 / Prep (10:05 - 10:55)', 'Period 5 / Planning (1:15 - 2:05)'],
+          capabilities: ['5-Min Quick Class Watch', 'Walk Student to Nurse', 'Supply / Print Run']
+        },
+        {
+          id: 'h-2',
+          name: 'Ms. Chen (Science)',
+          room: 'Room 216 (Building B)',
+          slots: ['Right Now (Next 20m)', 'Lunch Block (11:30 - 12:15)'],
+          capabilities: ['5-Min Quick Class Watch', 'Student De-escalation']
+        },
+        {
+          id: 'h-3',
+          name: 'Coach Davis (PE / Health)',
+          room: 'Gym Office',
+          slots: ['Period 2 (9:10 - 10:00)', 'Period 5 / Planning (1:15 - 2:05)'],
+          capabilities: ['Walk Student to Nurse', 'Emergency De-escalation']
+        },
+        {
+          id: 'h-4',
+          name: 'Mrs. Alvarez (Spanish)',
+          room: 'Room 114 (1st Floor)',
+          slots: ['Right Now (Next 20m)', 'After School (3:15 - 4:00)'],
+          capabilities: ['5-Min Quick Class Watch', 'Peer Mentoring Debrief']
+        }
+      ],
+
+      // Staff Gratitude Notes
+      kudos: [
+        {
+          to: 'Ms. Chen (Science)',
+          from: 'Ms. Jessica Taylor',
+          message: 'Thank you for popping into my 2nd period for 4 minutes so I could drink water and reset after a rough morning transition!',
+          time: 'Today, 9:20 AM'
+        },
+        {
+          to: 'Nurse Clara',
+          from: 'Mr. David Harris',
+          message: 'Huge thanks for rapidly meeting my student halfway down the hallway during 4th period. You are our rock!',
+          time: 'Today, 11:45 AM'
+        },
+        {
+          to: 'Mr. Marcus Bell',
+          from: 'Coach Davis',
+          message: 'Appreciate you printing out those 35 study guides for my health class when the main Xerox was jammed.',
+          time: 'Yesterday'
+        }
+      ],
+
+      // Saved SMART Goals
+      goals: [
+        {
+          id: 'goal-1',
+          specific: 'Leave the school building by 4:15 PM every Tuesday and Thursday',
+          measurable: 'Log departure times in my phone calendar, targeting 8 days per month',
+          achievable: 'Pack teaching bag during 5th period prep; pair up with Ms. Chen to walk out together',
+          relevant: 'Preventing chronic evening fatigue allows me to stay patient with students and present with my family',
+          timeBound: 'Review at 4 weeks during departmental planning block',
+          progress: 65,
+          completed: false
+        },
+        {
+          id: 'goal-2',
+          specific: 'Dedicate first 5 minutes of 1st period prep to silent diaphragmatic breathing',
+          measurable: 'Complete 4 box breathing cycles 5 days a week',
+          achievable: 'Use FacultyWell interactive breathing pacer right from my desk bookmark',
+          relevant: 'Reduces morning autonomic stress and sets a calm classroom tone',
+          timeBound: 'Ongoing daily practice',
+          progress: 90,
+          completed: false
+        }
+      ]
+    };
+
+    // Load from localStorage if present
+    function loadSavedState() {
+      try {
+        const savedReqs = localStorage.getItem('fw_requests');
+        if (savedReqs) state.requests = JSON.parse(savedReqs);
+        const savedGoals = localStorage.getItem('fw_goals');
+        if (savedGoals) state.goals = JSON.parse(savedGoals);
+        const savedKudos = localStorage.getItem('fw_kudos');
+        if (savedKudos) state.kudos = JSON.parse(savedKudos);
+      } catch (e) {
+        console.error('LocalStorage error:', e);
+      }
+    }
+
+    function persistState() {
+      try {
+        localStorage.setItem('fw_requests', JSON.stringify(state.requests));
+        localStorage.setItem('fw_goals', JSON.stringify(state.goals));
+        localStorage.setItem('fw_kudos', JSON.stringify(state.kudos));
+      } catch (e) {
+        console.error('Failed saving to LocalStorage', e);
+      }
+    }
+
+    // NAVIGATION SYSTEM
+    function navigateTo(viewId) {
+      document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+      const activeSec = document.getElementById('view-' + viewId);
+      if (activeSec) {
+        activeSec.classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      // Update Nav Buttons
+      document.querySelectorAll('.nav-link').forEach(btn => {
+        btn.classList.remove('bg-brand-soft', 'text-brand-accent', 'border', 'border-blue-200/50', 'font-semibold');
+        btn.classList.add('text-brand-slate', 'font-medium');
+      });
+
+      const activeBtn = document.getElementById('nav-' + viewId);
+      if (activeBtn) {
+        activeBtn.classList.add('bg-brand-soft', 'text-brand-accent', 'border', 'border-blue-200/50', 'font-semibold');
+        activeBtn.classList.remove('text-brand-slate');
+      }
+
+      // Re-initialize Lucide Icons on view switch
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobileMenu');
+      menu.classList.toggle('hidden');
+    }
+
+    // MULTI-SCHOOL SCALE DROPDOWN
+    function toggleSchoolMenu() {
+      document.getElementById('schoolDropdownMenu').classList.toggle('hidden');
+    }
+
+    function switchSchool(schoolName, schoolCode) {
+      state.currentSchool = schoolName;
+      state.currentSchoolCode = schoolCode;
+      document.getElementById('currentSchoolName').textContent = schoolName;
+      document.getElementById('boardSchoolBadge').textContent = schoolName;
+      document.getElementById('schoolDropdownMenu').classList.add('hidden');
+      showToast(`Switched campus context to ${schoolName}`, 'info');
+      renderRequestsFeed();
+    }
+
+    function openNewSchoolModal() {
+      document.getElementById('schoolDropdownMenu').classList.add('hidden');
+      document.getElementById('newSchoolModal').classList.remove('hidden');
+    }
+
+    function closeNewSchoolModal() {
+      document.getElementById('newSchoolModal').classList.add('hidden');
+    }
+
+    function registerNewSchoolSubmit() {
+      const name = document.getElementById('newSchoolNameInput').value.trim();
+      if (!name) {
+        showToast('Please enter a school name', 'error');
+        return;
+      }
+      closeNewSchoolModal();
+      switchSchool(name, 'NEW-' + Math.floor(Math.random() * 899 + 100));
+      showToast(`Successfully registered and switched to ${name}! Ready for faculty invites.`, 'success');
+    }
+
+    // REQUEST HELP BUILDER
+    function toggleRequestOption(optionId) {
+      const card = document.getElementById('opt-' + optionId);
+      const checkIcon = card.querySelector('.check-icon');
+      const checkboxBox = card.querySelector('.opt-checkbox');
+
+      if (state.selectedRequestOptions.has(optionId)) {
+        state.selectedRequestOptions.delete(optionId);
+        card.classList.remove('border-brand-accent', 'bg-blue-50/40', 'border-rose-500', 'bg-rose-50/40', 'border-red-500', 'border-amber-500');
+        card.classList.add('border-slate-200', 'bg-white');
+        checkIcon.classList.add('hidden');
+        checkboxBox.classList.remove('bg-brand-accent', 'border-brand-accent', 'bg-rose-600', 'border-rose-600');
+        checkboxBox.classList.add('border-slate-300', 'bg-white');
+
+        if (optionId === 'watch-class') {
+          document.getElementById('sub-duration-box').classList.add('hidden');
+        }
+      } else {
+        state.selectedRequestOptions.add(optionId);
+        checkIcon.classList.remove('hidden');
+
+        if (optionId === 'urgent-emergency' || optionId === 'medical-emergency') {
+          card.classList.add('border-rose-500', 'bg-rose-50/40');
+          checkboxBox.classList.add('bg-rose-600', 'border-rose-600');
+        } else {
+          card.classList.add('border-brand-accent', 'bg-blue-50/40');
+          checkboxBox.classList.add('bg-brand-accent', 'border-brand-accent');
+        }
+        card.classList.remove('border-slate-200');
+
+        if (optionId === 'watch-class') {
+          document.getElementById('sub-duration-box').classList.remove('hidden');
+        }
+      }
+
+      updateSelectedCountBadge();
+    }
+
+    function setWatchMinutes(mins) {
+      state.watchMinutes = mins;
+      document.querySelectorAll('.min-btn').forEach(btn => {
+        if (parseInt(btn.getAttribute('data-min')) === mins) {
+          btn.classList.add('bg-blue-600', 'text-white', 'border-blue-300');
+          btn.classList.remove('bg-white', 'text-slate-700');
+        } else {
+          btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-300');
+          btn.classList.add('bg-white', 'text-slate-700');
+        }
+      });
+    }
+
+    function updateSelectedCountBadge() {
+      const count = state.selectedRequestOptions.size;
+      document.getElementById('selectedOptionsCounter').textContent = `${count} selected`;
+    }
+
+    function submitHelpRequest() {
+      if (state.selectedRequestOptions.size === 0) {
+        showToast('Please select at least one option of what you need.', 'error');
+        return;
+      }
+
+      const room = document.getElementById('reqRoomNumber').value.trim();
+      if (!room) {
+        showToast('Please enter your room number or location so colleagues know where to go.', 'error');
+        return;
+      }
+
+      const teacher = document.getElementById('reqTeacherName').value.trim() || 'Staff Colleague';
+      const notes = document.getElementById('reqNotes').value.trim();
+      const isUrgent = document.getElementById('urgentPriorityToggle').checked || state.selectedRequestOptions.has('urgent-emergency') || state.selectedRequestOptions.has('medical-emergency');
+
+      // Convert selected options to readable strings
+      const optLabels = [];
+      state.selectedRequestOptions.forEach(opt => {
+        if (opt === 'watch-class') optLabels.push(`Classroom Watch (${state.watchMinutes} min)`);
+        else if (opt === 'urgent-emergency') optLabels.push('Urgent / De-escalation');
+        else if (opt === 'medical-emergency') optLabels.push('Medical Emergency');
+        else if (opt === 'need-nurse') optLabels.push('I Need a Nurse');
+        else if (opt === 'supplies-copies') optLabels.push('Supplies / Print Job');
+        else if (opt === 'mindful-reset') optLabels.push('3-Min Mindful Reset');
+      });
+
+      const newReq = {
+        id: 'req-' + Date.now(),
+        teacher: teacher,
+        room: room,
+        options: optLabels,
+        note: notes || 'Assistance requested by colleague.',
+        timestamp: 'Just now',
+        urgent: isUrgent,
+        status: 'Open',
+        claimedBy: null
+      };
+
+      state.requests.unshift(newReq);
+      persistState();
+      renderRequestsFeed();
+
+      // Play soft notification sound or alert
+      playChimeSound(660);
+      showToast(`Help request broadcasted to all ${state.currentSchool} staff!`, 'success');
+
+      // Reset notes field
+      document.getElementById('reqNotes').value = '';
+    }
+
+    // RENDER LIVE REQUESTS FEED
+    function renderRequestsFeed() {
+      const listEl = document.getElementById('requestsFeedList');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      let filtered = state.requests;
+      if (state.boardFilter === 'coverage') {
+        filtered = state.requests.filter(r => r.options.some(o => o.includes('Watch')));
+      } else if (state.boardFilter === 'urgent') {
+        filtered = state.requests.filter(r => r.urgent || r.options.some(o => o.includes('Urgent') || o.includes('Nurse') || o.includes('Medical')));
+      } else if (state.boardFilter === 'resolved') {
+        filtered = state.requests.filter(r => r.status === 'Resolved');
+      }
+
+      // Update counters
+      const activeCount = state.requests.filter(r => r.status !== 'Resolved').length;
+      document.getElementById('count-all').textContent = activeCount;
+      document.getElementById('liveActiveRequestsStat').textContent = `${activeCount} active request${activeCount === 1 ? '' : 's'}`;
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `
+          <div class="text-center py-10 px-4 bg-white rounded-2xl border border-slate-200">
+            <i data-lucide="check-circle" class="w-8 h-8 text-emerald-500 mx-auto mb-2"></i>
+            <h4 class="text-sm font-bold text-slate-800">All Clear in ${state.currentSchool}</h4>
+            <p class="text-xs text-slate-500 mt-1">No active requests matching this filter right now.</p>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+
+      filtered.forEach(req => {
+        const isUrgent = req.urgent;
+        const cardBorder = isUrgent ? 'border-rose-300 bg-rose-50/20' : (req.status === 'Resolved' ? 'border-slate-200 bg-slate-50/60 opacity-75' : 'border-slate-200 bg-white');
+        
+        let statusBadge = '';
+        if (req.status === 'Open') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span> Open</span>`;
+        } else if (req.status === 'Claimed') {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800"><i data-lucide="check" class="w-3 h-3"></i> Claimed (${req.claimedBy || 'Colleague on way'})</span>`;
+        } else {
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-200 text-slate-700">Resolved</span>`;
+        }
+
+        const tagsHtml = req.options.map(opt => `
+          <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold ${opt.includes('Watch') ? 'bg-blue-100 text-blue-800' : (opt.includes('Urgent') || opt.includes('Medical') ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-700')}">
+            ${opt}
+          </span>
+        `).join(' ');
+
+        const actionsHtml = req.status === 'Open' ? `
+          <button onclick="claimHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
+            <i data-lucide="hand" class="w-3.5 h-3.5"></i>
+            <span>I Can Step In!</span>
+          </button>
+        ` : (req.status === 'Claimed' ? `
+          <button onclick="resolveHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
+            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+            <span>Mark Resolved</span>
+          </button>
+        ` : `
+          <span class="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
+            <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Covered by Colleague
+          </span>
+        `);
+
+        const card = document.createElement('div');
+        card.className = `p-4 rounded-2xl border ${cardBorder} shadow-sm space-y-3 transition-all`;
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="text-sm font-extrabold text-brand-ink">${req.teacher}</h4>
+                ${isUrgent ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-rose-600 text-white animate-pulse">Urgent</span>' : ''}
+              </div>
+              <div class="flex items-center gap-1.5 text-xs text-brand-slate font-semibold mt-0.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-accent"></i>
+                <span>${req.room}</span>
+                <span class="text-slate-300">•</span>
+                <span class="text-slate-400 font-normal">${req.timestamp}</span>
+              </div>
+            </div>
+            <div>${statusBadge}</div>
+          </div>
+
+          <div class="flex flex-wrap gap-1.5">
+            ${tagsHtml}
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed bg-slate-50 p-2.5 rounded-xl border border-slate-100">
+            "${req.note}"
+          </p>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[11px] text-slate-400">Lincoln High Mutual Aid</span>
+            <div class="flex items-center gap-2">
+              ${actionsHtml}
+            </div>
+          </div>
+        `;
+
+        listEl.appendChild(card);
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function setBoardFilter(filter) {
+      state.boardFilter = filter;
+      document.querySelectorAll('#filter-all, #filter-coverage, #filter-urgent, #filter-resolved').forEach(btn => {
+        btn.classList.remove('bg-white', 'text-brand-ink', 'shadow-sm');
+        btn.classList.add('text-slate-600');
+      });
+      document.getElementById('filter-' + filter).classList.add('bg-white', 'text-brand-ink', 'shadow-sm');
+      document.getElementById('filter-' + filter).classList.remove('text-slate-600');
+      renderRequestsFeed();
+    }
+
+    function claimHelpRequest(reqId) {
+      const target = state.requests.find(r => r.id === reqId);
+      if (target) {
+        target.status = 'Claimed';
+        target.claimedBy = 'You (On the way!)';
+        persistState();
+        renderRequestsFeed();
+        playChimeSound(520);
+        showToast(`You claimed this request! Head over to ${target.room}. Colleague notified.`, 'success');
+      }
+    }
+
+    function resolveHelpRequest(reqId) {
+      const target = state.requests.find(r => r.id === reqId);
+      if (target) {
+        target.status = 'Resolved';
+        persistState();
+        renderRequestsFeed();
+        showToast('Request marked resolved. Thank you for supporting your peer!', 'info');
+      }
+    }
+
+    // OFFER HELP & AVAILABILITY
+    function toggleAvailSlot(btn, slotName) {
+      btn.classList.toggle('active-slot');
+      if (btn.classList.contains('active-slot')) {
+        btn.classList.add('border-emerald-400', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700', 'font-medium');
+        btn.querySelector('svg').remove();
+        btn.insertAdjacentHTML('beforeend', '<i data-lucide="check" class="w-3.5 h-3.5"></i>');
+      } else {
+        btn.classList.remove('border-emerald-400', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.add('border-slate-200', 'bg-white', 'text-slate-700', 'font-medium');
+        btn.querySelector('svg').remove();
+        btn.insertAdjacentHTML('beforeend', '<i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function saveHelperAvailability() {
+      const name = document.getElementById('helperNameInput').value.trim();
+      const room = document.getElementById('helperLocationInput').value.trim();
+      if (!name || !room) {
+        showToast('Please enter your name and base room location.', 'error');
+        return;
+      }
+
+      const activeSlots = [];
+      document.querySelectorAll('#availTimeSlots .active-slot span').forEach(el => {
+        activeSlots.push(el.textContent.trim());
+      });
+
+      const checkedCaps = [];
+      document.querySelectorAll('.avail-cap-check:checked').forEach(cb => {
+        checkedCaps.push(cb.value);
+      });
+
+      if (activeSlots.length === 0) {
+        showToast('Please choose at least one time period you are available today.', 'error');
+        return;
+      }
+
+      // Add to standby helpers list
+      state.helpers.unshift({
+        id: 'h-' + Date.now(),
+        name: name,
+        room: room,
+        slots: activeSlots,
+        capabilities: checkedCaps
+      });
+
+      renderStandbyHelpers();
+      showToast('Your availability is now live on the school standby board!', 'success');
+      navigateTo('offer-help');
+    }
+
+    function renderStandbyHelpers() {
+      const listEl = document.getElementById('standbyHelpersList');
+      if (!listEl) return;
+      listEl.innerHTML = '';
+
+      document.getElementById('standbyCountBadge').textContent = `${state.helpers.length} Available`;
+      document.getElementById('helperBadgeCount').textContent = state.helpers.length;
+      document.getElementById('liveHelpersStat').innerHTML = `<strong>${state.helpers.length} Teachers</strong> available for quick cover now`;
+
+      state.helpers.forEach(h => {
+        const slotsBadges = h.slots.map(s => `<span class="px-2 py-0.5 rounded-md text-[10px] font-bold bg-emerald-100 text-emerald-800">${s}</span>`).join(' ');
+        const capsList = h.capabilities.slice(0, 3).map(c => `• ${c}`).join(' ');
+
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-2.5';
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <div>
+              <h4 class="text-sm font-bold text-brand-ink">${h.name}</h4>
+              <p class="text-xs text-brand-muted flex items-center gap-1 mt-0.5">
+                <i data-lucide="map-pin" class="w-3 h-3 text-emerald-600"></i>
+                ${h.room}
+              </p>
+            </div>
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" title="Ready to help"></span>
+          </div>
+
+          <div class="flex flex-wrap gap-1">
+            ${slotsBadges}
+          </div>
+
+          <p class="text-[11px] text-slate-500 leading-snug">
+            ${capsList}
+          </p>
+
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-[10px] text-slate-400">Verified Faculty Member</span>
+            <button onclick="pingHelperDirectly('${h.name}', '${h.room}')" class="px-2.5 py-1 text-xs font-bold text-emerald-700 hover:bg-emerald-50 rounded-lg transition-colors flex items-center gap-1">
+              <i data-lucide="message-square" class="w-3 h-3"></i>
+              <span>Quick Ping</span>
+            </button>
+          </div>
+        `;
+        listEl.appendChild(card);
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function pingHelperDirectly(name, room) {
+      showToast(`Pinging ${name} (${room}) for quick classroom support.`, 'info');
+    }
+
+    // =========================================================================
+    // INTERACTIVE WELLBEING & MEDITATION ENGINE (WEB AUDIO API)
+    // =========================================================================
+    let audioCtx = null;
+    let currentNoiseNode = null;
+    let currentGainNode = null;
+    let activeSoundName = null;
+
+    function getAudioContext() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    // Pure synthesizer for chimes
+    function playChimeSound(freq = 528) {
+      const chimeEnabled = document.getElementById('chimeToggle')?.checked ?? true;
+      if (!chimeEnabled) return;
+
+      try {
+        const ctx = getAudioContext();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 1.2);
+
+        gain.gain.setValueAtTime(0.15, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 1.8);
+
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc.start();
+        osc.stop(ctx.currentTime + 1.8);
+      } catch (e) {
+        console.error('Audio chime error:', e);
+      }
+    }
+
+    // Soundscape Generator (Rain, Ocean, Singing Bowl, Alpha Wave)
+    function toggleAudioSound(type) {
+      if (activeSoundName === type) {
+        stopAllAudio();
+        return;
+      }
+      stopAllAudio();
+
+      try {
+        const ctx = getAudioContext();
+        activeSoundName = type;
+
+        // UI highlight
+        document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('border-brand-accent', 'bg-blue-50/50'));
+        const btn = document.getElementById('audio-btn-' + type);
+        if (btn) btn.classList.add('border-brand-accent', 'bg-blue-50/50');
+
+        const masterGain = ctx.createGain();
+        const volSlider = document.getElementById('soundVolume');
+        const volVal = (volSlider ? volSlider.value : 40) / 100;
+        masterGain.gain.setValueAtTime(volVal * 0.25, ctx.currentTime);
+        masterGain.connect(ctx.destination);
+        currentGainNode = masterGain;
+
+        if (type === 'rain') {
+          // Pink noise generator buffer for soft rain
+          const bufferSize = ctx.sampleRate * 2;
+          const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          let b0 = 0, b1 = 0, b2 = 0, b3 = 0, b4 = 0, b5 = 0, b6 = 0;
+          for (let i = 0; i < bufferSize; i++) {
+            const white = Math.random() * 2 - 1;
+            b0 = 0.99886 * b0 + white * 0.0555179;
+            b1 = 0.99332 * b1 + white * 0.0750759;
+            b2 = 0.96900 * b2 + white * 0.1538520;
+            b3 = 0.86650 * b3 + white * 0.3104856;
+            b4 = 0.55000 * b4 + white * 0.5329522;
+            b5 = -0.7616 * b5 - white * 0.0168980;
+            output[i] = (b0 + b1 + b2 + b3 + b4 + b5 + b6 + white * 0.5362) * 0.08;
+            b6 = white * 0.115926;
+          }
+
+          const whiteNoise = ctx.createBufferSource();
+          whiteNoise.buffer = noiseBuffer;
+          whiteNoise.loop = true;
+
+          // Low pass filter for soft rain
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(800, ctx.currentTime);
+
+          whiteNoise.connect(filter);
+          filter.connect(masterGain);
+          whiteNoise.start();
+          currentNoiseNode = whiteNoise;
+
+        } else if (type === 'singing-bowl' || type === 'alpha-drone') {
+          // Harmonic warm drone
+          const osc1 = ctx.createOscillator();
+          const osc2 = ctx.createOscillator();
+          osc1.type = 'sine';
+          osc2.type = 'triangle';
+
+          const baseFreq = type === 'singing-bowl' ? 432 : 136.1; // 432Hz or Om drone
+          osc1.frequency.setValueAtTime(baseFreq, ctx.currentTime);
+          osc2.frequency.setValueAtTime(baseFreq * 1.5, ctx.currentTime);
+
+          osc1.connect(masterGain);
+          osc2.connect(masterGain);
+          osc1.start();
+          osc2.start();
+          currentNoiseNode = {
+            stop: () => {
+              osc1.stop();
+              osc2.stop();
+            }
+          };
+
+        } else if (type === 'ocean') {
+          // Ocean rhythmic wave filter
+          const bufferSize = ctx.sampleRate * 2;
+          const noiseBuffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+          const output = noiseBuffer.getChannelData(0);
+          for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1;
+          }
+
+          const noise = ctx.createBufferSource();
+          noise.buffer = noiseBuffer;
+          noise.loop = true;
+
+          const filter = ctx.createBiquadFilter();
+          filter.type = 'bandpass';
+          filter.frequency.setValueAtTime(300, ctx.currentTime);
+          filter.Q.setValueAtTime(2.0, ctx.currentTime);
+
+          // LFO for ocean wave swell
+          const lfo = ctx.createOscillator();
+          lfo.frequency.setValueAtTime(0.12, ctx.currentTime); // one wave every ~8 seconds
+          const lfoGain = ctx.createGain();
+          lfoGain.gain.setValueAtTime(250, ctx.currentTime);
+          lfo.connect(lfoGain);
+          lfoGain.connect(filter.frequency);
+
+          noise.connect(filter);
+          filter.connect(masterGain);
+
+          lfo.start();
+          noise.start();
+          currentNoiseNode = {
+            stop: () => {
+              lfo.stop();
+              noise.stop();
+            }
+          };
+        }
+
+        showToast(`Playing ${type.replace('-', ' ')} soundscape. Enjoy your mental pause.`, 'info');
+      } catch (e) {
+        console.error('Audio playback error:', e);
+      }
+    }
+
+    function stopAllAudio() {
+      if (currentNoiseNode) {
+        try { currentNoiseNode.stop(); } catch (e) {}
+        currentNoiseNode = null;
+      }
+      activeSoundName = null;
+      document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('border-brand-accent', 'bg-blue-50/50'));
+    }
+
+    function setAudioVolume(val) {
+      if (currentGainNode && audioCtx) {
+        currentGainNode.gain.setValueAtTime((val / 100) * 0.25, audioCtx.currentTime);
+      }
+    }
+
+    // =========================================================================
+    // INTERACTIVE BOX BREATHING PACER
+    // =========================================================================
+    let breathInterval = null;
+    let breathIsRunning = false;
+    let breathCurrentPhaseIndex = 0;
+    let breathTimeRemainingInPhase = 4;
+    let breathCompletedCycles = 0;
+    let breathConfig = {
+      name: 'box',
+      phases: [
+        { label: 'Inhale', duration: 4, scale: 'scale-125', freq: 440 },
+        { label: 'Hold', duration: 4, scale: 'scale-125', freq: 520 },
+        { label: 'Exhale', duration: 4, scale: 'scale-90', freq: 360 },
+        { label: 'Hold', duration: 4, scale: 'scale-90', freq: 440 }
+      ]
+    };
+
+    function setBreathingTechnique(tech) {
+      resetBreathingGuide();
+      document.querySelectorAll('#breath-box-btn, #breath-calm-btn, #breath-trans-btn').forEach(b => {
+        b.classList.remove('bg-brand-ink', 'text-white');
+        b.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+      });
+
+      if (tech === 'box') {
+        document.getElementById('breath-box-btn').classList.add('bg-brand-ink', 'text-white');
+        document.getElementById('breathTitle').textContent = 'Guided Box Breathing (Samavritti)';
+        document.getElementById('breathDescription').textContent = 'Used by educators and emergency responders to immediately halt sympathetic overdrive. 4 seconds inhale, 4s hold, 4s exhale, 4s hold.';
+        breathConfig = {
+          name: 'box',
+          phases: [
+            { label: 'Inhale', duration: 4, scale: 'scale-125', freq: 440 },
+            { label: 'Hold', duration: 4, scale: 'scale-125', freq: 520 },
+            { label: 'Exhale', duration: 4, scale: 'scale-90', freq: 360 },
+            { label: 'Hold', duration: 4, scale: 'scale-90', freq: 440 }
+          ]
+        };
+      } else if (tech === 'calm') {
+        document.getElementById('breath-calm-btn').classList.add('bg-brand-ink', 'text-white');
+        document.getElementById('breathTitle').textContent = '4-7-8 Parasympathetic Vagus Nerve Reset';
+        document.getElementById('breathDescription').textContent = 'Dr. Andrew Weil’s relaxation technique. A longer exhale activates the vagus nerve and lowers heart rate rapidly during high-stress class transitions.';
+        breathConfig = {
+          name: 'calm',
+          phases: [
+            { label: 'Inhale', duration: 4, scale: 'scale-125', freq: 440 },
+            { label: 'Hold', duration: 7, scale: 'scale-125', freq: 520 },
+            { label: 'Exhale', duration: 8, scale: 'scale-90', freq: 330 }
+          ]
+        };
+      } else if (tech === 'transition') {
+        document.getElementById('breath-trans-btn').classList.add('bg-brand-ink', 'text-white');
+        document.getElementById('breathTitle').textContent = 'Quick Classroom Bell Reset (3-3)';
+        document.getElementById('breathDescription').textContent = 'Quick 3-second inhale and 3-second exhale designed for the 2-minute hallway passing period between class periods.';
+        breathConfig = {
+          name: 'transition',
+          phases: [
+            { label: 'Inhale', duration: 3, scale: 'scale-125', freq: 440 },
+            { label: 'Exhale', duration: 3, scale: 'scale-90', freq: 360 }
+          ]
+        };
+      }
+
+      breathTimeRemainingInPhase = breathConfig.phases[0].duration;
+      document.getElementById('breathTimerDisplay').textContent = breathTimeRemainingInPhase;
+      document.getElementById('breathPhaseText').textContent = breathConfig.phases[0].label;
+    }
+
+    function toggleBreathingGuide() {
+      if (breathIsRunning) {
+        pauseBreathingGuide();
+      } else {
+        startBreathingGuide();
+      }
+    }
+
+    function startBreathingGuide() {
+      breathIsRunning = true;
+      document.getElementById('breathPlayLabel').textContent = 'Pause Breathing';
+      document.getElementById('breathPlayIcon').setAttribute('data-lucide', 'pause');
+      if (window.lucide) lucide.createIcons();
+
+      const circle = document.getElementById('breathingCircle');
+      circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${breathConfig.phases[breathCurrentPhaseIndex].scale}`;
+
+      playChimeSound(breathConfig.phases[breathCurrentPhaseIndex].freq);
+
+      breathInterval = setInterval(() => {
+        breathTimeRemainingInPhase--;
+        if (breathTimeRemainingInPhase <= 0) {
+          breathCurrentPhaseIndex = (breathCurrentPhaseIndex + 1) % breathConfig.phases.length;
+          if (breathCurrentPhaseIndex === 0) {
+            breathCompletedCycles++;
+            document.getElementById('cycleCounterBadge').textContent = `${breathCompletedCycles} / 4`;
+          }
+          const nextPhase = breathConfig.phases[breathCurrentPhaseIndex];
+          breathTimeRemainingInPhase = nextPhase.duration;
+          document.getElementById('breathPhaseText').textContent = nextPhase.label;
+          circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${nextPhase.scale}`;
+          playChimeSound(nextPhase.freq);
+        }
+        document.getElementById('breathTimerDisplay').textContent = breathTimeRemainingInPhase;
+      }, 1000);
+    }
+
+    function pauseBreathingGuide() {
+      breathIsRunning = false;
+      clearInterval(breathInterval);
+      document.getElementById('breathPlayLabel').textContent = 'Resume Breathing';
+      document.getElementById('breathPlayIcon').setAttribute('data-lucide', 'play');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function resetBreathingGuide() {
+      pauseBreathingGuide();
+      breathCurrentPhaseIndex = 0;
+      breathCompletedCycles = 0;
+      breathTimeRemainingInPhase = breathConfig.phases[0].duration;
+      document.getElementById('breathTimerDisplay').textContent = breathTimeRemainingInPhase;
+      document.getElementById('breathPhaseText').textContent = breathConfig.phases[0].label;
+      document.getElementById('cycleCounterBadge').textContent = '0 / 4';
+      document.getElementById('breathPlayLabel').textContent = 'Start Breathing Guide';
+      const circle = document.getElementById('breathingCircle');
+      circle.className = 'w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-700 ease-in-out shadow-2xl shadow-blue-300/40';
+    }
+
+    // SOMATIC MICRO-BREAK GUIDE STEPPER
+    const somaticSteps = [
+      {
+        title: '1. Neck & Upper Trapezius Drop',
+        duration: '15s',
+        desc: 'Lower your right ear toward your right shoulder without lifting the shoulder. Gently place your right hand on your head (no pulling, just dead weight). Take two deep diaphragmatic breaths, noticing the release along the left neck tendon.'
+      },
+      {
+        title: '2. Seated Spinal Decompression Twist',
+        duration: '15s',
+        desc: 'Sit tall at the edge of your desk chair. Inhale to lengthen your spine. On the exhale, place your right hand on the outside of your left thigh and gently gaze over your left shoulder. Releases thoracic tension from leaning over student desks.'
+      },
+      {
+        title: '3. Shoulder Blade Retraction & Chest Opener',
+        duration: '15s',
+        desc: 'Interlace your fingers behind your back (or hold your chair back). Inhale as you roll your shoulder blades down and back, lifting your sternum toward the ceiling. Counters "whiteboard posture" and opening lung capacity.'
+      },
+      {
+        title: '4. Jaw, Brow & Eyestrain Dissolve',
+        duration: '15s',
+        desc: 'Close your eyes. Gently separate your teeth to unclamp the masseter jaw muscles. Rub your palms together briskly for 5 seconds to generate heat, then gently cup your warm palms over your closed eyelids.'
+      }
+    ];
+    let currentSomaticIndex = 0;
+
+    function renderSomaticStep() {
+      const step = somaticSteps[currentSomaticIndex];
+      document.getElementById('somaticStepTitle').innerHTML = `<i data-lucide="move" class="w-4 h-4 text-brand-accent"></i> ${step.title}`;
+      document.getElementById('somaticStepDesc').textContent = step.desc;
+      document.getElementById('somaticStepBadge').textContent = `Step ${currentSomaticIndex + 1} of 4`;
+
+      // Update dots
+      for (let i = 0; i < 4; i++) {
+        const dot = document.getElementById('dot-' + i);
+        if (i === currentSomaticIndex) {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-brand-accent somatic-dot';
+        } else {
+          dot.className = 'w-2.5 h-2.5 rounded-full bg-slate-200 somatic-dot';
+        }
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function nextSomaticStep() {
+      currentSomaticIndex = (currentSomaticIndex + 1) % somaticSteps.length;
+      renderSomaticStep();
+    }
+
+    function prevSomaticStep() {
+      currentSomaticIndex = (currentSomaticIndex - 1 + somaticSteps.length) % somaticSteps.length;
+      renderSomaticStep();
+    }
+
+    // GRATITUDE SHOUTOUTS
+    function openGratitudeModal() {
+      document.getElementById('gratitudeModal').classList.remove('hidden');
+    }
+
+    function closeGratitudeModal() {
+      document.getElementById('gratitudeModal').classList.add('hidden');
+    }
+
+    function submitGratitudeNote() {
+      const to = document.getElementById('kudosTo').value.trim();
+      const from = document.getElementById('kudosFrom').value.trim();
+      const msg = document.getElementById('kudosMessage').value.trim();
+
+      if (!to || !msg) {
+        showToast('Please specify the recipient and appreciation message.', 'error');
+        return;
+      }
+
+      state.kudos.unshift({
+        to: to,
+        from: from || 'Anonymous Colleague',
+        message: msg,
+        time: 'Just now'
+      });
+
+      persistState();
+      renderGratitudeNotes();
+      closeGratitudeModal();
+      showToast('Kudos posted! Dr. Adair’s research shows peer gratitude drives faculty retention.', 'success');
+      document.getElementById('kudosMessage').value = '';
+    }
+
+    function renderGratitudeNotes() {
+      const container = document.getElementById('gratitudeNotesList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      state.kudos.forEach(k => {
+        const card = document.createElement('div');
+        card.className = 'p-4 rounded-2xl bg-amber-50/40 border border-amber-200/80 shadow-sm space-y-2';
+        card.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+              <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+              To: ${k.to}
+            </span>
+            <span class="text-[10px] text-amber-700 font-semibold">${k.time}</span>
+          </div>
+          <p class="text-xs text-slate-700 italic leading-relaxed">
+            "${k.message}"
+          </p>
+          <div class="pt-1 text-[11px] font-bold text-amber-800 text-right">
+            — ${k.from}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // =========================================================================
+    // SMART GOALS BUILDER & EXPORT
+    // =========================================================================
+    const goalTemplates = {
+      departure: {
+        s: 'Leave the school building by 4:15 PM every Tuesday and Thursday',
+        m: 'Log departure times in phone calendar; achieve 8 target days per month',
+        a: 'Pack teaching bag during 5th period planning; walk out with Ms. Chen',
+        r: 'Prevents evening exhaustion so I remain patient with my students and family',
+        t: 'Evaluate success after 4 consecutive weeks'
+      },
+      'batch-grading': {
+        s: 'Zero grading during weekends by batch-evaluating student rubrics during Tuesday/Thursday planning blocks',
+        m: '100% of weekend hours kept completely free from school grading',
+        a: 'Use 4-criteria rubrics instead of handwritten essay marginalia',
+        r: 'Restores vital mental whitespace and protects emotional boundaries',
+        t: 'Implement for the upcoming 6-week grading cycle'
+      },
+      'mindful-transition': {
+        s: 'Dedicate the first 4 minutes of 1st period prep to silent diaphragmatic box breathing at desk',
+        m: 'Complete breathing guide 5 days per week',
+        a: 'Bookmark FacultyWell breathing visualizer as the home tab on classroom computer',
+        r: 'Down-regulates morning sympathetic tension and anchors a centered classroom tone',
+        t: 'Daily habit maintained across the entire semester'
+      },
+      mentoring: {
+        s: 'Conduct a 10-minute mutual aid check-in with early-career mentee every other Friday',
+        m: '2 structured peer debriefs completed every month',
+        a: 'Schedule during mutual prep block with tea/coffee in Room 210',
+        r: 'Strengthens teacher retention, resilience, and reciprocal pedagogical growth',
+        t: 'Review impact at mid-year faculty conference'
+      }
+    };
+
+    function toggleTemplateDropdown() {
+      document.getElementById('goalTemplatesMenu').classList.toggle('hidden');
+    }
+
+    function loadGoalTemplate(key) {
+      const t = goalTemplates[key];
+      if (!t) return;
+      document.getElementById('smartSpecific').value = t.s;
+      document.getElementById('smartMeasurable').value = t.m;
+      document.getElementById('smartAchievable').value = t.a;
+      document.getElementById('smartRelevant').value = t.r;
+      document.getElementById('smartTimeBound').value = t.t;
+      document.getElementById('goalTemplatesMenu').classList.add('hidden');
+      showToast('Loaded educator goal template! Feel free to customize.', 'info');
+    }
+
+    function clearGoalForm() {
+      document.getElementById('smartSpecific').value = '';
+      document.getElementById('smartMeasurable').value = '';
+      document.getElementById('smartAchievable').value = '';
+      document.getElementById('smartRelevant').value = '';
+      document.getElementById('smartTimeBound').value = '';
+    }
+
+    function saveSmartGoal() {
+      const s = document.getElementById('smartSpecific').value.trim();
+      const m = document.getElementById('smartMeasurable').value.trim();
+      const a = document.getElementById('smartAchievable').value.trim();
+      const r = document.getElementById('smartRelevant').value.trim();
+      const t = document.getElementById('smartTimeBound').value.trim();
+
+      if (!s) {
+        showToast('Please define the Specific (S) component of your goal.', 'error');
+        return;
+      }
+
+      state.goals.unshift({
+        id: 'goal-' + Date.now(),
+        specific: s,
+        measurable: m,
+        achievable: a,
+        relevant: r,
+        timeBound: t,
+        progress: 10,
+        completed: false
+      });
+
+      persistState();
+      renderSavedGoals();
+      showToast('SMART Goal added to your personal wellbeing plan!', 'success');
+    }
+
+    function renderSavedGoals() {
+      const container = document.getElementById('savedGoalsList');
+      if (!container) return;
+      container.innerHTML = '';
+
+      if (state.goals.length === 0) {
+        container.innerHTML = `
+          <div class="p-6 rounded-2xl bg-white border border-slate-200 text-center text-xs text-slate-500">
+            No goals saved yet. Use the builder on the left to create your first wellbeing boundary!
+          </div>
+        `;
+        return;
+      }
+
+      state.goals.forEach(g => {
+        const card = document.createElement('div');
+        card.className = 'p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3';
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2">
+            <h4 class="text-sm font-bold text-brand-ink leading-snug">${g.specific}</h4>
+            <button onclick="deleteGoal('${g.id}')" class="no-print text-slate-400 hover:text-rose-500 transition-colors p-1" title="Delete Goal">
+              <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            </button>
+          </div>
+
+          <div class="space-y-1.5 text-xs text-slate-600 bg-slate-50 p-3 rounded-xl border border-slate-100 font-normal">
+            <p><strong>Track:</strong> ${g.measurable}</p>
+            <p><strong>System:</strong> ${g.achievable}</p>
+            <p><strong>Why:</strong> ${g.relevant}</p>
+            <p class="text-indigo-700 font-semibold"><strong>Target:</strong> ${g.timeBound}</p>
+          </div>
+
+          <!-- Progress Bar & Checkoff -->
+          <div class="pt-2 border-t border-slate-100 flex items-center justify-between gap-3">
+            <div class="flex-grow">
+              <div class="flex justify-between text-[11px] font-bold mb-1">
+                <span class="text-slate-500">Milestone Progress</span>
+                <span class="text-indigo-600">${g.progress}%</span>
+              </div>
+              <div class="w-full bg-slate-200 rounded-full h-2">
+                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${g.progress}%"></div>
+              </div>
+            </div>
+
+            <button onclick="incrementGoalProgress('${g.id}')" class="no-print px-2.5 py-1 text-xs font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg transition-colors flex items-center gap-1">
+              <i data-lucide="plus" class="w-3 h-3"></i>
+              <span>+25%</span>
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function incrementGoalProgress(id) {
+      const g = state.goals.find(x => x.id === id);
+      if (g) {
+        g.progress = Math.min(100, g.progress + 25);
+        if (g.progress === 100) {
+          playChimeSound(660);
+          showToast('Congratulations! Goal milestone 100% achieved!', 'success');
+        }
+        persistState();
+        renderSavedGoals();
+      }
+    }
+
+    function deleteGoal(id) {
+      state.goals = state.goals.filter(x => x.id !== id);
+      persistState();
+      renderSavedGoals();
+      showToast('Goal removed.', 'info');
+    }
+
+    // =========================================================================
+    // EMERGENCY QUICK MODAL
+    // =========================================================================
+    function triggerQuickEmergencyModal() {
+      document.getElementById('quickEmergencyModal').classList.remove('hidden');
+    }
+
+    function closeQuickEmergencyModal() {
+      document.getElementById('quickEmergencyModal').classList.add('hidden');
+    }
+
+    function sendImmediateEmergency() {
+      const emType = document.getElementById('emTypeSelect').value;
+      const emLoc = document.getElementById('emLocationInput').value.trim() || 'Room 214';
+      const emDetail = document.getElementById('emDetailInput').value.trim() || 'Urgent assistance requested';
+
+      const emReq = {
+        id: 'em-' + Date.now(),
+        teacher: 'URGENT ALERT (Immediate Staff Backup)',
+        room: emLoc,
+        options: [emType],
+        note: emDetail,
+        timestamp: 'Just now',
+        urgent: true,
+        status: 'Open',
+        claimedBy: null
+      };
+
+      state.requests.unshift(emReq);
+      persistState();
+      renderRequestsFeed();
+      closeQuickEmergencyModal();
+
+      // Sound high audible chime
+      playChimeSound(880);
+      showToast(`EMERGENCY BROADCAST TRANSMITTED: All available personnel alerted to ${emLoc}!`, 'error');
+      navigateTo('request-help');
+    }
+
+    // TOAST NOTIFICATIONS
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      
+      let bgStyle = 'bg-slate-900 text-white border-slate-800';
+      let icon = 'info';
+      if (type === 'success') {
+        bgStyle = 'bg-emerald-900 text-emerald-100 border-emerald-700';
+        icon = 'check-circle';
+      } else if (type === 'error') {
+        bgStyle = 'bg-rose-900 text-rose-100 border-rose-700';
+        icon = 'alert-triangle';
+      }
+
+      toast.className = `pointer-events-auto p-3.5 rounded-2xl shadow-2xl border text-xs font-semibold flex items-center gap-2.5 max-w-sm transition-all duration-300 transform translate-y-2 opacity-0 ${bgStyle}`;
+      toast.innerHTML = `
+        <i data-lucide="${icon}" class="w-4 h-4 flex-shrink-0"></i>
+        <span>${message}</span>
+      `;
+
+      container.appendChild(toast);
+      if (window.lucide) lucide.createIcons();
+
+      // Animate in
+      setTimeout(() => {
+        toast.classList.remove('translate-y-2', 'opacity-0');
+      }, 10);
+
+      // Dismiss after 4 seconds
+      setTimeout(() => {
+        toast.classList.add('opacity-0', 'translate-x-4');
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // GLOBAL INITIALIZATION ON LOAD
+    window.addEventListener('DOMContentLoaded', () => {
+      loadSavedState();
+      renderRequestsFeed();
+      renderStandbyHelpers();
+      renderGratitudeNotes();
+      renderSavedGoals();
+      renderSomaticStep();
+      if (window.lucide) lucide.createIcons();
+
+      // Close dropdowns on outside click
+      document.addEventListener('click', (e) => {
+        const schoolDropdown = document.getElementById('schoolDropdownMenu');
+        const schoolBtn = document.getElementById('schoolDropdownBtn');
+        if (schoolDropdown && !schoolDropdown.contains(e.target) && !schoolBtn.contains(e.target)) {
+          schoolDropdown.classList.add('hidden');
+        }
+
+        const goalMenu = document.getElementById('goalTemplatesMenu');
+        if (goalMenu && !goalMenu.contains(e.target) && !e.target.closest('button[onclick="toggleTemplateDropdown()"]')) {
+          goalMenu.classList.add('hidden');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

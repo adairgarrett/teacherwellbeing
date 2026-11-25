@@ -1,0 +1,4 @@
+*.docx
+website_design.md
+*.png
+!headshot.png
