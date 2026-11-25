@@ -8,7 +8,10 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="FacultyWell">
   <meta name="format-detection" content="telephone=no">
-  <meta name="theme-color" content="#F8FAFC">
+  <meta name="theme-color" content="#0A1128">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
   <title>FacultyWell | Teacher Mutual Aid & Wellbeing Network</title>
   <!-- Tailwind CSS via CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -28,16 +31,31 @@
         extend: {
           colors: {
             brand: {
-              soft: '#F0F7FD',       // Calming soft ice-blue background
-              softHover: '#E1EFFF',  // Hover soft blue
-              light: '#DBEAFE',      // Light border blue
-              accent: '#2563EB',     // Sleek vivid blue
-              accentDark: '#1D4ED8', // Darker vivid blue
-              sky: '#0EA5E9',        // Sky blue for mindful accents
-              ink: '#090D16',        // Deep modern sleek black
-              slate: '#1E293B',      // Secondary dark text
-              muted: '#64748B',      // Muted slate
-              border: '#E2E8F0',     // Subtle border
+              // Exact 5-Color Serene Palette
+              prussian: '#0A1128',    // Prussian Blue (Deepest background/headers/ink)
+              navy: '#001F54',        // Deep Navy (Primary actions, confident academic foundation)
+              cyan: '#55868C',        // Dark Cyan (Serene calming teal/mint accent)
+              rose: '#7F636E',        // Smoky Rose (Dignified, warm caring & gentle urgency)
+              linen: '#FEFCFB',       // Warm White / Alabaster (Pristine serene background)
+
+              // Soft tints for mindful cards & tags
+              cyanSoft: '#EFF5F6',    // Soft serene cyan wash
+              cyanHover: '#477278',   // Deeper cyan for hover
+              roseSoft: '#F7F2F4',    // Soft smoky rose wash
+              roseHover: '#6B525D',   // Deeper smoky rose
+              navySoft: '#EDF2F8',    // Soft navy wash
+
+              // Mappings to streamline existing utility styles
+              soft: '#F3F7F8',        // Calming linen-cyan wash
+              softHover: '#E7EFF1',   // Hover wash
+              light: '#DCE7E9',       // Light border
+              accent: '#001F54',      // Deep Navy primary accent
+              accentDark: '#0A1128',  // Prussian Blue
+              serene: '#55868C',      // Dark Cyan
+              ink: '#0A1128',         // Prussian Blue primary text
+              slate: '#1E2B37',       // Secondary deep text
+              muted: '#627282',       // Soft muted slate
+              border: '#E1E9EA',      // Soft calming border
             }
           },
           fontFamily: {
@@ -47,15 +65,15 @@
           keyframes: {
             pulseGlow: {
               '0%, 100%': { transform: 'scale(1)', opacity: '1' },
-              '50%': { transform: 'scale(1.03)', opacity: '0.85' },
+              '50%': { transform: 'scale(1.02)', opacity: '0.9' },
             },
             breatheCircle: {
               '0%, 100%': { transform: 'scale(0.85)' },
-              '50%': { transform: 'scale(1.25)' },
+              '50%': { transform: 'scale(1.22)' },
             }
           },
           animation: {
-            'pulse-glow': 'pulseGlow 2.5s ease-in-out infinite',
+            'pulse-glow': 'pulseGlow 3s ease-in-out infinite',
             'breathe': 'breatheCircle 8s ease-in-out infinite',
           }
         }
@@ -69,11 +87,14 @@
       -webkit-text-size-adjust: 100%;
       -webkit-tap-highlight-color: transparent;
       touch-action: manipulation;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: #FEFCFB;
     }
 
     body {
-      background-color: #F8FAFC;
-      color: #090D16;
+      background-color: #FEFCFB;
+      color: #0A1128;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: env(safe-area-inset-bottom, 0px);
@@ -82,14 +103,8 @@
       overflow-x: hidden;
     }
 
-    html {
-      max-width: 100%;
-      overflow-x: hidden;
-    }
-
     /* Prevent iOS Safari auto-zoom when tapping inputs (triggers if font < 16px) */
     @media screen and (max-width: 768px) {
-
       input[type="text"],
       input[type="email"],
       input[type="number"],
@@ -102,7 +117,6 @@
 
     /* Mobile touch target minimum standards (Apple HIG) */
     @media (hover: none) and (pointer: coarse) {
-
       button,
       a,
       input,
@@ -113,38 +127,39 @@
       }
     }
 
-    /* Custom subtle glass & borders */
+    /* Custom Serene Glass & Soft Borders */
     .glass-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(226, 232, 240, 0.85);
+      background: rgba(254, 252, 251, 0.94);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(85, 134, 140, 0.16);
+      box-shadow: 0 4px 20px -2px rgba(10, 17, 40, 0.03);
     }
 
     .soft-blue-gradient {
-      background: linear-gradient(135deg, #F0F7FD 0%, #FFFFFF 100%);
+      background: linear-gradient(135deg, #F3F7F8 0%, #FEFCFB 100%);
     }
 
     .hero-glow {
-      background: radial-gradient(circle at 50% 10%, rgba(37, 99, 235, 0.08) 0%, rgba(240, 247, 253, 0) 70%);
+      background: radial-gradient(circle at 50% 12%, rgba(85, 134, 140, 0.09) 0%, rgba(0, 31, 84, 0.03) 40%, rgba(254, 252, 251, 0) 75%);
     }
 
-    /* Custom scrollbar */
+    /* Custom serene scrollbar */
     ::-webkit-scrollbar {
       width: 6px;
       height: 6px;
     }
 
     ::-webkit-scrollbar-track {
-      background: #F1F5F9;
+      background: #F3F7F8;
     }
 
     ::-webkit-scrollbar-thumb {
-      background: #CBD5E1;
+      background: #CCD8DA;
       border-radius: 9999px;
     }
 
     ::-webkit-scrollbar-thumb:hover {
-      background: #94A3B8;
+      background: #55868C;
     }
 
     /* Print styles for SMART goals */
@@ -176,7 +191,7 @@
 <body class="min-h-screen flex flex-col antialiased selection:bg-brand-accent selection:text-white">
 
   <!-- TOP ANNOUNCEMENT BAR -->
-  <header class="bg-brand-ink text-white text-xs border-b border-gray-800 sticky top-0 z-50">
+  <header class="bg-[#0A1128] text-white text-xs border-b border-[#001F54] sticky top-0 z-50">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center space-x-3">
         <span
@@ -235,7 +250,7 @@
   </header>
 
   <!-- MAIN NAVIGATION BAR -->
-  <nav class="bg-white border-b border-slate-200 sticky top-9 z-40 shadow-sm">
+  <nav class="bg-[#FEFCFB]/95 backdrop-blur-md border-b border-[#55868C]/20 sticky top-9 z-40 shadow-sm">
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center gap-2">
         <!-- Logo -->
@@ -296,10 +311,17 @@
 
         <!-- Quick Urgent Action Button -->
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <button onclick="openInstallAppModal()"
+            class="hidden lg:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#EFF5F6] text-[#55868C] hover:bg-[#E2EDEF] border border-[#55868C]/30 transition-colors shadow-sm"
+            title="Add to iPhone or Android Home Screen">
+            <i data-lucide="smartphone" class="w-3.5 h-3.5 text-[#55868C]"></i>
+            <span>Install App</span>
+          </button>
+
           <button onclick="triggerQuickEmergencyModal()"
-            class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200 transition-colors flex items-center gap-1.5 shadow-sm">
-            <span class="w-2 h-2 rounded-full bg-rose-600 animate-ping flex-shrink-0"></span>
-            <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-rose-600 flex-shrink-0"></i>
+            class="px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#F7F2F4] text-[#7F636E] hover:bg-[#EFE8EB] border border-[#7F636E]/30 transition-colors flex items-center gap-1.5 shadow-sm">
+            <span class="w-2 h-2 rounded-full bg-[#7F636E] animate-ping flex-shrink-0"></span>
+            <i data-lucide="alert-octagon" class="w-3.5 h-3.5 text-[#7F636E] flex-shrink-0"></i>
             <span class="hidden sm:inline">Immediate Emergency</span>
             <span class="sm:hidden font-bold">Emergency</span>
           </button>
@@ -315,7 +337,11 @@
     </div>
 
     <!-- Mobile Navigation Drawer -->
-    <div id="mobileMenu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 pt-2 pb-4 space-y-1">
+    <div id="mobileMenu" class="hidden md:hidden border-t border-[#55868C]/20 bg-[#FEFCFB] px-4 pt-2 pb-4 space-y-1">
+      <button onclick="openInstallAppModal(); toggleMobileMenu()"
+        class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-[#55868C] bg-[#EFF5F6] flex items-center gap-2 border border-[#55868C]/30 mb-1">
+        <i data-lucide="smartphone" class="w-4 h-4"></i> 📲 Add FacultyWell to iPhone / Android
+      </button>
       <button onclick="navigateTo('request-help'); toggleMobileMenu()"
         class="w-full text-left px-3 py-2.5 rounded-lg text-sm font-semibold text-brand-accent bg-brand-soft flex items-center gap-2">
         <i data-lucide="help-circle" class="w-4 h-4"></i> Request Help
@@ -356,14 +382,13 @@
 
         <!-- HERO HEADER -->
         <div class="text-center max-w-3xl mx-auto space-y-4">
-          <div
-            class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-brand-soft text-brand-accent border border-blue-200/80">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-[#EFF5F6] text-[#55868C] border border-[#55868C]/30">
             <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
             <span>Confidential, Safe & Collegial Peer Support</span>
           </div>
 
-          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-brand-ink tracking-tight">
-            What do you need <span class="text-brand-accent">today?</span>
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#0A1128] tracking-tight">
+            What do you need <span class="text-[#001F54]">today?</span>
           </h1>
 
           <p class="text-base sm:text-lg text-brand-muted leading-relaxed font-normal">
@@ -380,15 +405,15 @@
             class="lg:col-span-7 glass-card rounded-3xl p-6 sm:p-8 shadow-xl shadow-blue-900/5 border border-slate-200">
             <div class="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
               <div>
-                <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
-                  <i data-lucide="layers" class="w-5 h-5 text-brand-accent"></i>
+                <h2 class="text-xl font-bold text-[#0A1128] flex items-center gap-2">
+                  <i data-lucide="layers" class="w-5 h-5 text-[#001F54]"></i>
                   Select What You Need
                 </h2>
-                <p class="text-xs text-brand-muted mt-0.5">Click any category below to select what you need (selecting
+                <p class="text-xs text-[#627282] mt-0.5">Click any category below to select what you need (selecting
                   an option automatically deselects others).
                 </p>
               </div>
-              <span class="text-xs font-semibold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full"
+              <span class="text-xs font-bold px-2.5 py-1 bg-[#EFF5F6] text-[#55868C] rounded-full border border-[#55868C]/30"
                 id="selectedOptionsCounter">1 selected</span>
             </div>
 
@@ -401,44 +426,44 @@
 
                 <!-- Option 1: Watch Class (with duration selector including Full Period) -->
                 <div onclick="toggleRequestOption('watch-class')" id="opt-watch-class"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-brand-accent bg-blue-50/40 hover:border-blue-500 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-[#55868C] bg-[#EFF5F6] hover:border-[#477278] transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-blue-100 text-brand-accent flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#DCE7E9] text-[#001F54] flex items-center justify-center font-bold">
                         <i data-lucide="clock" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-brand-ink">Watch My Class</h3>
-                        <p class="text-xs text-brand-muted">Restroom, phone call, stepping out, full period</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">Watch My Class</h3>
+                        <p class="text-xs text-[#627282]">Restroom, phone call, stepping out, full period</p>
                       </div>
                     </div>
                     <div
-                      class="opt-checkbox w-5 h-5 rounded-md border border-brand-accent bg-brand-accent flex items-center justify-center text-white">
+                      class="opt-checkbox w-5 h-5 rounded-md border border-[#55868C] bg-[#55868C] flex items-center justify-center text-white">
                       <i data-lucide="check" class="w-3.5 h-3.5 check-icon"></i>
                     </div>
                   </div>
 
                   <!-- Sub-selector for Minutes / Full Period -->
                   <div id="sub-duration-box"
-                    class="mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap items-center justify-between gap-2"
+                    class="mt-3 pt-3 border-t border-[#55868C]/30 flex flex-wrap items-center justify-between gap-2"
                     onclick="event.stopPropagation()">
-                    <span class="text-xs font-semibold text-slate-600">Duration:</span>
+                    <span class="text-xs font-semibold text-slate-700">Duration:</span>
                     <div class="flex flex-wrap items-center gap-1.5">
                       <button type="button" onclick="setWatchMinutes(5)"
-                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-blue-300 bg-blue-600 text-white"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-[#001F54] bg-[#001F54] text-white"
                         data-min="5">5 min</button>
                       <button type="button" onclick="setWatchMinutes(10)"
-                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8]"
                         data-min="10">10 min</button>
                       <button type="button" onclick="setWatchMinutes(15)"
-                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8]"
                         data-min="15">15 min</button>
                       <button type="button" onclick="setWatchMinutes(30)"
-                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8]"
                         data-min="30">Half Period</button>
                       <button type="button" onclick="setWatchMinutes('Full Period')"
-                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-slate-100"
+                        class="min-btn px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8]"
                         data-min="Full Period">Full Period (45-60m)</button>
                     </div>
                   </div>
@@ -446,16 +471,16 @@
 
                 <!-- Option 2: Urgent / Emergency (Fight, de-escalation) -->
                 <div onclick="toggleRequestOption('urgent-emergency')" id="opt-urgent-emergency"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-rose-400 hover:bg-rose-50/30 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#7F636E] hover:bg-[#F7F2F4]/40 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#F7F2F4] text-[#7F636E] flex items-center justify-center font-bold">
                         <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-rose-900">Urgent / De-escalation</h3>
-                        <p class="text-xs text-rose-600 font-medium">Fight, crisis, admin backup</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">Urgent / De-escalation</h3>
+                        <p class="text-xs text-[#7F636E] font-medium">Fight, crisis, admin backup</p>
                       </div>
                     </div>
                     <div
@@ -465,32 +490,32 @@
                   </div>
 
                   <!-- Sub-options for Urgent -->
-                  <div id="sub-urgent-box" class="hidden mt-3 pt-3 border-t border-rose-200/80 flex flex-wrap gap-1.5"
+                  <div id="sub-urgent-box" class="hidden mt-3 pt-3 border-t border-[#7F636E]/30 flex flex-wrap gap-1.5"
                     onclick="event.stopPropagation()">
                     <button type="button"
                       onclick="selectSubOption('urgent-emergency', 'Student Conflict / Fight', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Student
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">Student
                       Fight</button>
                     <button type="button" onclick="selectSubOption('urgent-emergency', 'Classroom De-escalation', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">De-escalation</button>
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">De-escalation</button>
                     <button type="button" onclick="selectSubOption('urgent-emergency', 'Administrator Needed', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Admin
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">Admin
                       Backup</button>
                   </div>
                 </div>
 
                 <!-- Option 3: Medical Emergency -->
                 <div onclick="toggleRequestOption('medical-emergency')" id="opt-medical-emergency"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-red-400 hover:bg-red-50/30 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#7F636E] hover:bg-[#F7F2F4]/40 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-red-100 text-red-600 flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#F7F2F4] text-[#7F636E] flex items-center justify-center font-bold">
                         <i data-lucide="cross" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-red-900">Medical Emergency</h3>
-                        <p class="text-xs text-red-600 font-medium">Injury, seizure, allergic reaction</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">Medical Emergency</h3>
+                        <p class="text-xs text-[#7F636E] font-medium">Injury, seizure, allergic reaction</p>
                       </div>
                     </div>
                     <div
@@ -500,34 +525,34 @@
                   </div>
 
                   <!-- Sub-options for Medical Emergency -->
-                  <div id="sub-medical-box" class="hidden mt-3 pt-3 border-t border-red-200/80 flex flex-wrap gap-1.5"
+                  <div id="sub-medical-box" class="hidden mt-3 pt-3 border-t border-[#7F636E]/30 flex flex-wrap gap-1.5"
                     onclick="event.stopPropagation()">
                     <button type="button" onclick="selectSubOption('medical-emergency', 'Injury / Bleeding', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Injury
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">Injury
                       / Bleeding</button>
                     <button type="button"
                       onclick="selectSubOption('medical-emergency', 'Severe Allergy / EpiPen', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Allergy
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">Allergy
                       / EpiPen</button>
                     <button type="button"
                       onclick="selectSubOption('medical-emergency', 'Seizure / Fainting / 911', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Seizure
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#7F636E]/30 bg-white text-[#7F636E] hover:bg-[#F7F2F4] transition-colors">Seizure
                       / 911</button>
                   </div>
                 </div>
 
                 <!-- Option 4: I Need a Nurse -->
                 <div onclick="toggleRequestOption('need-nurse')" id="opt-need-nurse"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-amber-400 hover:bg-amber-50/30 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#55868C] hover:bg-[#EFF5F6]/40 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#EFF5F6] text-[#55868C] flex items-center justify-center font-bold">
                         <i data-lucide="stethoscope" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-brand-ink">I Need a Nurse</h3>
-                        <p class="text-xs text-brand-muted">Clinic visit, student sick, medication</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">I Need a Nurse</h3>
+                        <p class="text-xs text-[#627282]">Clinic visit, student sick, medication</p>
                       </div>
                     </div>
                     <div
@@ -537,32 +562,32 @@
                   </div>
 
                   <!-- Sub-options for Nurse -->
-                  <div id="sub-nurse-box" class="hidden mt-3 pt-3 border-t border-amber-200/80 flex flex-wrap gap-1.5"
+                  <div id="sub-nurse-box" class="hidden mt-3 pt-3 border-t border-[#55868C]/30 flex flex-wrap gap-1.5"
                     onclick="event.stopPropagation()">
                     <button type="button" onclick="selectSubOption('need-nurse', 'Send Nurse to My Classroom', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Send
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">Send
                       Nurse to Room</button>
                     <button type="button" onclick="selectSubOption('need-nurse', 'Escort Student to Clinic', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Escort
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">Escort
                       to Clinic</button>
                     <button type="button" onclick="selectSubOption('need-nurse', 'Medication / Diabetic Care', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Medication
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">Medication
                       Check</button>
                   </div>
                 </div>
 
                 <!-- Option 5: Supplies / Copies / Tech Run -->
                 <div onclick="toggleRequestOption('supplies-copies')" id="opt-supplies-copies"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-blue-400 hover:bg-blue-50/30 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#001F54] hover:bg-[#EDF2F8]/40 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#EDF2F8] text-[#001F54] flex items-center justify-center font-bold">
                         <i data-lucide="printer" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-brand-ink">Supplies / Print Job</h3>
-                        <p class="text-xs text-brand-muted">Urgent copies, markers, lab gear</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">Supplies / Print Job</h3>
+                        <p class="text-xs text-[#627282]">Urgent copies, markers, lab gear</p>
                       </div>
                     </div>
                     <div
@@ -572,34 +597,34 @@
                   </div>
 
                   <!-- Sub-options for Supplies -->
-                  <div id="sub-supplies-box" class="hidden mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap gap-1.5"
+                  <div id="sub-supplies-box" class="hidden mt-3 pt-3 border-t border-[#001F54]/20 flex flex-wrap gap-1.5"
                     onclick="event.stopPropagation()">
                     <button type="button" onclick="selectSubOption('supplies-copies', 'Urgent Print Copies Run', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Urgent
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#001F54]/20 bg-white text-[#001F54] hover:bg-[#EDF2F8] transition-colors">Urgent
                       Print Copies</button>
                     <button type="button"
                       onclick="selectSubOption('supplies-copies', 'Whiteboard Markers / Erasers', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Whiteboard
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#001F54]/20 bg-white text-[#001F54] hover:bg-[#EDF2F8] transition-colors">Whiteboard
                       Markers</button>
                     <button type="button"
                       onclick="selectSubOption('supplies-copies', 'Paper / Pencils / Supplies', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Paper
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#001F54]/20 bg-white text-[#001F54] hover:bg-[#EDF2F8] transition-colors">Paper
                       / Pencils</button>
                   </div>
                 </div>
 
                 <!-- Option 6: 3-Min Mindful Reset / Emotional Debrief -->
                 <div onclick="toggleRequestOption('mindful-reset')" id="opt-mindful-reset"
-                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-teal-400 hover:bg-teal-50/30 transition-all select-none">
+                  class="request-option-card cursor-pointer p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-[#55868C] hover:bg-[#EFF5F6]/40 transition-all select-none">
                   <div class="flex items-start justify-between">
                     <div class="flex items-center gap-3">
                       <div
-                        class="w-9 h-9 rounded-xl bg-teal-100 text-teal-700 flex items-center justify-center font-bold">
+                        class="w-9 h-9 rounded-xl bg-[#EFF5F6] text-[#55868C] flex items-center justify-center font-bold">
                         <i data-lucide="wind" class="w-4 h-4"></i>
                       </div>
                       <div>
-                        <h3 class="text-sm font-bold text-brand-ink">Mindful Reset / Debrief</h3>
-                        <p class="text-xs text-brand-muted">Need 3 min breathing space / peer ear</p>
+                        <h3 class="text-sm font-bold text-[#0A1128]">Mindful Reset / Debrief</h3>
+                        <p class="text-xs text-[#627282]">Need 3 min breathing space / peer ear</p>
                       </div>
                     </div>
                     <div
@@ -609,17 +634,17 @@
                   </div>
 
                   <!-- Sub-options for Mindful Reset -->
-                  <div id="sub-mindful-box" class="hidden mt-3 pt-3 border-t border-teal-200/80 flex flex-wrap gap-1.5"
+                  <div id="sub-mindful-box" class="hidden mt-3 pt-3 border-t border-[#55868C]/30 flex flex-wrap gap-1.5"
                     onclick="event.stopPropagation()">
                     <button type="button" onclick="selectSubOption('mindful-reset', '5-Minute Quiet Step-Out', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">5-Min
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">5-Min
                       Step-Out</button>
                     <button type="button"
                       onclick="selectSubOption('mindful-reset', 'Peer Listening Ear / Debrief', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Peer
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">Peer
                       Listening Ear</button>
                     <button type="button" onclick="selectSubOption('mindful-reset', 'Quiet Hallway Reset', this)"
-                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Quiet
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-[#55868C]/30 bg-white text-[#55868C] hover:bg-[#EFF5F6] transition-colors">Quiet
                       Reset</button>
                   </div>
                 </div>
@@ -674,8 +699,8 @@
               </div>
 
               <button type="button" onclick="submitHelpRequest()"
-                class="w-full sm:w-auto px-6 py-3 rounded-xl bg-brand-ink hover:bg-slate-800 text-white font-bold text-sm shadow-lg shadow-black/10 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
-                <i data-lucide="send" class="w-4 h-4 text-blue-400"></i>
+                class="w-full sm:w-auto px-6 py-3 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-sm shadow-lg shadow-[#001F54]/20 transition-all flex items-center justify-center gap-2 hover:-translate-y-0.5">
+                <i data-lucide="send" class="w-4 h-4 text-[#55868C]"></i>
                 <span>Broadcast Request to Staff</span>
               </button>
             </div>
@@ -687,8 +712,8 @@
 
             <div class="flex items-center justify-between">
               <div>
-                <h2 class="text-xl font-bold text-brand-ink flex items-center gap-2">
-                  <i data-lucide="radio" class="w-5 h-5 text-rose-500 animate-pulse"></i>
+                <h2 class="text-xl font-bold text-[#0A1128] flex items-center gap-2">
+                  <i data-lucide="radio" class="w-5 h-5 text-[#7F636E] animate-pulse"></i>
                   Live Campus Board
                 </h2>
                 <p class="text-xs text-brand-muted">Active peer requests at <span class="font-semibold text-brand-slate"
@@ -792,52 +817,52 @@
 
               <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2" id="availTimeSlots">
                 <button type="button" onclick="toggleAvailSlot(this, 'Right Now')"
-                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-[#55868C] bg-[#EFF5F6] text-[#001F54] flex items-center justify-between">
                   <span>Right Now</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 1')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Period 1</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 2')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Period 2</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 3')"
-                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-[#55868C] bg-[#EFF5F6] text-[#001F54] flex items-center justify-between">
                   <span>Period 3</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 4')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Period 4</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 5')"
-                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-emerald-400 bg-emerald-50 text-emerald-800 flex items-center justify-between">
+                  class="avail-slot-btn active-slot px-3 py-2 text-xs font-bold rounded-xl border border-[#55868C] bg-[#EFF5F6] text-[#001F54] flex items-center justify-between">
                   <span>Period 5</span>
                   <i data-lucide="check" class="w-3.5 h-3.5"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 6')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Period 6</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Period 7')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Period 7</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'Lunch Block')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>Lunch Block</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
                 <button type="button" onclick="toggleAvailSlot(this, 'After School')"
-                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+                  class="avail-slot-btn px-3 py-2 text-xs font-medium rounded-xl border border-slate-200 bg-white text-slate-700 hover:bg-[#F3F7F8] flex items-center justify-between">
                   <span>After School</span>
                   <i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>
                 </button>
@@ -902,7 +927,7 @@
 
             <!-- Submit Availability -->
             <button onclick="saveHelperAvailability()"
-              class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+              class="w-full py-3 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
               <i data-lucide="check-circle-2" class="w-4 h-4"></i>
               <span>Publish My Availability Status</span>
             </button>
@@ -963,7 +988,7 @@
               class="lg:col-span-5 flex flex-col items-center justify-center p-6 bg-brand-soft rounded-2xl border border-blue-100 min-h-[340px] relative overflow-hidden">
               <!-- Animated Ring -->
               <div id="breathingCircle"
-                class="w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[4000ms] ease-in-out shadow-2xl shadow-blue-300/40">
+                class="w-48 h-48 rounded-full bg-gradient-to-tr from-[#55868C] to-[#7EA9AF] opacity-90 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[4000ms] ease-in-out shadow-2xl shadow-[#55868C]/30">
                 <div
                   class="w-36 h-36 rounded-full bg-white/20 backdrop-blur-sm flex flex-col items-center justify-center">
                   <span id="breathPhaseText" class="text-lg uppercase tracking-wider font-extrabold">Inhale</span>
@@ -1002,7 +1027,7 @@
               <!-- Interactive Controls -->
               <div class="flex items-center gap-3 pt-2">
                 <button id="toggleBreathBtn" onclick="toggleBreathingGuide()"
-                  class="px-6 py-3 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
+                  class="px-6 py-3 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-sm shadow-md transition-all flex items-center gap-2">
                   <i data-lucide="play" id="breathPlayIcon" class="w-4 h-4"></i>
                   <span id="breathPlayLabel">Start Breathing Guide</span>
                 </button>
@@ -1198,7 +1223,7 @@
             <div class="flex items-center justify-between pb-4 border-b border-slate-100">
               <div>
                 <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
-                  <i data-lucide="edit-3" class="w-5 h-5 text-indigo-600"></i>
+                  <i data-lucide="edit-3" class="w-5 h-5 text-[#001F54]"></i>
                   SMART Goal Framework
                 </h3>
                 <p class="text-xs text-brand-muted">Fill out each dimension or load an educator-tested template below.
@@ -1209,7 +1234,7 @@
               <div class="relative">
                 <button onclick="toggleTemplateDropdown()"
                   class="px-3 py-1.5 rounded-lg text-xs font-bold bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-200 flex items-center gap-1.5">
-                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-indigo-600"></i>
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#001F54]"></i>
                   <span>Load Preset Template</span>
                   <i data-lucide="chevron-down" class="w-3 h-3"></i>
                 </button>
@@ -1240,9 +1265,9 @@
               <!-- S: Specific -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
                 <label
-                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  class="flex items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider mb-1">
                   <span
-                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">S</span>
+                    class="w-5 h-5 rounded-full bg-[#001F54] text-white flex items-center justify-center font-bold text-[11px]">S</span>
                   Specific — What exactly will you achieve?
                 </label>
                 <input type="text" id="smartSpecific"
@@ -1254,9 +1279,9 @@
               <!-- M: Measurable -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
                 <label
-                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  class="flex items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider mb-1">
                   <span
-                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">M</span>
+                    class="w-5 h-5 rounded-full bg-[#001F54] text-white flex items-center justify-center font-bold text-[11px]">M</span>
                   Measurable — How will you track progress?
                 </label>
                 <input type="text" id="smartMeasurable"
@@ -1268,9 +1293,9 @@
               <!-- A: Achievable -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
                 <label
-                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  class="flex items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider mb-1">
                   <span
-                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">A</span>
+                    class="w-5 h-5 rounded-full bg-[#55868C] text-white flex items-center justify-center font-bold text-[11px]">A</span>
                   Achievable — What system or support makes this realistic?
                 </label>
                 <input type="text" id="smartAchievable"
@@ -1282,9 +1307,9 @@
               <!-- R: Relevant -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
                 <label
-                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  class="flex items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider mb-1">
                   <span
-                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">R</span>
+                    class="w-5 h-5 rounded-full bg-[#55868C] text-white flex items-center justify-center font-bold text-[11px]">R</span>
                   Relevant — Why does this matter for your longevity & wellbeing?
                 </label>
                 <input type="text" id="smartRelevant"
@@ -1296,9 +1321,9 @@
               <!-- T: Time-bound -->
               <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
                 <label
-                  class="flex items-center gap-2 text-xs font-extrabold text-indigo-700 uppercase tracking-wider mb-1">
+                  class="flex items-center gap-2 text-xs font-extrabold text-[#7F636E] uppercase tracking-wider mb-1">
                   <span
-                    class="w-5 h-5 rounded-full bg-indigo-100 text-indigo-700 flex items-center justify-center font-bold text-[11px]">T</span>
+                    class="w-5 h-5 rounded-full bg-[#7F636E] text-white flex items-center justify-center font-bold text-[11px]">T</span>
                   Time-bound — Target review date or milestone period
                 </label>
                 <input type="text" id="smartTimeBound"
@@ -1315,7 +1340,7 @@
                 Reset Form
               </button>
               <button onclick="saveSmartGoal()"
-                class="px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
+                class="px-6 py-2.5 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white text-xs font-bold shadow-md transition-all flex items-center gap-1.5">
                 <i data-lucide="plus-circle" class="w-4 h-4"></i>
                 <span>Save to My Wellbeing Plan</span>
               </button>
@@ -1329,7 +1354,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-slate-100">
               <div>
                 <h3 class="text-xl font-bold text-brand-ink flex items-center gap-2">
-                  <i data-lucide="award" class="w-5 h-5 text-indigo-600"></i>
+                  <i data-lucide="award" class="w-5 h-5 text-[#001F54]"></i>
                   My Active Goals
                 </h3>
                 <p class="text-xs text-brand-muted">Auto-saved to your browser storage & downloadable.</p>
@@ -1337,13 +1362,13 @@
 
               <div class="no-print flex items-center gap-1.5 flex-wrap">
                 <button onclick="downloadSmartGoalsWordDoc()"
-                  class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  class="px-2.5 py-1.5 rounded-lg border border-[#001F54]/25 bg-[#EDF2F8] text-[#001F54] hover:bg-[#001F54] hover:text-white text-xs font-bold flex items-center gap-1 transition-colors"
                   title="Download formatted Word Document">
                   <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                   <span>Word Doc (.doc)</span>
                 </button>
                 <button onclick="openGoogleDocsExport()"
-                  class="px-2.5 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  class="px-2.5 py-1.5 rounded-lg border border-[#55868C]/35 bg-[#EFF5F6] text-[#55868C] hover:bg-[#55868C] hover:text-white text-xs font-bold flex items-center gap-1 transition-colors"
                   title="Open & Save in Google Docs / Google Drive">
                   <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
                   <span>Save to Google Drive</span>
@@ -1403,15 +1428,15 @@
             <div class="lg:col-span-4 flex flex-col items-center text-center">
               <div class="relative">
                 <div
-                  class="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-tr from-brand-accent to-sky-400 p-1.5 shadow-xl shadow-blue-500/20">
+                  class="w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-tr from-[#001F54] to-[#55868C] p-1.5 shadow-xl shadow-[#001F54]/20">
                   <div
                     class="w-full h-full rounded-full bg-brand-ink text-white flex flex-col items-center justify-center p-4">
-                    <span class="text-4xl sm:text-5xl font-black tracking-tight text-blue-200">AA</span>
-                    <span class="text-[11px] font-bold tracking-widest uppercase text-blue-400 mt-1">Auburn Univ.</span>
+                    <span class="text-4xl sm:text-5xl font-black tracking-tight text-[#FEFCFB]">AA</span>
+                    <span class="text-[11px] font-bold tracking-widest uppercase text-[#55868C] mt-1">Auburn Univ.</span>
                   </div>
                 </div>
                 <div
-                  class="absolute bottom-2 right-2 p-2 rounded-full bg-emerald-500 text-white shadow-lg border-2 border-white"
+                  class="absolute bottom-2 right-2 p-2 rounded-full bg-[#55868C] text-white shadow-lg border-2 border-[#FEFCFB]"
                   title="Verified Educational Leadership Expert">
                   <i data-lucide="check-check" class="w-4 h-4"></i>
                 </div>
@@ -1513,7 +1538,7 @@
             <!-- Pillar 3: Resilience -->
             <div
               class="p-6 rounded-3xl bg-white border border-slate-200 shadow-sm hover:shadow-md transition-shadow space-y-3">
-              <div class="w-10 h-10 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center">
+              <div class="w-10 h-10 rounded-xl bg-indigo-100 text-[#001F54] flex items-center justify-center">
                 <i data-lucide="shield" class="w-5 h-5"></i>
               </div>
               <h4 class="text-base font-bold text-brand-ink">3. Educator Resilience</h4>
@@ -1652,6 +1677,65 @@
   <!-- ========================================================================= -->
   <!-- MODALS & DIALOGS                                                          -->
   <!-- ========================================================================= -->
+
+  
+  <!-- ========================================================================= -->
+  <!-- OPTION E: INSTALL PWA / ADD TO HOME SCREEN MODAL                          -->
+  <!-- ========================================================================= -->
+  <div id="installAppModal"
+    class="hidden fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+    <div
+      class="bg-[#FEFCFB] rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-[#55868C]/30 space-y-5 animate-in fade-in zoom-in-95 duration-150">
+      <div class="flex items-start justify-between">
+        <div class="flex items-center gap-3">
+          <img src="icon-192.png" alt="FacultyWell Icon" class="w-12 h-12 rounded-2xl shadow-md border border-[#55868C]/20 flex-shrink-0">
+          <div>
+            <h3 class="text-lg font-bold text-[#0A1128]">Install FacultyWell App</h3>
+            <p class="text-xs text-[#55868C] font-semibold">1-Tap Classroom Access • Offline Ready</p>
+          </div>
+        </div>
+        <button onclick="closeInstallAppModal()" class="text-slate-400 hover:text-slate-700 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-[#627282] leading-relaxed">
+        Add FacultyWell directly to your iPhone or Android home screen for instant 1-tap peer coverage and mindful resets without opening Safari or typing URLs.
+      </p>
+
+      <!-- Step-by-step instructions for iPhone and Android -->
+      <div class="space-y-3 pt-1">
+        <div class="p-3.5 rounded-2xl bg-[#EFF5F6] border border-[#55868C]/25 space-y-1.5">
+          <h4 class="text-xs font-bold text-[#001F54] flex items-center gap-1.5">
+            <i data-lucide="apple" class="w-4 h-4 text-[#001F54]"></i> On iPhone (Safari):
+          </h4>
+          <ol class="text-xs text-[#0A1128] space-y-1 pl-5 list-decimal font-medium">
+            <li>Tap the <strong>Share</strong> button at the bottom of Safari (<i data-lucide="share" class="w-3.5 h-3.5 inline text-[#001F54]"></i>).</li>
+            <li>Scroll down and tap <strong>"Add to Home Screen"</strong>.</li>
+            <li>Tap <strong>"Add"</strong> in the top right corner.</li>
+          </ol>
+        </div>
+
+        <div class="p-3.5 rounded-2xl bg-[#EDF2F8] border border-[#001F54]/20 space-y-1.5">
+          <h4 class="text-xs font-bold text-[#001F54] flex items-center gap-1.5">
+            <i data-lucide="smartphone" class="w-4 h-4 text-[#001F54]"></i> On Android / Chrome:
+          </h4>
+          <ol class="text-xs text-[#0A1128] space-y-1 pl-5 list-decimal font-medium">
+            <li>Tap the <strong>Three Dots (Menu)</strong> in the top right.</li>
+            <li>Tap <strong>"Install app"</strong> or <strong>"Add to Home screen"</strong>.</li>
+            <li>Confirm and launch directly from your home screen.</li>
+          </ol>
+        </div>
+      </div>
+
+      <div class="pt-2 flex items-center justify-end">
+        <button onclick="closeInstallAppModal()"
+          class="w-full py-2.5 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-xs shadow-md transition-colors">
+          Got It, Thanks!
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- QUICK EMERGENCY MODAL -->
   <div id="quickEmergencyModal"
@@ -1965,19 +2049,19 @@
 
       // Update Nav Buttons
       document.querySelectorAll('.nav-link').forEach(btn => {
-        btn.classList.remove('bg-brand-soft', 'text-brand-accent', 'border', 'border-blue-200/50', 'font-semibold');
-        btn.classList.add('text-brand-slate', 'font-medium');
+        btn.classList.remove('bg-[#EFF5F6]', 'text-[#001F54]', 'border', 'border-[#55868C]/30', 'font-bold', 'bg-brand-soft', 'text-brand-accent', 'border-blue-200/50', 'font-semibold');
+        btn.classList.add('text-[#627282]', 'font-medium');
       });
 
       const activeBtn = document.getElementById('nav-' + viewId);
       if (activeBtn) {
-        activeBtn.classList.add('bg-brand-soft', 'text-brand-accent', 'border', 'border-blue-200/50', 'font-semibold');
-        activeBtn.classList.remove('text-brand-slate');
+        activeBtn.classList.add('bg-[#EFF5F6]', 'text-[#001F54]', 'border', 'border-[#55868C]/30', 'font-bold');
+        activeBtn.classList.remove('text-[#627282]');
       }
 
       // Update Mobile Bottom Nav Active State
       document.querySelectorAll('.bottom-nav-btn').forEach(btn => {
-        btn.classList.remove('text-brand-accent');
+        btn.classList.remove('text-[#001F54]', 'text-brand-accent');
         btn.classList.add('text-slate-400');
         const span = btn.querySelector('span');
         if (span) {
@@ -1989,7 +2073,7 @@
       const activeBottomBtn = document.getElementById('bottom-nav-' + viewId);
       if (activeBottomBtn) {
         activeBottomBtn.classList.remove('text-slate-400');
-        activeBottomBtn.classList.add('text-brand-accent');
+        activeBottomBtn.classList.add('text-[#001F54]');
         const span = activeBottomBtn.querySelector('span');
         if (span) {
           span.classList.remove('font-semibold');
@@ -2061,18 +2145,18 @@
         const subBoxId = subBoxMap[id];
         const subBoxEl = subBoxId ? document.getElementById(subBoxId) : null;
 
-        card.classList.remove('border-brand-accent', 'bg-blue-50/40', 'border-rose-500', 'bg-rose-50/40', 'border-red-500', 'border-amber-500');
+        card.classList.remove('border-[#55868C]', 'bg-[#EFF5F6]', 'border-[#7F636E]', 'bg-[#F7F2F4]', 'border-[#001F54]', 'bg-[#EDF2F8]', 'border-brand-accent', 'bg-blue-50/40', 'border-rose-500', 'bg-rose-50/40', 'border-red-500', 'border-amber-500');
         card.classList.add('border-slate-200', 'bg-white');
         if (checkIcon) checkIcon.classList.add('hidden');
         if (checkboxBox) {
-          checkboxBox.classList.remove('bg-brand-accent', 'border-brand-accent', 'bg-rose-600', 'border-rose-600', 'bg-amber-600', 'border-amber-600', 'bg-teal-600', 'border-teal-600');
+          checkboxBox.classList.remove('bg-[#55868C]', 'border-[#55868C]', 'bg-[#7F636E]', 'border-[#7F636E]', 'bg-[#001F54]', 'border-[#001F54]', 'bg-brand-accent', 'border-brand-accent', 'bg-rose-600', 'border-rose-600', 'bg-amber-600', 'border-amber-600', 'bg-teal-600', 'border-teal-600');
           checkboxBox.classList.add('border-slate-300', 'bg-white');
         }
 
         if (subBoxEl) {
           subBoxEl.classList.add('hidden');
           subBoxEl.querySelectorAll('.sub-chip-btn, .sub-chip').forEach(btn => {
-            btn.classList.remove('bg-brand-accent', 'text-white', 'border-brand-accent', 'bg-rose-600', 'border-rose-600', 'bg-amber-600', 'border-amber-600', 'bg-teal-600', 'border-teal-600');
+            btn.classList.remove('bg-[#55868C]', 'bg-[#7F636E]', 'bg-[#001F54]', 'text-white', 'border-[#55868C]', 'border-[#7F636E]', 'border-[#001F54]', 'bg-brand-accent', 'bg-rose-600', 'bg-amber-600', 'bg-teal-600');
             btn.classList.add('bg-white');
           });
         }
@@ -2102,15 +2186,21 @@
           if (checkIcon) checkIcon.classList.remove('hidden');
 
           if (optionId === 'urgent-emergency' || optionId === 'medical-emergency') {
-            card.classList.add('border-rose-500', 'bg-rose-50/40');
+            card.classList.add('border-[#7F636E]', 'bg-[#F7F2F4]');
             if (checkboxBox) {
-              checkboxBox.classList.add('bg-rose-600', 'border-rose-600');
+              checkboxBox.classList.add('bg-[#7F636E]', 'border-[#7F636E]');
+              checkboxBox.classList.remove('border-slate-300', 'bg-white');
+            }
+          } else if (optionId === 'need-nurse' || optionId === 'mindful-reset') {
+            card.classList.add('border-[#55868C]', 'bg-[#EFF5F6]');
+            if (checkboxBox) {
+              checkboxBox.classList.add('bg-[#55868C]', 'border-[#55868C]');
               checkboxBox.classList.remove('border-slate-300', 'bg-white');
             }
           } else {
-            card.classList.add('border-brand-accent', 'bg-blue-50/40');
+            card.classList.add('border-[#55868C]', 'bg-[#EFF5F6]');
             if (checkboxBox) {
-              checkboxBox.classList.add('bg-brand-accent', 'border-brand-accent');
+              checkboxBox.classList.add('bg-[#55868C]', 'border-[#55868C]');
               checkboxBox.classList.remove('border-slate-300', 'bg-white');
             }
           }
@@ -2139,16 +2229,13 @@
 
       if (categoryId === 'urgent-emergency' || categoryId === 'medical-emergency') {
         btnEl.classList.remove('bg-white');
-        btnEl.classList.add('bg-rose-600', 'text-white', 'border-rose-600');
-      } else if (categoryId === 'need-nurse') {
+        btnEl.classList.add('bg-[#7F636E]', 'text-white', 'border-[#7F636E]');
+      } else if (categoryId === 'need-nurse' || categoryId === 'mindful-reset') {
         btnEl.classList.remove('bg-white');
-        btnEl.classList.add('bg-amber-600', 'text-white', 'border-amber-600');
-      } else if (categoryId === 'mindful-reset') {
-        btnEl.classList.remove('bg-white');
-        btnEl.classList.add('bg-teal-600', 'text-white', 'border-teal-600');
+        btnEl.classList.add('bg-[#55868C]', 'text-white', 'border-[#55868C]');
       } else {
         btnEl.classList.remove('bg-white');
-        btnEl.classList.add('bg-brand-accent', 'text-white', 'border-brand-accent');
+        btnEl.classList.add('bg-[#001F54]', 'text-white', 'border-[#001F54]');
       }
 
       // Automatically append or set in notes if note is empty
@@ -2165,10 +2252,10 @@
       document.querySelectorAll('.min-btn').forEach(btn => {
         const btnVal = btn.getAttribute('data-min');
         if (btnVal === String(mins)) {
-          btn.classList.add('bg-blue-600', 'text-white', 'border-blue-300');
+          btn.classList.add('bg-[#001F54]', 'text-white', 'border-[#001F54]');
           btn.classList.remove('bg-white', 'text-slate-700');
         } else {
-          btn.classList.remove('bg-blue-600', 'text-white', 'border-blue-300');
+          btn.classList.remove('bg-[#001F54]', 'text-white', 'border-[#001F54]');
           btn.classList.add('bg-white', 'text-slate-700');
         }
       });
@@ -2273,35 +2360,35 @@
 
       filtered.forEach(req => {
         const isUrgent = req.urgent;
-        const cardBorder = isUrgent ? 'border-rose-300 bg-rose-50/20' : (req.status === 'Resolved' ? 'border-slate-200 bg-slate-50/60 opacity-75' : 'border-slate-200 bg-white');
+        const cardBorder = isUrgent ? 'border-[#7F636E]/40 bg-[#F7F2F4]/30' : (req.status === 'Resolved' ? 'border-slate-200 bg-slate-50/60 opacity-75' : 'border-[#55868C]/20 bg-white');
 
         let statusBadge = '';
         if (req.status === 'Open') {
-          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800"><span class="w-1.5 h-1.5 rounded-full bg-amber-500 animate-ping"></span> Open</span>`;
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EFF5F6] text-[#55868C] border border-[#55868C]/30"><span class="w-1.5 h-1.5 rounded-full bg-[#55868C] animate-ping"></span> Open</span>`;
         } else if (req.status === 'Claimed') {
-          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-100 text-blue-800"><i data-lucide="check" class="w-3 h-3"></i> Claimed (${req.claimedBy || 'Colleague on way'})</span>`;
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#EDF2F8] text-[#001F54] border border-[#001F54]/20"><i data-lucide="check" class="w-3 h-3"></i> Claimed (${req.claimedBy || 'Colleague on way'})</span>`;
         } else {
-          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-200 text-slate-700">Resolved</span>`;
+          statusBadge = `<span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-slate-600">Resolved</span>`;
         }
 
         const tagsHtml = req.options.map(opt => `
-          <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold ${opt.includes('Watch') ? 'bg-blue-100 text-blue-800' : (opt.includes('Urgent') || opt.includes('Medical') ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-700')}">
+          <span class="inline-block px-2 py-0.5 rounded-md text-[10px] font-bold ${opt.includes('Watch') ? 'bg-[#EDF2F8] text-[#001F54]' : (opt.includes('Urgent') || opt.includes('Medical') ? 'bg-[#F7F2F4] text-[#7F636E]' : 'bg-[#EFF5F6] text-[#55868C]')}">
             ${opt}
           </span>
         `).join(' ');
 
         const actionsHtml = req.status === 'Open' ? `
-          <button onclick="claimHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-brand-accent hover:bg-brand-accentDark text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
+          <button onclick="claimHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
             <i data-lucide="hand" class="w-3.5 h-3.5"></i>
             <span>I Can Step In!</span>
           </button>
         ` : (req.status === 'Claimed' ? `
-          <button onclick="resolveHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
+          <button onclick="resolveHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-[#55868C] hover:bg-[#477278] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
             <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
             <span>Mark Resolved</span>
           </button>
         ` : `
-          <span class="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
+          <span class="text-[11px] font-semibold text-[#55868C] flex items-center gap-1">
             <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Covered by Colleague
           </span>
         `);
@@ -2312,11 +2399,11 @@
           <div class="flex items-start justify-between gap-2">
             <div>
               <div class="flex items-center gap-2">
-                <h4 class="text-sm font-extrabold text-brand-ink">${req.teacher}</h4>
-                ${isUrgent ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-rose-600 text-white animate-pulse">Urgent</span>' : ''}
+                <h4 class="text-sm font-extrabold text-[#0A1128]">${req.teacher}</h4>
+                ${isUrgent ? '<span class="px-1.5 py-0.2 rounded text-[10px] font-black uppercase tracking-wider bg-[#7F636E] text-white animate-pulse">Urgent</span>' : ''}
               </div>
-              <div class="flex items-center gap-1.5 text-xs text-brand-slate font-semibold mt-0.5">
-                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-accent"></i>
+              <div class="flex items-center gap-1.5 text-xs text-[#1E2B37] font-semibold mt-0.5">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#55868C]"></i>
                 <span>${req.room}</span>
                 <span class="text-slate-300">•</span>
                 <span class="text-slate-400 font-normal">${req.timestamp}</span>
@@ -2384,12 +2471,12 @@
     function toggleAvailSlot(btn, slotName) {
       btn.classList.toggle('active-slot');
       if (btn.classList.contains('active-slot')) {
-        btn.classList.add('border-emerald-400', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.add('border-[#55868C]', 'bg-[#EFF5F6]', 'text-[#001F54]', 'font-bold');
         btn.classList.remove('border-slate-200', 'bg-white', 'text-slate-700', 'font-medium');
         btn.querySelector('svg').remove();
-        btn.insertAdjacentHTML('beforeend', '<i data-lucide="check" class="w-3.5 h-3.5"></i>');
+        btn.insertAdjacentHTML('beforeend', '<i data-lucide="check" class="w-3.5 h-3.5 text-[#55868C]"></i>');
       } else {
-        btn.classList.remove('border-emerald-400', 'bg-emerald-50', 'text-emerald-800', 'font-bold');
+        btn.classList.remove('border-[#55868C]', 'bg-[#EFF5F6]', 'text-[#001F54]', 'font-bold');
         btn.classList.add('border-slate-200', 'bg-white', 'text-slate-700', 'font-medium');
         btn.querySelector('svg').remove();
         btn.insertAdjacentHTML('beforeend', '<i data-lucide="plus" class="w-3.5 h-3.5 text-slate-400"></i>');
@@ -2731,7 +2818,7 @@
       if (window.lucide) lucide.createIcons();
 
       const circle = document.getElementById('breathingCircle');
-      circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${breathConfig.phases[breathCurrentPhaseIndex].scale}`;
+      circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-[#55868C] to-[#7EA9AF] opacity-90 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-[#55868C]/30 ${breathConfig.phases[breathCurrentPhaseIndex].scale}`;
 
       breathInterval = setInterval(() => {
         breathTimeRemainingInPhase--;
@@ -2744,7 +2831,7 @@
           const nextPhase = breathConfig.phases[breathCurrentPhaseIndex];
           breathTimeRemainingInPhase = nextPhase.duration;
           document.getElementById('breathPhaseText').textContent = nextPhase.label;
-          circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-blue-300/40 ${nextPhase.scale}`;
+          circle.className = `w-48 h-48 rounded-full bg-gradient-to-tr from-[#55868C] to-[#7EA9AF] opacity-90 flex items-center justify-center text-white font-extrabold text-center transition-all duration-[3000ms] ease-in-out shadow-2xl shadow-[#55868C]/30 ${nextPhase.scale}`;
         }
         document.getElementById('breathTimerDisplay').textContent = breathTimeRemainingInPhase;
       }, 1000);
@@ -2768,7 +2855,7 @@
       document.getElementById('cycleCounterBadge').textContent = '0 / 4';
       document.getElementById('breathPlayLabel').textContent = 'Start Breathing Guide';
       const circle = document.getElementById('breathingCircle');
-      circle.className = 'w-48 h-48 rounded-full bg-gradient-to-tr from-blue-400 to-sky-300 opacity-80 flex items-center justify-center text-white font-extrabold text-center transition-all duration-700 ease-in-out shadow-2xl shadow-blue-300/40';
+      circle.className = 'w-48 h-48 rounded-full bg-gradient-to-tr from-[#55868C] to-[#7EA9AF] opacity-90 flex items-center justify-center text-white font-extrabold text-center transition-all duration-700 ease-in-out shadow-2xl shadow-[#55868C]/30';
     }
 
     // SOMATIC MICRO-BREAK GUIDE STEPPER
@@ -3167,14 +3254,14 @@
             <div class="flex-grow">
               <div class="flex justify-between text-[11px] font-bold mb-1">
                 <span class="text-slate-500">Milestone Progress</span>
-                <span class="text-indigo-600">${g.progress}%</span>
+                <span class="text-[#001F54]">${g.progress}%</span>
               </div>
               <div class="w-full bg-slate-200 rounded-full h-2">
-                <div class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: ${g.progress}%"></div>
+                <div class="bg-[#001F54] h-2 rounded-full transition-all duration-300" style="width: ${g.progress}%"></div>
               </div>
             </div>
 
-            <button onclick="incrementGoalProgress('${g.id}')" class="no-print px-2.5 py-1 text-xs font-bold bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-lg transition-colors flex items-center gap-1">
+            <button onclick="incrementGoalProgress('${g.id}')" class="no-print px-2.5 py-1 text-xs font-bold bg-[#EDF2F8] hover:bg-[#001F54] hover:text-white text-[#001F54] rounded-lg transition-colors flex items-center gap-1">
               <i data-lucide="plus" class="w-3 h-3"></i>
               <span>+25%</span>
             </button>
@@ -3209,6 +3296,15 @@
     // =========================================================================
     // EMERGENCY QUICK MODAL
     // =========================================================================
+    
+    function openInstallAppModal() {
+      document.getElementById('installAppModal').classList.remove('hidden');
+    }
+
+    function closeInstallAppModal() {
+      document.getElementById('installAppModal').classList.add('hidden');
+    }
+
     function triggerQuickEmergencyModal() {
       document.getElementById('quickEmergencyModal').classList.remove('hidden');
     }
@@ -3290,6 +3386,10 @@
       renderSavedGoals();
       renderSomaticStep();
       if (window.lucide) lucide.createIcons();
+      // Register Option E Service Worker for offline capability & PWA installability
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js').catch(e => console.log('SW Note:', e));
+      }
 
       // Close dropdowns on outside click
       document.addEventListener('click', (e) => {

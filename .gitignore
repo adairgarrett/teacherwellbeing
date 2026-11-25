@@ -2,4 +2,8 @@
 website_design.md
 *.png
 !headshot.png
+!icon-192.png
+!icon-512.png
+!apple-touch-icon.png
 test*.py
+apply_*.py
