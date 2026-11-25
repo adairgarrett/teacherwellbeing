@@ -1279,11 +1279,21 @@
                 <p class="text-xs text-brand-muted">Auto-saved to your browser storage & downloadable.</p>
               </div>
 
-              <div class="no-print flex items-center gap-1.5">
-                <button onclick="downloadSmartGoalsTxt()"
-                  class="px-2.5 py-1.5 rounded-lg border border-indigo-200 bg-indigo-50 text-indigo-700 hover:bg-indigo-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Download text file">
-                  <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                  <span>Download .txt</span>
+              <div class="no-print flex items-center gap-1.5 flex-wrap">
+                <button onclick="downloadSmartGoalsWordDoc()"
+                  class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Download formatted Word Document">
+                  <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                  <span>Word Doc (.doc)</span>
+                </button>
+                <button onclick="openGoogleDocsExport()"
+                  class="px-2.5 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Open & Save in Google Docs / Google Drive">
+                  <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
+                  <span>Save to Google Drive</span>
+                </button>
+                <button onclick="copySmartGoalsToClipboard()"
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Copy plan text">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span>Copy</span>
                 </button>
                 <button onclick="window.print()"
                   class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Print or save as PDF">
@@ -2899,45 +2909,136 @@
       clearGoalForm();
     }
 
-    function downloadSmartGoalsTxt() {
+    function downloadSmartGoalsWordDoc() {
       if (state.goals.length === 0) {
         showToast('No saved goals to download yet. Create one first!', 'error');
         return;
       }
 
-      let content = `=======================================================\n`;
-      content += `FACULTYWELL - EDUCATOR WELLBEING & SMART GOALS PLAN\n`;
-      content += `Campus: ${state.currentSchool}\n`;
-      content += `Generated: ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}\n`;
-      content += `Framework: Dr. Angela Adair (Educational Leadership, Resilience & Mentoring)\n`;
-      content += `=======================================================\n\n`;
+      let html = `<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+<head>
+  <meta charset='utf-8'>
+  <title>FacultyWell SMART Goals - ${state.currentSchool}</title>
+  <style>
+    body { font-family: Calibri, Arial, sans-serif; font-size: 11pt; line-height: 1.5; color: #1E293B; margin: 1in; }
+    h1 { color: #1E3A8A; font-size: 18pt; margin-bottom: 2pt; border-bottom: 2pt solid #2563EB; padding-bottom: 4pt; }
+    .header-info { font-size: 10pt; color: #475569; margin-bottom: 16pt; }
+    table { width: 100%; border-collapse: collapse; margin-top: 8pt; margin-bottom: 16pt; }
+    th { background-color: #F1F5F9; color: #0F172A; text-align: left; padding: 6pt 8pt; border: 1pt solid #CBD5E1; font-size: 10pt; }
+    td { padding: 6pt 8pt; border: 1pt solid #E2E8F0; font-size: 10pt; vertical-align: top; }
+    .goal-title-row { background-color: #EEF2FF; font-weight: bold; color: #3730A3; font-size: 11pt; }
+    .label-col { width: 24%; font-weight: bold; color: #475569; background-color: #F8FAFC; }
+    .progress-bar-cell { font-weight: bold; color: #2563EB; }
+    .framework-box { background-color: #F0FDF4; border: 1pt solid #BBF7D0; padding: 10pt; border-radius: 4pt; margin-top: 18pt; }
+  </style>
+</head>
+<body>
+  <h1>FacultyWell: Educator Wellbeing & SMART Goals Plan</h1>
+  <div class="header-info">
+    <p><strong>Campus:</strong> ${state.currentSchool} &nbsp;|&nbsp; <strong>Date Generated:</strong> ${new Date().toLocaleDateString()} at ${new Date().toLocaleTimeString()}</p>
+    <p><strong>Research Framework:</strong> Dr. Angela Adair (Educational Leadership, Resilience & Mentoring)</p>
+  </div>
+
+  <p>This individual educator plan outlines intentional boundary habits and self-care systems designed to prevent chronic classroom fatigue and support pedagogical resilience.</p>
+`;
 
       state.goals.forEach((g, idx) => {
-        content += `GOAL #${idx + 1}: ${g.specific}\n`;
-        content += `-------------------------------------------------------\n`;
-        content += `• Measurable (Track):  ${g.measurable}\n`;
-        content += `• Achievable (System): ${g.achievable}\n`;
-        content += `• Relevant (Why):      ${g.relevant}\n`;
-        content += `• Time-Bound (Target): ${g.timeBound}\n`;
-        content += `• Milestone Progress:  ${g.progress}%\n`;
-        content += `• Status:              ${g.progress === 100 ? 'Achieved' : 'Active / In Progress'}\n\n`;
+        html += `
+  <table>
+    <tr class="goal-title-row">
+      <td colspan="2">Goal #${idx + 1}: ${g.specific}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Specific (Boundary Action)</td>
+      <td>${g.specific}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Measurable (How to Track)</td>
+      <td>${g.measurable}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Achievable (System in Place)</td>
+      <td>${g.achievable}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Relevant (Impact on Fatigue)</td>
+      <td>${g.relevant}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Time-Bound (Milestone Review)</td>
+      <td>${g.timeBound}</td>
+    </tr>
+    <tr>
+      <td class="label-col">Current Progress</td>
+      <td class="progress-bar-cell">${g.progress}% Complete &nbsp; (${g.progress === 100 ? 'Milestone Achieved' : 'Active In-Progress'})</td>
+    </tr>
+  </table>
+`;
       });
 
-      content += `=======================================================\n`;
-      content += `Notes for Administrator / Mentor Collaboration:\n`;
-      content += `Regular debriefs during planning periods support sustained educator resilience.\n`;
+      html += `
+  <div class="framework-box">
+    <p><strong>Collaborative Mentoring Note:</strong></p>
+    <p>Share these milestones during departmental planning blocks or mentor-mentee conferences. Dr. Adair’s leadership research underscores that explicit institutional affirmation of teacher boundaries directly fosters faculty retention and teacher agency.</p>
+  </div>
+</body>
+</html>`;
 
-      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const blob = new Blob(['\ufeff', html], { type: 'application/msword;charset=utf-8' });
       const url = URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `${state.currentSchool.replace(/\s+/g, '_')}_SMART_Goals.txt`;
+      link.download = `${state.currentSchool.replace(/\s+/g, '_')}_SMART_Goals.doc`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(url);
 
-      showToast('Downloaded SMART Goals wellbeing plan (.txt)!', 'success');
+      showToast('Downloaded formatted Word Document (.doc)!', 'success');
+    }
+
+    // Alias for legacy test suites
+    window.downloadSmartGoalsTxt = downloadSmartGoalsWordDoc;
+
+    function openGoogleDocsExport() {
+      if (state.goals.length === 0) {
+        showToast('No saved goals to export yet. Create one first!', 'error');
+        return;
+      }
+
+      // Build clean structured text formatted for Google Docs
+      let text = `FACULTYWELL - EDUCATOR WELLBEING & SMART GOALS PLAN\n`;
+      text += `Campus: ${state.currentSchool} | Date: ${new Date().toLocaleDateString()}\n`;
+      text += `Research Framework: Dr. Angela Adair (Auburn University - Educational Leadership, Resilience & Mentoring)\n\n`;
+      text += `=================================================================\n\n`;
+
+      state.goals.forEach((g, idx) => {
+        text += `GOAL #${idx + 1}: ${g.specific}\n`;
+        text += `• Specific (Action):   ${g.specific}\n`;
+        text += `• Measurable (Track):  ${g.measurable}\n`;
+        text += `• Achievable (System): ${g.achievable}\n`;
+        text += `• Relevant (Why):      ${g.relevant}\n`;
+        text += `• Time-Bound (Target): ${g.timeBound}\n`;
+        text += `• Milestone Progress:  ${g.progress}% (${g.progress === 100 ? 'Achieved' : 'In Progress'})\n\n`;
+      });
+
+      text += `=================================================================\n`;
+      text += `Collaborative Mentoring Notes:\n`;
+      text += `Review during departmental planning check-ins to sustain educator resilience.\n`;
+
+      // Copy text to clipboard and open Google Docs create endpoint
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast('Copied plan to clipboard! Opening new Google Doc...', 'success');
+          setTimeout(() => {
+            window.open('https://docs.google.com/document/create', '_blank');
+          }, 300);
+        }).catch(() => {
+          window.open('https://docs.google.com/document/create', '_blank');
+        });
+      } else {
+        window.open('https://docs.google.com/document/create', '_blank');
+      }
     }
 
     function copySmartGoalsToClipboard() {
