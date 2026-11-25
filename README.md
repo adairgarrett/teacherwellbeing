@@ -63,7 +63,7 @@ Then open `http://localhost:8000` in your web browser.
    - Five-dimension SMART goal wizard with educator templates (Departure boundaries, batch grading, morning quiet reset, mentoring).
    - Milestone progress tracking (+25% increments) and Print/PDF export.
 5. **About Dr. Angela Adair**:
-   - Bio highlighting her Doctorate in Educational Leadership from Auburn University and Program Evaluation Certification.
+   - Bio highlighting her Ph.D. in Educational Leadership from Auburn University and Program Evaluation Certification.
    - Research pillars: Mentoring, Mindfulness & Wellbeing, Resilience, Principal Preparation.
    - Institutional scaling roadmap from single-school pilot to multi-district network.
    - Contact email: `angelacadair@gmail.com`.
