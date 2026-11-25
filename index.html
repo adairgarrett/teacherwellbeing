@@ -89,6 +89,7 @@
 
     /* Prevent iOS Safari auto-zoom when tapping inputs (triggers if font < 16px) */
     @media screen and (max-width: 768px) {
+
       input[type="text"],
       input[type="email"],
       input[type="number"],
@@ -101,7 +102,13 @@
 
     /* Mobile touch target minimum standards (Apple HIG) */
     @media (hover: none) and (pointer: coarse) {
-      button, a, input, select, textarea, .min-touch-target {
+
+      button,
+      a,
+      input,
+      select,
+      textarea,
+      .min-touch-target {
         touch-action: manipulation;
       }
     }
@@ -192,7 +199,8 @@
               <div class="px-3 py-2 border-b border-gray-100 bg-gray-50">
                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Campus Directory</p>
               </div>
-              <div class="w-full text-left px-3 py-2 text-xs flex items-center justify-between bg-blue-50/70 font-semibold text-brand-ink">
+              <div
+                class="w-full text-left px-3 py-2 text-xs flex items-center justify-between bg-blue-50/70 font-semibold text-brand-ink">
                 <span class="flex items-center gap-2">
                   <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                   Hillcrest High School (Active)
@@ -214,7 +222,8 @@
       <div class="flex items-center space-x-4 text-gray-300">
         <div class="hidden sm:flex items-center space-x-2">
           <span class="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-          <span class="text-gray-300" id="liveHelpersStat"><strong>4 Teachers</strong> available for quick cover now</span>
+          <span class="text-gray-300" id="liveHelpersStat"><strong>4 Teachers</strong> available for quick cover
+            now</span>
         </div>
         <span class="text-gray-600">|</span>
         <div class="flex items-center space-x-1.5">
@@ -230,14 +239,16 @@
     <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
       <div class="flex justify-between h-16 items-center gap-2">
         <!-- Logo -->
-        <div class="flex items-center space-x-2.5 cursor-pointer flex-shrink min-w-0" onclick="navigateTo('request-help')">
+        <div class="flex items-center space-x-2.5 cursor-pointer flex-shrink min-w-0"
+          onclick="navigateTo('request-help')">
           <div
             class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-ink text-white flex items-center justify-center shadow-md shadow-brand-ink/10 flex-shrink-0">
             <i data-lucide="heart-handshake" class="w-5 h-5 text-blue-400"></i>
           </div>
           <div class="min-w-0">
             <div class="flex items-center gap-1.5 flex-wrap">
-              <span class="text-base sm:text-lg font-extrabold tracking-tight text-brand-ink whitespace-nowrap">Faculty<span
+              <span
+                class="text-base sm:text-lg font-extrabold tracking-tight text-brand-ink whitespace-nowrap">Faculty<span
                   class="text-brand-accent">Well</span></span>
               <span
                 class="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 bg-brand-soft text-brand-accent rounded-full border border-blue-100 hidden sm:inline-block">Mutual
@@ -329,7 +340,9 @@
   </nav>
 
   <!-- TOAST NOTIFICATION CONTAINER -->
-  <div id="toastContainer" class="fixed bottom-20 md:bottom-5 right-4 left-4 sm:left-auto sm:right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+  <div id="toastContainer"
+    class="fixed bottom-20 md:bottom-5 right-4 left-4 sm:left-auto sm:right-5 z-50 flex flex-col space-y-2 pointer-events-none">
+  </div>
 
   <!-- MAIN VIEWPORT CONTAINER -->
   <main class="flex-grow pb-24 md:pb-8">
@@ -371,7 +384,8 @@
                   <i data-lucide="layers" class="w-5 h-5 text-brand-accent"></i>
                   Select What You Need
                 </h2>
-                <p class="text-xs text-brand-muted mt-0.5">Click any category below to select what you need (selecting an option automatically deselects others).
+                <p class="text-xs text-brand-muted mt-0.5">Click any category below to select what you need (selecting
+                  an option automatically deselects others).
                 </p>
               </div>
               <span class="text-xs font-semibold px-2.5 py-1 bg-blue-100 text-brand-accent rounded-full"
@@ -380,7 +394,8 @@
 
             <!-- CATEGORY PILLS / CARDS -->
             <div class="space-y-4">
-              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Categories of Assistance</label>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-500">Categories of
+                Assistance</label>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="optionsGrid">
 
@@ -450,10 +465,17 @@
                   </div>
 
                   <!-- Sub-options for Urgent -->
-                  <div id="sub-urgent-box" class="hidden mt-3 pt-3 border-t border-rose-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
-                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Student Conflict / Fight', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Student Fight</button>
-                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Classroom De-escalation', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">De-escalation</button>
-                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Administrator Needed', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Admin Backup</button>
+                  <div id="sub-urgent-box" class="hidden mt-3 pt-3 border-t border-rose-200/80 flex flex-wrap gap-1.5"
+                    onclick="event.stopPropagation()">
+                    <button type="button"
+                      onclick="selectSubOption('urgent-emergency', 'Student Conflict / Fight', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Student
+                      Fight</button>
+                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Classroom De-escalation', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">De-escalation</button>
+                    <button type="button" onclick="selectSubOption('urgent-emergency', 'Administrator Needed', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-rose-200 bg-white text-rose-800 hover:bg-rose-100 transition-colors">Admin
+                      Backup</button>
                   </div>
                 </div>
 
@@ -478,10 +500,19 @@
                   </div>
 
                   <!-- Sub-options for Medical Emergency -->
-                  <div id="sub-medical-box" class="hidden mt-3 pt-3 border-t border-red-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
-                    <button type="button" onclick="selectSubOption('medical-emergency', 'Injury / Bleeding', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Injury / Bleeding</button>
-                    <button type="button" onclick="selectSubOption('medical-emergency', 'Severe Allergy / EpiPen', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Allergy / EpiPen</button>
-                    <button type="button" onclick="selectSubOption('medical-emergency', 'Seizure / Fainting / 911', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Seizure / 911</button>
+                  <div id="sub-medical-box" class="hidden mt-3 pt-3 border-t border-red-200/80 flex flex-wrap gap-1.5"
+                    onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('medical-emergency', 'Injury / Bleeding', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Injury
+                      / Bleeding</button>
+                    <button type="button"
+                      onclick="selectSubOption('medical-emergency', 'Severe Allergy / EpiPen', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Allergy
+                      / EpiPen</button>
+                    <button type="button"
+                      onclick="selectSubOption('medical-emergency', 'Seizure / Fainting / 911', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-red-200 bg-white text-red-800 hover:bg-red-100 transition-colors">Seizure
+                      / 911</button>
                   </div>
                 </div>
 
@@ -506,10 +537,17 @@
                   </div>
 
                   <!-- Sub-options for Nurse -->
-                  <div id="sub-nurse-box" class="hidden mt-3 pt-3 border-t border-amber-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
-                    <button type="button" onclick="selectSubOption('need-nurse', 'Send Nurse to My Classroom', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Send Nurse to Room</button>
-                    <button type="button" onclick="selectSubOption('need-nurse', 'Escort Student to Clinic', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Escort to Clinic</button>
-                    <button type="button" onclick="selectSubOption('need-nurse', 'Medication / Diabetic Care', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Medication Check</button>
+                  <div id="sub-nurse-box" class="hidden mt-3 pt-3 border-t border-amber-200/80 flex flex-wrap gap-1.5"
+                    onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Send Nurse to My Classroom', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Send
+                      Nurse to Room</button>
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Escort Student to Clinic', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Escort
+                      to Clinic</button>
+                    <button type="button" onclick="selectSubOption('need-nurse', 'Medication / Diabetic Care', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-amber-200 bg-white text-amber-800 hover:bg-amber-100 transition-colors">Medication
+                      Check</button>
                   </div>
                 </div>
 
@@ -534,10 +572,19 @@
                   </div>
 
                   <!-- Sub-options for Supplies -->
-                  <div id="sub-supplies-box" class="hidden mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
-                    <button type="button" onclick="selectSubOption('supplies-copies', 'Urgent Print Copies Run', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Urgent Print Copies</button>
-                    <button type="button" onclick="selectSubOption('supplies-copies', 'Whiteboard Markers / Erasers', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Whiteboard Markers</button>
-                    <button type="button" onclick="selectSubOption('supplies-copies', 'Paper / Pencils / Supplies', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Paper / Pencils</button>
+                  <div id="sub-supplies-box" class="hidden mt-3 pt-3 border-t border-blue-200/80 flex flex-wrap gap-1.5"
+                    onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('supplies-copies', 'Urgent Print Copies Run', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Urgent
+                      Print Copies</button>
+                    <button type="button"
+                      onclick="selectSubOption('supplies-copies', 'Whiteboard Markers / Erasers', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Whiteboard
+                      Markers</button>
+                    <button type="button"
+                      onclick="selectSubOption('supplies-copies', 'Paper / Pencils / Supplies', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-slate-200 bg-white text-slate-800 hover:bg-blue-50 transition-colors">Paper
+                      / Pencils</button>
                   </div>
                 </div>
 
@@ -562,10 +609,18 @@
                   </div>
 
                   <!-- Sub-options for Mindful Reset -->
-                  <div id="sub-mindful-box" class="hidden mt-3 pt-3 border-t border-teal-200/80 flex flex-wrap gap-1.5" onclick="event.stopPropagation()">
-                    <button type="button" onclick="selectSubOption('mindful-reset', '5-Minute Quiet Step-Out', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">5-Min Step-Out</button>
-                    <button type="button" onclick="selectSubOption('mindful-reset', 'Peer Listening Ear / Debrief', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Peer Listening Ear</button>
-                    <button type="button" onclick="selectSubOption('mindful-reset', 'Quiet Hallway Reset', this)" class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Quiet Reset</button>
+                  <div id="sub-mindful-box" class="hidden mt-3 pt-3 border-t border-teal-200/80 flex flex-wrap gap-1.5"
+                    onclick="event.stopPropagation()">
+                    <button type="button" onclick="selectSubOption('mindful-reset', '5-Minute Quiet Step-Out', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">5-Min
+                      Step-Out</button>
+                    <button type="button"
+                      onclick="selectSubOption('mindful-reset', 'Peer Listening Ear / Debrief', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Peer
+                      Listening Ear</button>
+                    <button type="button" onclick="selectSubOption('mindful-reset', 'Quiet Hallway Reset', this)"
+                      class="sub-chip px-2.5 py-1 text-xs rounded-lg font-bold border border-teal-200 bg-white text-teal-800 hover:bg-teal-50 transition-colors">Quiet
+                      Reset</button>
                   </div>
                 </div>
 
@@ -994,7 +1049,8 @@
             </div>
 
             <p class="text-xs text-brand-muted">
-              Built with real-time browser audio synthesis (no external audio files needed). Put on headphones or earbuds during planning periods for deep cognitive focus and stress reduction.
+              Built with real-time browser audio synthesis (no external audio files needed). Put on headphones or
+              earbuds during planning periods for deep cognitive focus and stress reduction.
             </p>
 
             <!-- Soundscape Options (Rain, Ocean) -->
@@ -1281,22 +1337,26 @@
 
               <div class="no-print flex items-center gap-1.5 flex-wrap">
                 <button onclick="downloadSmartGoalsWordDoc()"
-                  class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Download formatted Word Document">
+                  class="px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 hover:bg-blue-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  title="Download formatted Word Document">
                   <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
                   <span>Word Doc (.doc)</span>
                 </button>
                 <button onclick="openGoogleDocsExport()"
-                  class="px-2.5 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Open & Save in Google Docs / Google Drive">
+                  class="px-2.5 py-1.5 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  title="Open & Save in Google Docs / Google Drive">
                   <i data-lucide="cloud" class="w-3.5 h-3.5"></i>
                   <span>Save to Google Drive</span>
                 </button>
                 <button onclick="copySmartGoalsToClipboard()"
-                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Copy plan text">
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  title="Copy plan text">
                   <i data-lucide="copy" class="w-3.5 h-3.5"></i>
                   <span>Copy</span>
                 </button>
                 <button onclick="window.print()"
-                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors" title="Print or save as PDF">
+                  class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 text-xs font-bold flex items-center gap-1 transition-colors"
+                  title="Print or save as PDF">
                   <i data-lucide="printer" class="w-3.5 h-3.5"></i>
                   <span>Print</span>
                 </button>
@@ -1304,12 +1364,14 @@
             </div>
 
             <!-- Auto-save notification banner -->
-            <div class="no-print p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
+            <div
+              class="no-print p-3 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-between text-xs text-emerald-800">
               <span class="flex items-center gap-1.5 font-medium">
                 <i data-lucide="check-circle" class="w-4 h-4 text-emerald-600"></i>
                 <span>Goals automatically saved in this browser.</span>
               </span>
-              <button onclick="copySmartGoalsToClipboard()" class="font-bold underline hover:text-emerald-950">Copy All</button>
+              <button onclick="copySmartGoalsToClipboard()" class="font-bold underline hover:text-emerald-950">Copy
+                All</button>
             </div>
 
             <!-- Goal Cards Container -->
@@ -1326,7 +1388,7 @@
 
     <!-- ========================================================================= -->
     <!-- VIEW 5: ABOUT DR. ANGELA ADAIR & INSTITUTIONAL SCALING                     -->
-    <!-- Full Bio, Auburn Ed.D., Mentoring, Mindfulness, Resilience & Contact      -->
+    <!-- Full Bio, Auburn Ph.D., Mentoring, Mindfulness, Resilience & Contact      -->
     <!-- ========================================================================= -->
     <section id="view-about" class="view-section hidden py-8 sm:py-16">
       <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
@@ -1355,7 +1417,7 @@
                 </div>
               </div>
 
-              <h2 class="text-2xl font-extrabold text-brand-ink mt-4">Angela Adair, Ed.D.</h2>
+              <h2 class="text-2xl font-extrabold text-brand-ink mt-4">Angela Adair, Ph.D.</h2>
               <p class="text-xs font-semibold text-brand-accent uppercase tracking-wider">Educational Leadership &
                 Evaluation</p>
 
@@ -1480,10 +1542,12 @@
         <!-- CAMPUS PILOT & DISTRICT ROADMAP -->
         <div class="p-8 rounded-3xl bg-brand-ink text-white space-y-6">
           <div class="max-w-2xl">
-            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Campus Pilot & District Roadmap</span>
+            <span class="text-xs font-bold text-blue-400 uppercase tracking-widest">Campus Pilot & District
+              Roadmap</span>
             <h3 class="text-2xl font-bold tracking-tight mt-1">From Hillcrest High School to District-Wide Support</h3>
             <p class="text-xs text-gray-400 mt-2 leading-relaxed">
-              Designed with a modular architecture so Hillcrest High can demonstrate peer mutual aid, with the capacity to coordinate with neighboring schools in the future.
+              Designed with a modular architecture so Hillcrest High can demonstrate peer mutual aid, with the capacity
+              to coordinate with neighboring schools in the future.
             </p>
           </div>
 
@@ -1491,7 +1555,8 @@
             <div class="space-y-2">
               <span class="text-xs font-bold text-emerald-400 font-mono">PHASE 1 (ACTIVE)</span>
               <h4 class="text-sm font-bold text-white">Hillcrest High School Pilot</h4>
-              <p class="text-xs text-gray-400">Hillcrest High faculty testbed. Validating quick class coverage speed, peer de-escalation, and daily teacher wellbeing practices.</p>
+              <p class="text-xs text-gray-400">Hillcrest High faculty testbed. Validating quick class coverage speed,
+                peer de-escalation, and daily teacher wellbeing practices.</p>
             </div>
 
             <div class="space-y-2">
