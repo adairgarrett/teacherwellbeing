@@ -255,10 +255,9 @@
         <!-- Logo -->
         <div class="flex items-center space-x-2.5 cursor-pointer flex-shrink-0"
           onclick="navigateTo('request-help')">
-          <div
-            class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-ink text-white flex items-center justify-center shadow-md shadow-brand-ink/10 flex-shrink-0">
-            <i data-lucide="heart-handshake" class="w-5 h-5 text-blue-400"></i>
-          </div>
+          <img src="icon-192.png" alt="FacultyWell Logo"
+            class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl shadow-md shadow-brand-ink/10 flex-shrink-0 object-cover border border-[#55868C]/20"
+            onerror="this.onerror=null; this.src='apple-touch-icon.png';">
           <div class="flex-shrink-0">
             <div class="flex items-center gap-1.5 flex-nowrap">
               <span
@@ -306,8 +305,32 @@
           </button>
         </div>
 
-        <!-- Quick Urgent Action Button -->
+        <!-- Quick Actions: Auth, Notifications, Install, Emergency -->
         <div class="flex items-center space-x-1.5 sm:space-x-2 flex-shrink-0">
+          <!-- Notification Opt-In Bell Button -->
+          <button onclick="openNotificationModal()" id="notifBellBtn"
+            class="p-1.5 sm:p-2 rounded-xl text-slate-600 hover:text-[#001F54] hover:bg-[#EFF5F6] border border-slate-200/80 relative transition-colors flex-shrink-0"
+            title="Notification Opt-In Preferences">
+            <i data-lucide="bell" class="w-4 h-4 text-[#55868C]"></i>
+            <span id="notifActiveDot" class="hidden absolute top-1 right-1 w-2 h-2 rounded-full bg-emerald-500"></span>
+          </button>
+
+          <!-- User Login Status / Sign In Button -->
+          <div id="userAuthNavContainer" class="flex items-center flex-shrink-0">
+            <button onclick="openLoginModal()" id="navSignInBtn"
+              class="px-2.5 py-1.5 rounded-xl text-xs font-bold bg-[#EFF5F6] text-[#001F54] hover:bg-[#E2EDEF] border border-[#55868C]/30 flex items-center gap-1.5 transition-colors whitespace-nowrap">
+              <i data-lucide="log-in" class="w-3.5 h-3.5 text-[#55868C]"></i>
+              <span class="hidden sm:inline">School</span> Sign In
+            </button>
+            <div id="navUserPill" class="hidden flex items-center gap-1.5 bg-[#EFF5F6] border border-[#55868C]/30 rounded-xl px-2.5 py-1 text-xs text-[#001F54] font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>
+              <span id="navUserEmailDisplay" class="max-w-[110px] sm:max-w-[150px] truncate">Teacher</span>
+              <button onclick="logoutUser()" class="text-slate-400 hover:text-rose-600 transition-colors ml-0.5" title="Sign Out">
+                <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
           <button onclick="openInstallAppModal()"
             class="hidden xl:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-bold bg-[#EFF5F6] text-[#55868C] hover:bg-[#E2EDEF] border border-[#55868C]/30 transition-colors shadow-sm whitespace-nowrap flex-shrink-0"
             title="Add to iPhone or Android Home Screen">
@@ -333,6 +356,16 @@
 
     <!-- Mobile Navigation Drawer -->
     <div id="mobileMenu" class="hidden lg:hidden border-t border-[#55868C]/20 bg-[#FEFCFB] px-4 pt-2 pb-4 space-y-1">
+      <div id="mobileAuthBanner" class="p-2.5 rounded-xl bg-[#EFF5F6] border border-[#55868C]/30 flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <i data-lucide="user-check" class="w-4 h-4 text-[#55868C]"></i>
+          <span id="mobileUserDisplay" class="text-xs font-bold text-[#001F54]">Not Signed In</span>
+        </div>
+        <button onclick="openLoginModal(); toggleMobileMenu()" id="mobileSignInBtn"
+          class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#001F54] text-white">Sign In</button>
+        <button onclick="logoutUser()" id="mobileSignOutBtn"
+          class="hidden px-2 py-1 rounded-lg text-xs font-bold bg-rose-100 text-rose-700">Sign Out</button>
+      </div>
       <button onclick="openInstallAppModal(); toggleMobileMenu()"
         class="w-full text-left px-3 py-2 rounded-lg text-xs font-bold text-[#55868C] bg-[#EFF5F6] flex items-center gap-2 border border-[#55868C]/30 mb-1">
         <i data-lucide="smartphone" class="w-4 h-4"></i> 📲 Add FacultyWell to iPhone / Android
@@ -916,8 +949,8 @@
                   class="flex items-center space-x-3 p-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 cursor-pointer text-xs">
                   <input type="checkbox" checked
                     class="w-4 h-4 rounded text-emerald-600 focus:ring-emerald-500 border-slate-300 avail-cap-check"
-                    value="Walk Student to Nurse / Counseling">
-                  <span class="font-bold text-slate-800">Escort to Nurse / Front Office</span>
+                    value="Walk Student to Clinic / Counseling">
+                  <span class="font-bold text-slate-800">Escort to Clinic / Front Office</span>
                   <span class="text-slate-500 text-[11px]">— Walk a sick or emotionally distressed student to
                     clinic</span>
                 </label>
@@ -1026,7 +1059,7 @@
               <!-- Pacing Mode Badges -->
               <div class="mt-6 flex items-center gap-2">
                 <button onclick="setBreathingTechnique('box')" id="breath-box-btn"
-                  class="px-3 py-1 rounded-full text-xs font-bold bg-brand-ink text-white shadow-sm">Box
+                  class="px-3 py-1 rounded-full text-xs font-extrabold bg-[#EFF5F6] text-[#001F54] border-2 border-[#001F54] shadow-sm">Box
                   4-4-4-4</button>
                 <button onclick="setBreathingTechnique('calm')" id="breath-calm-btn"
                   class="px-3 py-1 rounded-full text-xs font-medium bg-white text-slate-700 border border-slate-200 hover:bg-slate-50">Calm
@@ -1302,71 +1335,91 @@
               </div>
             </div>
 
-            <!-- SMART FORM INPUTS (WRAPPING TEXTAREAS FOR MOBILE ADAPTABILITY) -->
+            <!-- SMART FORM INPUTS (CLEAN OF AUTO-TEXT WITH IMMEDIATE EXAMPLE GUIDANCE) -->
             <div class="space-y-4">
               <!-- S: Specific -->
-              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+              <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors space-y-1.5">
                 <label
-                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider mb-1">
+                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider">
                   <span
                     class="w-5 h-5 rounded-full bg-[#001F54] text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">S</span>
-                  <span>Specific — What exactly will you achieve?</span>
+                  <span>Specific — What boundary will you create?</span>
                 </label>
+                <div class="text-[11px] text-slate-500 bg-[#EFF5F6]/70 px-2.5 py-1 rounded-lg border border-[#55868C]/20 flex items-start gap-1.5">
+                  <span class="font-bold text-[#001F54] flex-shrink-0">Example:</span>
+                  <span class="italic text-slate-700">"Leave the school building by 4:15 PM every Tuesday and Thursday without bringing grading home."</span>
+                </div>
                 <textarea rows="2" id="smartSpecific"
-                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed"
-                  placeholder="e.g. Leave school campus by 4:00 PM twice a week without taking grading home">Leave the school building by 4:15 PM every Tuesday and Thursday</textarea>
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed mt-1"
+                  placeholder="Type your specific boundary action here..."></textarea>
               </div>
 
               <!-- M: Measurable -->
-              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+              <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors space-y-1.5">
                 <label
-                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider mb-1">
+                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#001F54] uppercase tracking-wider">
                   <span
                     class="w-5 h-5 rounded-full bg-[#001F54] text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">M</span>
                   <span>Measurable — How will you track progress?</span>
                 </label>
+                <div class="text-[11px] text-slate-500 bg-[#EFF5F6]/70 px-2.5 py-1 rounded-lg border border-[#55868C]/20 flex items-start gap-1.5">
+                  <span class="font-bold text-[#001F54] flex-shrink-0">Example:</span>
+                  <span class="italic text-slate-700">"Log departure times in phone calendar, targeting 8 successful days per month."</span>
+                </div>
                 <textarea rows="2" id="smartMeasurable"
-                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed"
-                  placeholder="e.g. Track on calendar: 8 out of 8 target days achieved">Log departure times in my phone calendar, targeting 8 successful days per month</textarea>
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed mt-1"
+                  placeholder="Type your tracking metric here..."></textarea>
               </div>
 
               <!-- A: Achievable -->
-              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+              <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors space-y-1.5">
                 <label
-                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider mb-1">
+                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider">
                   <span
                     class="w-5 h-5 rounded-full bg-[#55868C] text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">A</span>
                   <span>Achievable — What system or support makes this realistic?</span>
                 </label>
+                <div class="text-[11px] text-slate-500 bg-[#EFF5F6]/70 px-2.5 py-1 rounded-lg border border-[#55868C]/20 flex items-start gap-1.5">
+                  <span class="font-bold text-[#55868C] flex-shrink-0">Example:</span>
+                  <span class="italic text-slate-700">"Pack teaching bag during 5th period prep and arrange prompt walkout with a planning partner."</span>
+                </div>
                 <textarea rows="2" id="smartAchievable"
-                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed"
-                  placeholder="e.g. Close classroom door at 3:45 PM; pair up with an accountability buddy">Pack teaching bag during 5th period prep and arrange prompt walkout with a planning partner</textarea>
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed mt-1"
+                  placeholder="Type the system, tool, or peer support you will use..."></textarea>
               </div>
 
               <!-- R: Relevant -->
-              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+              <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors space-y-1.5">
                 <label
-                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider mb-1">
+                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#55868C] uppercase tracking-wider">
                   <span
                     class="w-5 h-5 rounded-full bg-[#55868C] text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">R</span>
-                  <span>Relevant — Why does this matter for your longevity & wellbeing?</span>
+                  <span>Relevant — Why does this matter for your wellbeing?</span>
                 </label>
+                <div class="text-[11px] text-slate-500 bg-[#EFF5F6]/70 px-2.5 py-1 rounded-lg border border-[#55868C]/20 flex items-start gap-1.5">
+                  <span class="font-bold text-[#55868C] flex-shrink-0">Example:</span>
+                  <span class="italic text-slate-700">"Preventing chronic evening fatigue allows me to stay patient with students and present with family."</span>
+                </div>
                 <textarea rows="2" id="smartRelevant"
-                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed"
-                  placeholder="e.g. Restores energy for my family and reduces Sunday evening anxiety">Preventing chronic evening fatigue allows me to stay patient and energetic with students</textarea>
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed mt-1"
+                  placeholder="Type why this goal directly protects your resilience..."></textarea>
               </div>
 
               <!-- T: Time-bound -->
-              <div class="p-3.5 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors">
+              <div class="p-4 rounded-2xl border border-slate-200 bg-white hover:border-indigo-300 transition-colors space-y-1.5">
                 <label
-                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#7F636E] uppercase tracking-wider mb-1">
+                  class="flex flex-wrap items-center gap-2 text-xs font-extrabold text-[#7F636E] uppercase tracking-wider">
                   <span
                     class="w-5 h-5 rounded-full bg-[#7F636E] text-white flex items-center justify-center font-bold text-[11px] flex-shrink-0">T</span>
                   <span>Time-bound — Target review date or milestone period</span>
                 </label>
+                <div class="text-[11px] text-slate-500 bg-[#F7F2F4]/70 px-2.5 py-1 rounded-lg border border-[#7F636E]/20 flex items-start gap-1.5">
+                  <span class="font-bold text-[#7F636E] flex-shrink-0">Example:</span>
+                  <span class="italic text-slate-700">"Review at 4 weeks (End of Month 1) during team collaboration block."</span>
+                </div>
                 <textarea rows="2" id="smartTimeBound"
-                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed"
-                  placeholder="e.g. 4-week pilot, evaluation on October 30th">Review at 4 weeks (End of Month 1) during team collaboration block</textarea>
+                  class="w-full text-xs sm:text-sm text-slate-800 font-medium border-0 focus:ring-0 p-0 placeholder:text-slate-400 resize-none break-words leading-relaxed mt-1"
+                  placeholder="Type your target review date or timeline..."></textarea>
               </div>
             </div>
 
@@ -2101,7 +2154,7 @@
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-bold text-slate-700 mb-1">To (Teacher Name & Dept)</label>
-          <input type="text" id="kudosTo" placeholder="e.g. Science Colleague, Campus Nurse"
+          <input type="text" id="kudosTo" placeholder="e.g. Science Colleague, Math Dept"
             class="w-full px-3 py-2 text-sm rounded-xl border border-slate-300">
         </div>
         <div>
@@ -2209,7 +2262,7 @@
           timestamp: '11 mins ago',
           urgent: false,
           status: 'Claimed',
-          claimedBy: 'Campus Nurse (ETA 2m)'
+          claimedBy: 'School Health Clinic (ETA 2m)'
         },
         {
           id: 'req-3',
@@ -2231,7 +2284,7 @@
           name: 'Peer Educator (Social Studies)',
           room: 'Room 210 (Building B)',
           slots: ['Right Now (Next 20m)', 'Period 3 (10:05 - 10:55)', 'Period 5 (1:15 - 2:05)'],
-          capabilities: ['5-Min Quick Class Watch', 'Full Period Watch (Emergency)', 'Walk Student to Nurse', 'Supply / Print Run']
+          capabilities: ['5-Min Quick Class Watch', 'Full Period Watch (Emergency)', 'Walk Student to Clinic', 'Supply / Print Run']
         },
         {
           id: 'h-2',
@@ -2245,7 +2298,7 @@
           name: 'Peer Educator (Health & PE)',
           room: 'Gym Office',
           slots: ['Period 2 (9:10 - 10:00)', 'Period 6 (2:10 - 3:00)'],
-          capabilities: ['Full Period Watch (Emergency)', 'Walk Student to Nurse', 'Emergency De-escalation']
+          capabilities: ['Full Period Watch (Emergency)', 'Walk Student to Clinic', 'Emergency De-escalation']
         },
         {
           id: 'h-4',
@@ -2265,7 +2318,7 @@
           time: 'Today, 9:20 AM'
         },
         {
-          to: 'Campus Nurse',
+          to: 'School Health Clinic',
           from: 'Science Department Colleague',
           message: 'Huge thanks for rapidly meeting my student halfway down the hallway during 4th period. You are our rock!',
           time: 'Today, 11:45 AM'
@@ -2672,16 +2725,32 @@
           </span>
         `).join(' ');
 
+        let countdownHtml = '';
+        if (req.status === 'Claimed' && req.deleteAt) {
+          const secLeft = Math.max(0, Math.round((req.deleteAt - Date.now()) / 1000));
+          const m = Math.floor(secLeft / 60);
+          const s = secLeft % 60;
+          countdownHtml = `
+            <span class="auto-delete-countdown px-2.5 py-1 rounded-xl bg-[#EFF5F6] text-[#001F54] border border-[#55868C]/30 text-xs font-bold flex items-center gap-1" data-delete-at="${req.deleteAt}">
+              <i data-lucide="clock" class="w-3 h-3 text-[#55868C]"></i>
+              <span class="countdown-timer-text">Clears in ${m}:${s < 10 ? '0' : ''}${s}</span>
+            </span>
+          `;
+        }
+
         const actionsHtml = req.status === 'Open' ? `
           <button onclick="claimHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
             <i data-lucide="hand" class="w-3.5 h-3.5"></i>
             <span>I Can Step In!</span>
           </button>
         ` : (req.status === 'Claimed' ? `
-          <button onclick="resolveHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-[#55868C] hover:bg-[#477278] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1">
-            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
-            <span>Mark Resolved</span>
-          </button>
+          <div class="flex items-center gap-2">
+            ${countdownHtml}
+            <button onclick="resolveHelpRequest('${req.id}')" class="px-3 py-1.5 rounded-xl bg-[#55868C] hover:bg-[#477278] text-white text-xs font-bold transition-all shadow-sm flex items-center gap-1" title="Resolve early if assistance is complete">
+              <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+              <span>Resolve Early</span>
+            </button>
+          </div>
         ` : `
           <span class="text-[11px] font-semibold text-[#55868C] flex items-center gap-1">
             <i data-lucide="check-circle-2" class="w-3.5 h-3.5"></i> Covered by Colleague
@@ -2744,11 +2813,55 @@
       const target = state.requests.find(r => r.id === reqId);
       if (target) {
         target.status = 'Claimed';
-        target.claimedBy = 'You (On the way!)';
+        const claimerName = state.currentUser ? (state.currentUser.name || state.currentUser.email.split('@')[0]) : 'Faculty Colleague';
+        target.claimedBy = `${claimerName} (Stepping in!)`;
+        target.claimedAt = Date.now();
+        target.deleteAt = Date.now() + 10 * 60 * 1000; // 10 minutes from now
+
         persistState();
         renderRequestsFeed();
-        // Audio boing removed for calming dignity
-        showToast(`You claimed this request! Head over to ${target.room}. Colleague notified.`, 'success');
+
+        // 1. Notify the Requestor immediately
+        const notifMsg = `📢 NOTIFICATION DISPATCHED: Colleague is stepping in right now to ${target.room}!`;
+        showToast(notifMsg, 'success');
+
+        // 2. Trigger browser notification if opt-in enabled
+        dispatchSystemNotification('FacultyWell: Colleague Stepping In!', `A peer has stepped in for Room ${target.room}. Requestor notified. Request will auto-clear in 10 minutes.`);
+      }
+    }
+
+    // Auto-delete timer checker running every second
+    function checkAutoDeleteRequests() {
+      if (!state.requests || state.requests.length === 0) return;
+      const now = Date.now();
+      let changed = false;
+
+      state.requests = state.requests.filter(r => {
+        if (r.status === 'Claimed' && r.deleteAt) {
+          if (now >= r.deleteAt) {
+            changed = true;
+            return false; // Auto-delete after 10 minutes
+          }
+        }
+        return true;
+      });
+
+      if (changed) {
+        persistState();
+        renderRequestsFeed();
+        showToast('A completed 10-minute coverage request was automatically archived.', 'info');
+      } else {
+        // Update countdown text on claimed cards without re-rendering entire list
+        document.querySelectorAll('.auto-delete-countdown').forEach(el => {
+          const deleteAt = parseInt(el.getAttribute('data-delete-at'), 10);
+          if (deleteAt) {
+            const secLeft = Math.max(0, Math.round((deleteAt - now) / 1000));
+            const m = Math.floor(secLeft / 60);
+            const s = secLeft % 60;
+            const span = el.querySelector('.countdown-timer-text') || el;
+            span.textContent = `Clears in ${m}:${s < 10 ? '0' : ''}${s}`;
+          }
+        });
       }
     }
 
@@ -2904,10 +3017,24 @@
         const ctx = getAudioContext();
         activeSoundName = type;
 
-        // UI highlight
-        document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('border-brand-accent', 'bg-blue-50/50'));
+        // UI highlight: make selected button text a darker, high-contrast color
+        document.querySelectorAll('.sound-card').forEach(c => {
+          c.classList.remove('border-2', 'border-[#001F54]', 'bg-[#EDF2F8]', 'shadow-md');
+          c.classList.add('border-slate-200', 'bg-white');
+          const title = c.querySelector('h4');
+          const subtitle = c.querySelector('p');
+          if (title) title.className = 'text-sm font-bold text-brand-ink';
+          if (subtitle) subtitle.className = 'text-xs text-slate-400';
+        });
         const btn = document.getElementById('audio-btn-' + type);
-        if (btn) btn.classList.add('border-brand-accent', 'bg-blue-50/50');
+        if (btn) {
+          btn.classList.remove('border-slate-200', 'bg-white');
+          btn.classList.add('border-2', 'border-[#001F54]', 'bg-[#EDF2F8]', 'shadow-md');
+          const title = btn.querySelector('h4');
+          const subtitle = btn.querySelector('p');
+          if (title) title.className = 'text-sm font-extrabold text-[#001F54]';
+          if (subtitle) subtitle.className = 'text-xs font-bold text-[#001F54]';
+        }
 
         const masterGain = ctx.createGain();
         const volSlider = document.getElementById('soundVolume');
@@ -2999,7 +3126,14 @@
         currentNoiseNode = null;
       }
       activeSoundName = null;
-      document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('border-brand-accent', 'bg-blue-50/50'));
+      document.querySelectorAll('.sound-card').forEach(c => {
+        c.classList.remove('border-2', 'border-[#001F54]', 'bg-[#EDF2F8]', 'shadow-md');
+        c.classList.add('border-slate-200', 'bg-white');
+        const title = c.querySelector('h4');
+        const subtitle = c.querySelector('p');
+        if (title) title.className = 'text-sm font-bold text-brand-ink';
+        if (subtitle) subtitle.className = 'text-xs text-slate-400';
+      });
     }
 
     function setAudioVolume(val) {
@@ -3029,12 +3163,20 @@
     function setBreathingTechnique(tech) {
       resetBreathingGuide();
       document.querySelectorAll('#breath-box-btn, #breath-calm-btn, #breath-trans-btn').forEach(b => {
-        b.classList.remove('bg-brand-ink', 'text-white');
+        b.classList.remove('bg-[#001F54]', 'text-white', 'border-2', 'border-[#001F54]', 'bg-[#EFF5F6]', 'text-[#001F54]', 'font-extrabold', 'shadow-sm');
         b.classList.add('bg-white', 'text-slate-700', 'border', 'border-slate-200');
       });
 
+      const applyActiveTechBtn = (btnId) => {
+        const btn = document.getElementById(btnId);
+        if (btn) {
+          btn.classList.remove('bg-white', 'text-slate-700', 'border', 'border-slate-200');
+          btn.classList.add('bg-[#EFF5F6]', 'text-[#001F54]', 'border-2', 'border-[#001F54]', 'font-extrabold', 'shadow-sm');
+        }
+      };
+
       if (tech === 'box') {
-        document.getElementById('breath-box-btn').classList.add('bg-brand-ink', 'text-white');
+        applyActiveTechBtn('breath-box-btn');
         document.getElementById('breathTitle').textContent = 'Guided Box Breathing (Samavritti)';
         document.getElementById('breathDescription').textContent = 'Used by educators and emergency responders to immediately halt sympathetic overdrive. 4 seconds inhale, 4s hold, 4s exhale, 4s hold.';
         breathConfig = {
@@ -3047,7 +3189,7 @@
           ]
         };
       } else if (tech === 'calm') {
-        document.getElementById('breath-calm-btn').classList.add('bg-brand-ink', 'text-white');
+        applyActiveTechBtn('breath-calm-btn');
         document.getElementById('breathTitle').textContent = '4-7-8 Parasympathetic Vagus Nerve Reset';
         document.getElementById('breathDescription').textContent = 'Dr. Andrew Weil’s relaxation technique. A longer exhale activates the vagus nerve and lowers heart rate rapidly during high-stress class transitions.';
         breathConfig = {
@@ -3059,7 +3201,7 @@
           ]
         };
       } else if (tech === 'transition') {
-        document.getElementById('breath-trans-btn').classList.add('bg-brand-ink', 'text-white');
+        applyActiveTechBtn('breath-trans-btn');
         document.getElementById('breathTitle').textContent = 'Quick Classroom Bell Reset (3-3)';
         document.getElementById('breathDescription').textContent = 'Quick 3-second inhale and 3-second exhale designed for the 2-minute hallway passing period between class periods.';
         breathConfig = {
@@ -3653,6 +3795,143 @@
     <p><strong>Collaborative Mentoring Note:</strong></p>
     <p>Share these milestones during departmental planning blocks or mentor-mentee conferences. Dr. Adair’s leadership research underscores that explicit institutional affirmation of teacher boundaries directly fosters faculty retention and teacher agency.</p>
   </div>
+  <!-- ========================================================================= -->
+  <!-- MODAL: SCHOOL EMAIL LOGIN & CAMPUS VERIFICATION                            -->
+  <!-- ========================================================================= -->
+  <div id="schoolLoginModal" class="hidden fixed inset-0 z-50 bg-brand-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 transform transition-all">
+      <div class="flex items-start justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#EFF5F6] text-[#001F54] flex items-center justify-center font-bold">
+            <i data-lucide="shield-check" class="w-5 h-5 text-[#55868C]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#0A1128]">School Email Sign-In</h3>
+            <p class="text-xs text-[#627282]">Verified access for campus faculty & staff</p>
+          </div>
+        </div>
+        <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        FacultyWell connects colleagues across your campus. Sign in with your school email address to easily submit and claim requests from your phone or laptop.
+      </p>
+
+      <form onsubmit="handleSchoolLogin(event)" class="space-y-4">
+        <div>
+          <label for="loginEmail" class="block text-xs font-bold text-slate-700 mb-1">
+            School / District Email Address <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+            <input type="email" id="loginEmail" required
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#001F54] bg-white"
+              placeholder="e.g. teacher@hillcrest.edu or your district email">
+          </div>
+        </div>
+
+        <div>
+          <label for="loginName" class="block text-xs font-bold text-slate-700 mb-1">
+            Display Name or Department (Optional)
+          </label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+            <input type="text" id="loginName"
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#001F54] bg-white"
+              placeholder="e.g. English Dept, Room 214">
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full py-3 px-4 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-[#55868C]"></i>
+          <span>Sign In to FacultyWell</span>
+        </button>
+
+        <button type="button" onclick="quickLoginDemo()"
+          class="w-full py-2 text-xs font-semibold text-[#55868C] hover:text-[#001F54] hover:bg-[#EFF5F6] rounded-lg transition-colors">
+          Demo Access: Quick Sign In as Hillcrest Educator
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: NOTIFICATION OPT-IN PREFERENCES                                     -->
+  <!-- ========================================================================= -->
+  <div id="notificationModal" class="hidden fixed inset-0 z-50 bg-brand-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6">
+      <div class="flex items-start justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#EFF5F6] text-[#001F54] flex items-center justify-center font-bold">
+            <i data-lucide="bell-ring" class="w-5 h-5 text-[#55868C]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#0A1128]">Notification Opt-In</h3>
+            <p class="text-xs text-[#627282]">Browser & App Alerts for FacultyWell</p>
+          </div>
+        </div>
+        <button onclick="closeNotificationModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Choose when you would like FacultyWell to notify you on this device. You will only receive alerts for situations you explicitly opt into.
+      </p>
+
+      <div class="space-y-4">
+        <!-- System Permission Card -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">Browser System Notifications</p>
+            <p class="text-[11px] text-slate-500" id="browserNotifStatusText">Permission not yet granted</p>
+          </div>
+          <button type="button" onclick="requestBrowserNotificationPermission()" id="requestBrowserNotifBtn"
+            class="px-3 py-1.5 text-xs font-bold bg-[#001F54] text-white rounded-lg hover:bg-[#0A1128] transition-colors whitespace-nowrap">
+            Enable Alerts
+          </button>
+        </div>
+
+        <!-- Preference 1: When Marked Available -->
+        <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-[#EFF5F6]/40 cursor-pointer transition-colors">
+          <input type="checkbox" id="notifWhenAvailable" onchange="saveNotificationPreferences()" checked
+            class="w-4 h-4 mt-0.5 rounded text-[#001F54] focus:ring-[#001F54]">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">When I Have Indicated I'm Available</p>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              Receive a ping if a peer requests class watch or assistance during a period you marked in "I Can Help".
+            </p>
+          </div>
+        </label>
+
+        <!-- Preference 2: School-Wide Alerts -->
+        <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-[#EFF5F6]/40 cursor-pointer transition-colors">
+          <input type="checkbox" id="notifSchoolWide" onchange="saveNotificationPreferences()" checked
+            class="w-4 h-4 mt-0.5 rounded text-[#001F54] focus:ring-[#001F54]">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">School-Wide Urgent Alerts</p>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              Immediate alert whenever faculty triggers a campus emergency backup (Fight, Medical, Admin Support).
+            </p>
+          </div>
+        </label>
+      </div>
+
+      <div class="pt-2 flex items-center justify-between gap-3">
+        <button type="button" onclick="sendTestNotification()"
+          class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-[#55868C] hover:bg-[#EFF5F6] transition-colors">
+          Send Test Notification
+        </button>
+        <button type="button" onclick="closeNotificationModal()"
+          class="px-5 py-2 rounded-xl bg-[#001F54] text-white text-xs font-bold hover:bg-[#0A1128] transition-colors">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>`;
 
@@ -3927,6 +4206,11 @@
       renderRequestsFeed();
       closeQuickEmergencyModal();
 
+      // Trigger School-Wide notification to opted-in devices
+      if (state.notifications && state.notifications.schoolWideAlerts) {
+        dispatchSystemNotification(`🚨 SCHOOL-WIDE ALERT: ${emType}`, `${emLoc} - ${emDetail}. Immediate campus assistance requested.`);
+      }
+
       // Sound high audible chime
       // Audio boing removed for calming dignity
       showToast(`EMERGENCY BROADCAST TRANSMITTED: All available personnel alerted to ${emLoc}!`, 'error');
@@ -3970,8 +4254,229 @@
     }
 
     // GLOBAL INITIALIZATION ON LOAD
+    
+    // =========================================================================
+    // SCHOOL EMAIL AUTHENTICATION & LOGIN MANAGEMENT
+    // =========================================================================
+    function loadUserAuth() {
+      try {
+        const savedUser = localStorage.getItem('fw_user');
+        if (savedUser) {
+          state.currentUser = JSON.parse(savedUser);
+        }
+      } catch (e) { }
+      updateAuthUI();
+    }
+
+    function updateAuthUI() {
+      const signInBtn = document.getElementById('navSignInBtn');
+      const userPill = document.getElementById('navUserPill');
+      const userEmailDisplay = document.getElementById('navUserEmailDisplay');
+      const mobileDisplay = document.getElementById('mobileUserDisplay');
+      const mobileSignIn = document.getElementById('mobileSignInBtn');
+      const mobileSignOut = document.getElementById('mobileSignOutBtn');
+
+      if (state.currentUser && state.currentUser.email) {
+        if (signInBtn) signInBtn.classList.add('hidden');
+        if (userPill) userPill.classList.remove('hidden');
+        const shortName = state.currentUser.name || state.currentUser.email.split('@')[0];
+        if (userEmailDisplay) userEmailDisplay.textContent = shortName;
+
+        if (mobileDisplay) mobileDisplay.textContent = shortName;
+        if (mobileSignIn) mobileSignIn.classList.add('hidden');
+        if (mobileSignOut) mobileSignOut.classList.remove('hidden');
+
+        // Auto-fill forms with user identity if empty
+        const reqName = document.getElementById('reqTeacherName');
+        if (reqName && !reqName.value) {
+          reqName.value = state.currentUser.name || state.currentUser.email.split('@')[0];
+        }
+        const helperName = document.getElementById('helperNameInput');
+        if (helperName && !helperName.value) {
+          helperName.value = state.currentUser.name || state.currentUser.email.split('@')[0];
+        }
+      } else {
+        if (signInBtn) signInBtn.classList.remove('hidden');
+        if (userPill) userPill.classList.add('hidden');
+        if (mobileDisplay) mobileDisplay.textContent = 'Not Signed In';
+        if (mobileSignIn) mobileSignIn.classList.remove('hidden');
+        if (mobileSignOut) mobileSignOut.classList.add('hidden');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function openLoginModal() {
+      document.getElementById('schoolLoginModal').classList.remove('hidden');
+      const emailInput = document.getElementById('loginEmail');
+      if (emailInput) setTimeout(() => emailInput.focus(), 100);
+    }
+
+    function closeLoginModal() {
+      document.getElementById('schoolLoginModal').classList.add('hidden');
+    }
+
+    function handleSchoolLogin(e) {
+      if (e) e.preventDefault();
+      const email = document.getElementById('loginEmail').value.trim();
+      const name = document.getElementById('loginName').value.trim();
+
+      if (!email || !email.includes('@')) {
+        showToast('Please enter a valid school or district email address.', 'error');
+        return;
+      }
+
+      state.currentUser = {
+        email: email,
+        name: name || email.split('@')[0],
+        school: state.currentSchool,
+        signedInAt: Date.now()
+      };
+
+      try {
+        localStorage.setItem('fw_user', JSON.stringify(state.currentUser));
+      } catch (err) { }
+
+      updateAuthUI();
+      closeLoginModal();
+      showToast(`Welcome back, ${state.currentUser.name}! Signed in to ${state.currentSchool}.`, 'success');
+    }
+
+    function quickLoginDemo() {
+      document.getElementById('loginEmail').value = 'educator@hillcrest.edu';
+      document.getElementById('loginName').value = 'Hillcrest Educator';
+      handleSchoolLogin(null);
+    }
+
+    function logoutUser() {
+      state.currentUser = null;
+      try {
+        localStorage.removeItem('fw_user');
+      } catch (e) { }
+      updateAuthUI();
+      showToast('Signed out of FacultyWell.', 'info');
+    }
+
+    // =========================================================================
+    // NOTIFICATION PREFERENCES & SYSTEM ALERTS
+    // =========================================================================
+    function loadNotificationPreferences() {
+      try {
+        const savedNotifs = localStorage.getItem('fw_notifications');
+        if (savedNotifs) {
+          state.notifications = JSON.parse(savedNotifs);
+        } else {
+          state.notifications = {
+            enabled: false,
+            whenAvailable: true,
+            schoolWideAlerts: true
+          };
+        }
+      } catch (e) {
+        state.notifications = { enabled: false, whenAvailable: true, schoolWideAlerts: true };
+      }
+      updateNotificationUI();
+    }
+
+    function updateNotificationUI() {
+      const dot = document.getElementById('notifActiveDot');
+      const statusText = document.getElementById('browserNotifStatusText');
+      const btn = document.getElementById('requestBrowserNotifBtn');
+      const checkAvail = document.getElementById('notifWhenAvailable');
+      const checkSchool = document.getElementById('notifSchoolWide');
+
+      if (checkAvail) checkAvail.checked = !!state.notifications.whenAvailable;
+      if (checkSchool) checkSchool.checked = !!state.notifications.schoolWideAlerts;
+
+      if ('Notification' in window) {
+        if (Notification.permission === 'granted') {
+          if (dot) dot.classList.remove('hidden');
+          if (statusText) statusText.textContent = 'System alerts active';
+          if (btn) {
+            btn.textContent = 'Active ✓';
+            btn.className = 'px-3 py-1.5 text-xs font-bold bg-emerald-600 text-white rounded-lg cursor-default';
+          }
+        } else {
+          if (dot) dot.classList.add('hidden');
+          if (statusText) statusText.textContent = Notification.permission === 'denied' ? 'Alerts blocked in browser' : 'Permission needed';
+          if (btn) {
+            btn.textContent = 'Enable Alerts';
+            btn.className = 'px-3 py-1.5 text-xs font-bold bg-[#001F54] text-white rounded-lg hover:bg-[#0A1128] transition-colors whitespace-nowrap';
+          }
+        }
+      }
+    }
+
+    function openNotificationModal() {
+      document.getElementById('notificationModal').classList.remove('hidden');
+      updateNotificationUI();
+    }
+
+    function closeNotificationModal() {
+      document.getElementById('notificationModal').classList.add('hidden');
+    }
+
+    function saveNotificationPreferences() {
+      const checkAvail = document.getElementById('notifWhenAvailable');
+      const checkSchool = document.getElementById('notifSchoolWide');
+
+      state.notifications.whenAvailable = checkAvail ? checkAvail.checked : true;
+      state.notifications.schoolWideAlerts = checkSchool ? checkSchool.checked : true;
+
+      try {
+        localStorage.setItem('fw_notifications', JSON.stringify(state.notifications));
+      } catch (e) { }
+
+      showToast('Notification preferences saved!', 'info');
+    }
+
+    function requestBrowserNotificationPermission() {
+      if (!('Notification' in window)) {
+        showToast('This browser does not support system push notifications.', 'error');
+        return;
+      }
+
+      Notification.requestPermission().then(permission => {
+        if (permission === 'granted') {
+          state.notifications.enabled = true;
+          try {
+            localStorage.setItem('fw_notifications', JSON.stringify(state.notifications));
+          } catch (e) { }
+          updateNotificationUI();
+          showToast('Notifications enabled for FacultyWell!', 'success');
+          dispatchSystemNotification('FacultyWell Alerts Active', 'You will now receive notifications when available or for school-wide alerts.');
+        } else {
+          showToast('Notification permission was not granted.', 'error');
+          updateNotificationUI();
+        }
+      });
+    }
+
+    function dispatchSystemNotification(title, body) {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        try {
+          new Notification(title, {
+            body: body,
+            icon: 'icon-192.png'
+          });
+        } catch (e) { }
+      }
+    }
+
+    function sendTestNotification() {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        dispatchSystemNotification('FacultyWell Test Alert', 'Your notification system is working perfectly on this device!');
+        showToast('Test notification sent to your system!', 'success');
+      } else {
+        requestBrowserNotificationPermission();
+      }
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       loadSavedState();
+      loadUserAuth();
+      loadNotificationPreferences();
+      // Start 1-second auto-delete countdown interval
+      setInterval(checkAutoDeleteRequests, 1000);
       renderRequestsFeed();
       renderStandbyHelpers();
       renderGratitudeNotes();
@@ -3998,6 +4503,143 @@
       });
     });
   </script>
+  <!-- ========================================================================= -->
+  <!-- MODAL: SCHOOL EMAIL LOGIN & CAMPUS VERIFICATION                            -->
+  <!-- ========================================================================= -->
+  <div id="schoolLoginModal" class="hidden fixed inset-0 z-50 bg-brand-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6 transform transition-all">
+      <div class="flex items-start justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#EFF5F6] text-[#001F54] flex items-center justify-center font-bold">
+            <i data-lucide="shield-check" class="w-5 h-5 text-[#55868C]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#0A1128]">School Email Sign-In</h3>
+            <p class="text-xs text-[#627282]">Verified access for campus faculty & staff</p>
+          </div>
+        </div>
+        <button onclick="closeLoginModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        FacultyWell connects colleagues across your campus. Sign in with your school email address to easily submit and claim requests from your phone or laptop.
+      </p>
+
+      <form onsubmit="handleSchoolLogin(event)" class="space-y-4">
+        <div>
+          <label for="loginEmail" class="block text-xs font-bold text-slate-700 mb-1">
+            School / District Email Address <span class="text-rose-500">*</span>
+          </label>
+          <div class="relative">
+            <i data-lucide="mail" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+            <input type="email" id="loginEmail" required
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#001F54] bg-white"
+              placeholder="e.g. teacher@hillcrest.edu or your district email">
+          </div>
+        </div>
+
+        <div>
+          <label for="loginName" class="block text-xs font-bold text-slate-700 mb-1">
+            Display Name or Department (Optional)
+          </label>
+          <div class="relative">
+            <i data-lucide="user" class="w-4 h-4 absolute left-3 top-3 text-slate-400"></i>
+            <input type="text" id="loginName"
+              class="w-full pl-9 pr-3 py-2.5 text-sm rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-[#001F54] bg-white"
+              placeholder="e.g. English Dept, Room 214">
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full py-3 px-4 rounded-xl bg-[#001F54] hover:bg-[#0A1128] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2">
+          <i data-lucide="check-circle" class="w-4 h-4 text-[#55868C]"></i>
+          <span>Sign In to FacultyWell</span>
+        </button>
+
+        <button type="button" onclick="quickLoginDemo()"
+          class="w-full py-2 text-xs font-semibold text-[#55868C] hover:text-[#001F54] hover:bg-[#EFF5F6] rounded-lg transition-colors">
+          Demo Access: Quick Sign In as Hillcrest Educator
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================= -->
+  <!-- MODAL: NOTIFICATION OPT-IN PREFERENCES                                     -->
+  <!-- ========================================================================= -->
+  <div id="notificationModal" class="hidden fixed inset-0 z-50 bg-brand-ink/60 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="glass-card bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl border border-slate-200 space-y-6">
+      <div class="flex items-start justify-between pb-3 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-2xl bg-[#EFF5F6] text-[#001F54] flex items-center justify-center font-bold">
+            <i data-lucide="bell-ring" class="w-5 h-5 text-[#55868C]"></i>
+          </div>
+          <div>
+            <h3 class="text-lg font-bold text-[#0A1128]">Notification Opt-In</h3>
+            <p class="text-xs text-[#627282]">Browser & App Alerts for FacultyWell</p>
+          </div>
+        </div>
+        <button onclick="closeNotificationModal()" class="text-slate-400 hover:text-slate-600 p-1">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <p class="text-xs text-slate-600 leading-relaxed">
+        Choose when you would like FacultyWell to notify you on this device. You will only receive alerts for situations you explicitly opt into.
+      </p>
+
+      <div class="space-y-4">
+        <!-- System Permission Card -->
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-between gap-3">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">Browser System Notifications</p>
+            <p class="text-[11px] text-slate-500" id="browserNotifStatusText">Permission not yet granted</p>
+          </div>
+          <button type="button" onclick="requestBrowserNotificationPermission()" id="requestBrowserNotifBtn"
+            class="px-3 py-1.5 text-xs font-bold bg-[#001F54] text-white rounded-lg hover:bg-[#0A1128] transition-colors whitespace-nowrap">
+            Enable Alerts
+          </button>
+        </div>
+
+        <!-- Preference 1: When Marked Available -->
+        <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-[#EFF5F6]/40 cursor-pointer transition-colors">
+          <input type="checkbox" id="notifWhenAvailable" onchange="saveNotificationPreferences()" checked
+            class="w-4 h-4 mt-0.5 rounded text-[#001F54] focus:ring-[#001F54]">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">When I Have Indicated I'm Available</p>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              Receive a ping if a peer requests class watch or assistance during a period you marked in "I Can Help".
+            </p>
+          </div>
+        </label>
+
+        <!-- Preference 2: School-Wide Alerts -->
+        <label class="flex items-start gap-3 p-3 rounded-2xl border border-slate-200 hover:bg-[#EFF5F6]/40 cursor-pointer transition-colors">
+          <input type="checkbox" id="notifSchoolWide" onchange="saveNotificationPreferences()" checked
+            class="w-4 h-4 mt-0.5 rounded text-[#001F54] focus:ring-[#001F54]">
+          <div>
+            <p class="text-xs font-bold text-[#0A1128]">School-Wide Urgent Alerts</p>
+            <p class="text-[11px] text-slate-500 leading-relaxed">
+              Immediate alert whenever faculty triggers a campus emergency backup (Fight, Medical, Admin Support).
+            </p>
+          </div>
+        </label>
+      </div>
+
+      <div class="pt-2 flex items-center justify-between gap-3">
+        <button type="button" onclick="sendTestNotification()"
+          class="px-3 py-2 rounded-xl border border-slate-200 text-xs font-bold text-[#55868C] hover:bg-[#EFF5F6] transition-colors">
+          Send Test Notification
+        </button>
+        <button type="button" onclick="closeNotificationModal()"
+          class="px-5 py-2 rounded-xl bg-[#001F54] text-white text-xs font-bold hover:bg-[#0A1128] transition-colors">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
